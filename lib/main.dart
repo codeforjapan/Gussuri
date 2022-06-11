@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _pageList = [
     CustomPage(pannelColor: Colors.cyan, title: 'Home'),
+    CustomPage(pannelColor: Colors.pink, title: 'Graph'),
     CustomPage(pannelColor: Colors.green, title: 'Settings'),
   ];
 
@@ -45,6 +46,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_graph),
+            label: 'Graph',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
