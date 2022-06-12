@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './home.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static List<Widget> _pageList = [
-    CustomPage(pannelColor: Colors.cyan, title: 'Home'),
+    HomePageDart(),
     CustomPage(pannelColor: Colors.pink, title: 'Graph'),
     CustomPage(pannelColor: Colors.green, title: 'Settings'),
   ];
