@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import './recording.dart';
 
 class HomePageDart extends StatelessWidget {
   const HomePageDart({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF757575),
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Padding(
+            padding: EdgeInsets.only(left: 28.0),
+            child: Text(
+              'ホーム',
+              style: TextStyle(color: Colors.black),
+            )),
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -39,7 +51,10 @@ class HomePageDart extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // todo Firebaseにデータ送信
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Recording()));
+                    },
                   )),
             ],
           )),
