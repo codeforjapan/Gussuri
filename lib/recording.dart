@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './awake.dart';
 
 class Recording extends StatelessWidget {
   const Recording({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class Recording extends StatelessWidget {
               '記録中',
               style: TextStyle(color: Colors.black),
             )),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFFAFAFA),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -30,7 +31,14 @@ class Recording extends StatelessWidget {
                   primary: Colors.white,
                   onPrimary: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // todo Firebaseにデータ送信
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Awake(
+                              title: '目が覚めた時間', text: '布団から出るまでにかかった時間')));
+                },
               )),
         ],
       ),

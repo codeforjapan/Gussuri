@@ -9,6 +9,7 @@ class HomePageDart extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF757575),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFFAFAFA),
         centerTitle: false,
         title: const Padding(
             padding: EdgeInsets.only(left: 28.0),
@@ -16,7 +17,6 @@ class HomePageDart extends StatelessWidget {
               'ホーム',
               style: TextStyle(color: Colors.black),
             )),
-        backgroundColor: Colors.white,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
