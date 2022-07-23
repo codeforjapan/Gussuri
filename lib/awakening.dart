@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gussuri/sleepy.dart';
 
 class Awaking extends StatelessWidget {
   const Awaking({required this.title, required this.text});
@@ -30,7 +31,7 @@ class Awaking extends StatelessWidget {
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    child: const Text('5分くらい'),
+                    child: const Text('0回'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 80),
                       primary: Colors.white,
@@ -41,7 +42,7 @@ class Awaking extends StatelessWidget {
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    child: const Text('10分くらい'),
+                    child: const Text('1回'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 80),
                       primary: Colors.white,
@@ -52,7 +53,7 @@ class Awaking extends StatelessWidget {
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    child: const Text('20分くらい'),
+                    child: const Text('2回'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 80),
                       primary: Colors.white,
@@ -63,7 +64,7 @@ class Awaking extends StatelessWidget {
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    child: const Text('30分以上'),
+                    child: const Text('3回以上'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 80),
                       primary: Colors.white,
@@ -77,16 +78,39 @@ class Awaking extends StatelessWidget {
             width: double.infinity,
             height: 100,
             decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 60),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: () {},
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 28.0),
+                    child: ElevatedButton(
+                      child: const Text('前へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(70, 60),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Sleepy(
+                                    title: '寝付くまでにかかった時間', text: '寝付くまでにかかった時間')));
+                      },
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(right: 28.0),
+                  child: ElevatedButton(
+                      child: const Text('次へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(70, 60),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () {}
+                  ),
+                )
+              ],
             ),
           ),
         ],

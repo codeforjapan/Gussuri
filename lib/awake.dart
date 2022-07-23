@@ -106,16 +106,39 @@ class Awake extends StatelessWidget {
             width: double.infinity,
             height: 100,
             decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 60),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: () {},
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 28.0),
+                    child: ElevatedButton(
+                      child: const Text('前へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(70, 60),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () {},
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(right: 28.0),
+                  child: ElevatedButton(
+                      child: const Text('次へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(70, 60),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Sleepy(
+                                  title: '寝付くまでにかかった時間', text: '寝付くまでにかかった時間')));
+                    },
+                  ),
+                )
+              ],
             ),
           ),
         ],
