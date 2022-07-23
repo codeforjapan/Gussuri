@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import './home.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
