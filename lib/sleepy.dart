@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gussuri/awake.dart';
+import 'package:gussuri/awakening.dart';
 
 class Sleepy extends StatelessWidget {
   const Sleepy({required this.title, required this.text});
 
   final String title, text;
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class Sleepy extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(child: Column(
+          Expanded(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(text),
@@ -36,7 +38,13 @@ class Sleepy extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awaking(
+                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
+                      }
                   )),
               Container(
                   alignment: Alignment.center,
@@ -47,7 +55,13 @@ class Sleepy extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awaking(
+                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
+                      }
                   )),
               Container(
                   alignment: Alignment.center,
@@ -58,7 +72,13 @@ class Sleepy extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awaking(
+                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
+                      }
                   )),
               Container(
                   alignment: Alignment.center,
@@ -69,25 +89,59 @@ class Sleepy extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awaking(
+                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
+                      }
                   )),
             ],
-          )
-          ),
+          )),
           Container(
             width: double.infinity,
             height: 100,
             decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(300, 60),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: () {},
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 28.0),
+                    child: ElevatedButton(
+                      child: const Text('前へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(70, 60),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awake(
+                                    title: '目が覚めた時間', text: '布団から出るまでにかかった時間')));
+                      },
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(right: 28.0),
+                  child: ElevatedButton(
+                    child: const Text('次へ'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(70, 60),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Awaking(
+                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
+                      }
+                  ),
+                )
+              ],
             ),
           ),
         ],
