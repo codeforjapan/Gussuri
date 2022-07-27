@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gussuri/finish.dart';
 import 'package:gussuri/sleepy.dart';
 
 class Awaking extends StatelessWidget {
@@ -37,7 +38,12 @@ class Awaking extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Finish()));
+                    },
                   )),
               Container(
                   alignment: Alignment.center,
@@ -107,7 +113,12 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {}
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Finish()));
+                    },
                   ),
                 )
               ],
