@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './sleepy.dart';
+import 'home.dart';
 
 class Awake extends StatelessWidget {
   const Awake({required this.title, required this.text});
@@ -18,6 +19,18 @@ class Awake extends StatelessWidget {
               title,
               style: const TextStyle(color: Colors.black),
             )),
+        actions: [
+          ElevatedButton(
+            child: const Text('ホーム'),
+            style: ElevatedButton.styleFrom(primary: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePageDart()));
+            },
+          )
+        ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
@@ -123,18 +136,19 @@ class Awake extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 28.0),
                   child: ElevatedButton(
-                      child: const Text('次へ'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(70, 60),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                      ),
+                    child: const Text('次へ'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(70, 60),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const Sleepy(
-                                  title: '寝付くまでにかかった時間', text: '寝付くまでにかかった時間')));
+                                  title: '寝付くまでにかかった時間',
+                                  text: '寝付くまでにかかった時間')));
                     },
                   ),
                 )

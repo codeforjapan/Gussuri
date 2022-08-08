@@ -38,12 +38,12 @@ class Finish extends StatelessWidget {
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                      child: const Text('ホームへ戻る'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 80),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                      ),
+                    child: const Text('ホームへ戻る'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(300, 80),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
                     onPressed: () {
                       Navigator.push(
                           context,

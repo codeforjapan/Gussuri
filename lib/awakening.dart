@@ -3,6 +3,8 @@ import 'package:gussuri/awakening_time.dart';
 import 'package:gussuri/finish.dart';
 import 'package:gussuri/sleepy.dart';
 
+import 'home.dart';
+
 class Awaking extends StatelessWidget {
   const Awaking({required this.title, required this.text});
 
@@ -20,6 +22,18 @@ class Awaking extends StatelessWidget {
               title,
               style: const TextStyle(color: Colors.black),
             )),
+        actions: [
+          ElevatedButton(
+            child: const Text('ホーム'),
+            style: ElevatedButton.styleFrom(primary: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePageDart()));
+            },
+          )
+        ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),

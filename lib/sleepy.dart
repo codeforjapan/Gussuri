@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/awake.dart';
 import 'package:gussuri/awakening.dart';
 
+import 'home.dart';
+
 class Sleepy extends StatelessWidget {
   const Sleepy({required this.title, required this.text});
 
@@ -19,6 +21,18 @@ class Sleepy extends StatelessWidget {
               title,
               style: const TextStyle(color: Colors.black),
             )),
+        actions: [
+          ElevatedButton(
+            child: const Text('ホーム'),
+            style: ElevatedButton.styleFrom(primary: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePageDart()));
+            },
+          )
+        ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),

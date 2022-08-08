@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/finish.dart';
 import 'package:gussuri/awakening.dart';
 
+import 'home.dart';
+
 class AwakingTime extends StatelessWidget {
   const AwakingTime({required this.title, required this.text});
 
@@ -19,6 +21,18 @@ class AwakingTime extends StatelessWidget {
               title,
               style: const TextStyle(color: Colors.black),
             )),
+        actions: [
+          ElevatedButton(
+            child: const Text('ホーム'),
+            style: ElevatedButton.styleFrom(primary: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePageDart()));
+            },
+          )
+        ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
@@ -39,8 +53,10 @@ class AwakingTime extends StatelessWidget {
                       onPrimary: Colors.black,
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Finish()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Finish()));
                     },
                   )),
               Container(
@@ -111,8 +127,10 @@ class AwakingTime extends StatelessWidget {
                       onPrimary: Colors.black,
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Finish()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Finish()));
                     },
                   ),
                 )
