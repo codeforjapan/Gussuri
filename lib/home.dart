@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './recording.dart';
+import 'package:gussuri/recording.dart';
+import './questionnaire.dart';
 
 class HomePageDart extends StatelessWidget {
   const HomePageDart({Key? key}) : super(key: key);
@@ -24,6 +25,20 @@ class HomePageDart extends StatelessWidget {
           Expanded(child: Column(
             children: [
               Container(
+                  padding: const EdgeInsets.all(30),
+                  child: ElevatedButton(
+                    child: const Text('昨日の睡眠'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(315, 100),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
+                    onPressed: () {
+                      // todo Firebaseにデータ送信
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Questionnaire()));
+                    },
+                  )),
+              Container(
                 decoration: const BoxDecoration(color: Color(0xFFBDBDBD)),
                 padding: const EdgeInsets.fromLTRB(15, 25, 15, 10),
                 width: double.infinity,
@@ -43,11 +58,11 @@ class HomePageDart extends StatelessWidget {
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.all(15),
+                  padding: EdgeInsets.symmetric(vertical: 80),
                   child: ElevatedButton(
-                    child: const Text('ベッドに入った時間'),
+                    child: const Text('布団に入ります'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 180),
+                      minimumSize: const Size(300, 150),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
