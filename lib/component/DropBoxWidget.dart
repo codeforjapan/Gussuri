@@ -20,6 +20,12 @@ class _DropBoxWidgetState extends State<DropBoxWidget> {
   }
 
   void setItems() {
+    _items.add(const DropdownMenuItem(
+        child: Text(
+          "--分",
+          style: TextStyle(fontSize: 16.0),
+        ),
+        value: 0));
     for (var i = 60; i < 300; i += 15) {
       _items.add(DropdownMenuItem(
           child: Text(
