@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gussuri/finish.dart';
 import 'package:gussuri/awakening.dart';
-
+import 'package:gussuri/memo.dart';
 import 'home.dart';
 
 class AwakingTime extends StatelessWidget {
@@ -60,7 +59,7 @@ class AwakingTime extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Finish()));
+                              builder: (context) => const Memo()));
                     },
                   )),
               Container(
@@ -73,7 +72,12 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
               Container(
                   padding: EdgeInsets.only(top: 30.h),
@@ -85,7 +89,12 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
               Container(
                   padding: EdgeInsets.only(top: 30.h),
@@ -97,7 +106,12 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
             ],
           )),
@@ -137,7 +151,7 @@ class AwakingTime extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Finish()));
+                              builder: (context) => const Memo()));
                     },
                   ),
                 )

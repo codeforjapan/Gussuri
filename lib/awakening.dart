@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening_time.dart';
-import 'package:gussuri/finish.dart';
+import 'package:gussuri/memo.dart';
 import 'package:gussuri/sleepy.dart';
 
 import 'home.dart';
@@ -59,7 +59,7 @@ class Awaking extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Finish()));
+                          MaterialPageRoute(builder: (context) => const Memo()));
                     },
                   )),
               Container(
@@ -151,7 +151,7 @@ class Awaking extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Finish()));
+                          MaterialPageRoute(builder: (context) => const Memo()));
                     },
                   ),
                 )
