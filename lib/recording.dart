@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awake.dart';
+
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 
 class Recording extends StatelessWidget {
   const Recording({Key? key}) : super(key: key);
@@ -64,7 +68,14 @@ class Recording extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(await DeviceData
+                          .getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'get_out_of_bed': DateKey.datetimeFormat(),
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(

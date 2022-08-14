@@ -113,12 +113,12 @@ class _HomeState extends State<Home> {
                     ),
                     onPressed: _checkLastNightSleep == true
                         ? () async {
-                            await FirebaseFirestore.instance
+                            FirebaseFirestore.instance
                                 .collection(await DeviceData
                                     .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                              'bed_time': DateKey.datetimeFormat(),
+                              'bed_in_time': DateKey.datetimeFormat(),
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
