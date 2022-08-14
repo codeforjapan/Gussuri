@@ -49,7 +49,7 @@ class Finish extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePageDart()));
+                              builder: (context) => const Home()));
                     },
                   )),
             ],

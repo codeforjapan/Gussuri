@@ -24,10 +24,8 @@ class Memo extends StatelessWidget {
             child: const Text('ホーム'),
             style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePageDart()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()));
             },
           )
         ],
@@ -58,12 +56,13 @@ class Memo extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'プレースホルダー',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white, width: 2.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 2.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-
                   ),
                   maxLines: 15,
                   minLines: 15,
@@ -87,8 +86,7 @@ class Memo extends StatelessWidget {
                           primary: Colors.white,
                           onPrimary: Colors.black,
                         ),
-                        onPressed: () => Navigator.of(context).pop()
-                    )),
+                        onPressed: () => Navigator.of(context).pop())),
                 Padding(
                   padding: EdgeInsets.only(right: 28.0.w),
                   child: ElevatedButton(

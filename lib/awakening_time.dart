@@ -26,10 +26,8 @@ class AwakingTime extends StatelessWidget {
             child: const Text('ホーム'),
             style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePageDart()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()));
             },
           )
         ],

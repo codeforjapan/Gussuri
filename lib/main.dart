@@ -14,16 +14,16 @@ void main() async {
 
 class Gussuri extends StatelessWidget {
   const Gussuri({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      builder: (context , child) {
-        return const MaterialApp(
-          home: HomePage(),
-        );
-      }
-    );
+        designSize: const Size(360, 690),
+        builder: (context, child) {
+          return const MaterialApp(
+            home: HomePage(),
+          );
+        });
   }
 }
 
@@ -37,8 +37,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:HomePageDart(),
+    return const Scaffold(
+      body: Home(),
     );
   }
 }
