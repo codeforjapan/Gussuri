@@ -3,6 +3,8 @@ PODS:
     - Firebase/Firestore (= 9.3.0)
     - firebase_core
     - Flutter
+  - device_info_plus (0.0.1):
+    - Flutter
   - Firebase/CoreOnly (9.3.0):
     - FirebaseCore (= 9.3.0)
   - Firebase/Firestore (9.3.0):
@@ -50,6 +52,7 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `9.3.0`)
   - Flutter (from `Flutter`)
@@ -68,6 +71,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   FirebaseFirestore:
@@ -83,6 +88,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   cloud_firestore: 683679d43f60e55f9318a5cb03b13637e060a99c
+  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   Firebase: ef75abb1cdbc746d5a38f4e26c422c807b189b8c
   firebase_core: e66a443ec996cb5e364dc70b4cfc1809c32cbb2e
   FirebaseCore: c088995ece701a021a48a1348ea0174877de2a6a
