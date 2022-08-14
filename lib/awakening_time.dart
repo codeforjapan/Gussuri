@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening.dart';
 import 'package:gussuri/memo.dart';
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class AwakingTime extends StatelessWidget {
@@ -53,7 +56,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening_total_time': 0,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -70,7 +80,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening_total_time': 30,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -87,7 +104,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening_total_time': 60,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -104,7 +128,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening_total_time': 120,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -145,7 +176,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening_total_time': null,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(

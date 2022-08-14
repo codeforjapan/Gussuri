@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awake.dart';
 import 'package:gussuri/awakening.dart';
 import 'package:gussuri/component/DropBoxWidget.dart';
 
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Sleepy extends StatelessWidget {
@@ -13,6 +16,8 @@ class Sleepy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dropBoxWidgetKey = GlobalObjectKey<DropBoxWidgetState>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFBDBDBD),
       appBar: AppBar(
@@ -62,7 +67,14 @@ class Sleepy extends StatelessWidget {
                           primary: Colors.white,
                           onPrimary: Colors.black,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          FirebaseFirestore.instance
+                              .collection(await DeviceData
+                              .getDeviceUniqueId()) // コレクションID
+                              .doc(DateKey.dateFormat())
+                              .set({
+                          'time_to_sleep': '0~15',
+                          }, SetOptions(merge: true));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -89,7 +101,14 @@ class Sleepy extends StatelessWidget {
                             primary: Colors.white,
                             onPrimary: Colors.black,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            FirebaseFirestore.instance
+                                .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                                .doc(DateKey.dateFormat())
+                                .set({
+                            'time_to_sleep': '16~30',
+                            }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -115,7 +134,14 @@ class Sleepy extends StatelessWidget {
                             primary: Colors.white,
                             onPrimary: Colors.black,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            FirebaseFirestore.instance
+                                .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                                .doc(DateKey.dateFormat())
+                                .set({
+                            'time_to_sleep': '31~45',
+                            }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -135,7 +161,7 @@ class Sleepy extends StatelessWidget {
                           Padding(
                               padding: EdgeInsets.only(bottom: 10.h),
                               child: const Text('46分以上')),
-                          const DropBoxWidget()
+                          DropBoxWidget(key: dropBoxWidgetKey)
                         ],
                       ))),
             ],
@@ -174,7 +200,17 @@ class Sleepy extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(
+                            await DeviceData.getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                        'time_to_sleep':
+                        dropBoxWidgetKey.currentState?.selectItem == ''
+                        ? null
+                            : dropBoxWidgetKey.currentState?.selectItem,
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(

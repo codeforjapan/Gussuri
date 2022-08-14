@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening_time.dart';
 import 'package:gussuri/memo.dart';
 import 'package:gussuri/sleepy.dart';
 
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Awaking extends StatelessWidget {
@@ -55,7 +58,14 @@ class Awaking extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening': null,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -72,7 +82,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'Mid-Awakening': 1,
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -89,7 +106,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'Mid-Awakening': 2,
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -106,7 +130,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'Mid-Awakening': '3~',
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -149,7 +180,14 @@ class Awaking extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'Mid-Awakening': null,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
