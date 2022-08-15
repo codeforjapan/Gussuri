@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/home.dart';
 
 class Finish extends StatelessWidget {
@@ -14,23 +15,23 @@ class Finish extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 30),
+              Padding(
+                padding: EdgeInsets.only(bottom: 30.h),
                 child: Text(
                   '記録しました',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 24.sp,
                   ),
                 ),
               ),
               Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.only(bottom: 30),
+                  padding: EdgeInsets.only(bottom: 30.h),
                   child: ElevatedButton(
                       child: const Text('睡眠記録シート'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 80),
+                        minimumSize: Size(300.w, 80.h),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
@@ -40,7 +41,7 @@ class Finish extends StatelessWidget {
                   child: ElevatedButton(
                     child: const Text('ホームへ戻る'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
+                      minimumSize: Size(300.w, 80.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),

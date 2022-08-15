@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gussuri/finish.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening.dart';
-
+import 'package:gussuri/memo.dart';
 import 'home.dart';
 
 class AwakingTime extends StatelessWidget {
@@ -16,7 +16,7 @@ class AwakingTime extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         title: Padding(
-            padding: const EdgeInsets.only(left: 28.0),
+            padding: EdgeInsets.only(left: 18.0.w),
             child: Text(
               title,
               style: const TextStyle(color: Colors.black),
@@ -40,15 +40,18 @@ class AwakingTime extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(text),
+              Padding(
+                padding: EdgeInsets.only(top: 50.h),
+                child: Text(text),
+              ),
               Container(
+                  padding: EdgeInsets.only(top: 30.h),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     child: const Text('比較的すぐ'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
+                      minimumSize: Size(300.w, 80.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
@@ -56,57 +59,75 @@ class AwakingTime extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Finish()));
+                              builder: (context) => const Memo()));
                     },
                   )),
               Container(
+                  padding: EdgeInsets.only(top: 30.h),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     child: const Text('30分くらい'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
+                      minimumSize: Size(300.w, 80.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
               Container(
+                  padding: EdgeInsets.only(top: 30.h),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     child: const Text('1時間くらい'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
+                      minimumSize: Size(300.w, 80.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
               Container(
+                  padding: EdgeInsets.only(top: 30.h),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     child: const Text('2時間以上'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
+                      minimumSize: Size(300.w, 80.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
+                    },
                   )),
             ],
           )),
           Container(
             width: double.infinity,
-            height: 100,
+            height: 80.h,
             decoration: const BoxDecoration(color: Color(0xFF424242)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(left: 28.0),
+                    padding: EdgeInsets.only(left: 28.0.w),
                     child: ElevatedButton(
                         child: const Text('前へ'),
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(70, 60),
+                          minimumSize: Size(70.w, 50.h),
                           primary: Colors.white,
                           onPrimary: Colors.black,
                         ),
@@ -118,11 +139,11 @@ class AwakingTime extends StatelessWidget {
                                       title: '中途覚醒', text: '途中で目が覚めた回数')));
                         })),
                 Padding(
-                  padding: const EdgeInsets.only(right: 28.0),
+                  padding: EdgeInsets.only(right: 28.0.w),
                   child: ElevatedButton(
                     child: const Text('次へ'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(70, 60),
+                      minimumSize: Size(70.w, 50.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
@@ -130,7 +151,7 @@ class AwakingTime extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Finish()));
+                              builder: (context) => const Memo()));
                     },
                   ),
                 )

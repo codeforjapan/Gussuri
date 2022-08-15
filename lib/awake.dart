@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gussuri/component/DropBoxWidget.dart';
 import './sleepy.dart';
 import 'home.dart';
 
@@ -14,7 +16,7 @@ class Awake extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         title: Padding(
-            padding: const EdgeInsets.only(left: 28.0),
+            padding: EdgeInsets.only(left: 18.0.w),
             child: Text(
               title,
               style: const TextStyle(color: Colors.black),
@@ -38,107 +40,133 @@ class Awake extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(text),
+              Padding(
+                padding: EdgeInsets.only(top: 50.h),
+                child: Text(text),
+              ),
               Container(
+                  padding: EdgeInsets.only(top: 30.h),
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                    child: const Text('5分くらい'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Sleepy(
-                                  title: '寝付くまでにかかった時間',
-                                  text: '寝付くまでにかかった時間')));
-                    },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.w),
+                        child: const Text('00~'),
+                      ),
+                      ElevatedButton(
+                        child: const Text('15分'),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(260.w, 60.h),
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Sleepy(
+                                      title: '寝付くまでにかかった時間',
+                                      text: '寝付くまでにかかった時間')));
+                        },
+                      )
+                    ],
                   )),
               Container(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                    child: const Text('10分くらい'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Sleepy(
-                                  title: '寝付くまでにかかった時間',
-                                  text: '寝付くまでにかかった時間')));
-                    },
-                  )),
+                  padding: EdgeInsets.only(top: 50.h),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.w),
+                          child: const Text('16~'),
+                        ),
+                        ElevatedButton(
+                          child: const Text('30分'),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(260.w, 60.h),
+                            primary: Colors.white,
+                            onPrimary: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Sleepy(
+                                        title: '寝付くまでにかかった時間',
+                                        text: '寝付くまでにかかった時間')));
+                          },
+                        )
+                      ])),
               Container(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                    child: const Text('20分くらい'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Sleepy(
-                                  title: '寝付くまでにかかった時間',
-                                  text: '寝付くまでにかかった時間')));
-                    },
-                  )),
+                  padding: EdgeInsets.only(top: 50.h),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.w),
+                          child: const Text('31~'),
+                        ),
+                        ElevatedButton(
+                          child: const Text('45分'),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(260.w, 60.h),
+                            primary: Colors.white,
+                            onPrimary: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Sleepy(
+                                        title: '寝付くまでにかかった時間',
+                                        text: '寝付くまでにかかった時間')));
+                          },
+                        )
+                      ])),
               Container(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                    child: const Text('30分以上'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 80),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Sleepy(
-                                  title: '寝付くまでにかかった時間',
-                                  text: '寝付くまでにかかった時間')));
-                    },
-                  )),
+                  padding: EdgeInsets.only(top: 30.h),
+                  child: SizedBox(
+                      width: 290.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(bottom: 10.h),
+                              child: const Text('46分以上')),
+                          const DropBoxWidget()
+                        ],
+                      ))),
             ],
           )),
           Container(
             width: double.infinity,
-            height: 100,
+            height: 80.h,
             decoration: const BoxDecoration(color: Color(0xFF424242)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(left: 28.0),
+                    padding: EdgeInsets.only(left: 28.0.w),
                     child: ElevatedButton(
                       child: const Text('前へ'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(70, 60),
+                        minimumSize: Size(70.w, 50.h),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
                       onPressed: () {},
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(right: 28.0),
+                  padding: EdgeInsets.only(right: 28.0.w),
                   child: ElevatedButton(
                     child: const Text('次へ'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(70, 60),
+                      minimumSize: Size(70.w, 50.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
@@ -160,3 +188,4 @@ class Awake extends StatelessWidget {
     );
   }
 }
+
