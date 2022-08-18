@@ -118,7 +118,7 @@ class _HomeState extends State<Home> {
                                     .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                              'bed_in_time': DateKey.datetimeFormat(),
+                              'bed_time': DateKey.datetimeFormat(),
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,

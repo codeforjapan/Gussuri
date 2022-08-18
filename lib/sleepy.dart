@@ -73,7 +73,7 @@ class Sleepy extends StatelessWidget {
                               .getDeviceUniqueId()) // コレクションID
                               .doc(DateKey.dateFormat())
                               .set({
-                          'time_to_sleep': '0~15',
+                          'SOL': '0~15',
                           }, SetOptions(merge: true));
                           Navigator.push(
                               context,
@@ -107,7 +107,7 @@ class Sleepy extends StatelessWidget {
                                 .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                            'time_to_sleep': '16~30',
+                            'SOL': '16~30',
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
@@ -140,7 +140,7 @@ class Sleepy extends StatelessWidget {
                                 .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                            'time_to_sleep': '31~45',
+                            'SOL': '31~45',
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
@@ -206,7 +206,7 @@ class Sleepy extends StatelessWidget {
                             await DeviceData.getDeviceUniqueId()) // コレクションID
                             .doc(DateKey.dateFormat())
                             .set({
-                        'time_to_sleep':
+                        'SOL':
                         dropBoxWidgetKey.currentState?.selectItem == ''
                         ? null
                             : dropBoxWidgetKey.currentState?.selectItem,

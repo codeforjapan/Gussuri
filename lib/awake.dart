@@ -71,7 +71,7 @@ class Awake extends StatelessWidget {
                                   .getDeviceUniqueId()) // コレクションID
                               .doc(DateKey.dateFormat())
                               .set({
-                            'time_to_get_out_of_bed': '0~15',
+                            'TASAFA': '0~15',
                           }, SetOptions(merge: true));
                           Navigator.push(
                               context,
@@ -106,7 +106,7 @@ class Awake extends StatelessWidget {
                                     .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                              'time_to_get_out_of_bed': '16~30',
+                              'TASAFA': '16~30',
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
@@ -140,7 +140,7 @@ class Awake extends StatelessWidget {
                                     .getDeviceUniqueId()) // コレクションID
                                 .doc(DateKey.dateFormat())
                                 .set({
-                              'time_to_get_out_of_bed': '31~45',
+                              'TASAFA': '31~45',
                             }, SetOptions(merge: true));
                             Navigator.push(
                                 context,
@@ -200,7 +200,7 @@ class Awake extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'time_to_get_out_of_bed':
+                        'TASAFA':
                             dropBoxWidgetKey.currentState?.selectItem == ''
                                 ? null
                                 : dropBoxWidgetKey.currentState?.selectItem,

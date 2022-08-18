@@ -62,7 +62,7 @@ class AwakingTime extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening_total_time': 0,
+                        'WASO': 0,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
@@ -86,7 +86,7 @@ class AwakingTime extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening_total_time': 30,
+                        'WASO': 30,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
@@ -110,7 +110,7 @@ class AwakingTime extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening_total_time': 60,
+                        'WASO': 60,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
@@ -134,7 +134,7 @@ class AwakingTime extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening_total_time': 120,
+                        'WASO': 120,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
@@ -182,7 +182,7 @@ class AwakingTime extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening_total_time': null,
+                        'WASO': null,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,

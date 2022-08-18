@@ -108,7 +108,7 @@ class Memo extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'memo': valueController.text,
+                        'comments': valueController.text,
                       }, SetOptions(merge: true));
 
                       Navigator.push(

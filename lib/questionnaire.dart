@@ -71,7 +71,7 @@ class Questionnaire extends StatelessWidget {
                       .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
                       .doc(DateKey.dateFormat())
                       .set({
-                    'degree_of_hindrance': sliderKey.currentState?.currentSliderValue
+                    'dysfunction': sliderKey.currentState?.currentSliderValue
                   });
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                 },

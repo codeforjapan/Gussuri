@@ -74,7 +74,7 @@ class Recording extends StatelessWidget {
                           .getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'get_out_of_bed': DateKey.datetimeFormat(),
+                        'get_up_time': DateKey.datetimeFormat(),
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,

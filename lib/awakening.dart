@@ -64,7 +64,7 @@ class Awaking extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening': null,
+                        'NOA': null,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
@@ -88,7 +88,7 @@ class Awaking extends StatelessWidget {
                                 .getDeviceUniqueId()) // コレクションID
                             .doc(DateKey.dateFormat())
                             .set({
-                          'Mid-Awakening': 1,
+                          'NOA': 1,
                         }, SetOptions(merge: true));
                         Navigator.push(
                             context,
@@ -112,7 +112,7 @@ class Awaking extends StatelessWidget {
                                 .getDeviceUniqueId()) // コレクションID
                             .doc(DateKey.dateFormat())
                             .set({
-                          'Mid-Awakening': 2,
+                          'NOA': 2,
                         }, SetOptions(merge: true));
                         Navigator.push(
                             context,
@@ -136,7 +136,7 @@ class Awaking extends StatelessWidget {
                                 .getDeviceUniqueId()) // コレクションID
                             .doc(DateKey.dateFormat())
                             .set({
-                          'Mid-Awakening': '3~',
+                          'NOA': '3~',
                         }, SetOptions(merge: true));
                         Navigator.push(
                             context,
@@ -186,7 +186,7 @@ class Awaking extends StatelessWidget {
                               await DeviceData.getDeviceUniqueId()) // コレクションID
                           .doc(DateKey.dateFormat())
                           .set({
-                        'Mid-Awakening': null,
+                        'NOA': null,
                       }, SetOptions(merge: true));
                       Navigator.push(
                           context,
