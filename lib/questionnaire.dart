@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gussuri/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 
 class Questionnaire extends StatelessWidget {
   const Questionnaire({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final sliderKey = GlobalObjectKey<_SliderWidgetState>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFBDBDBD),
       appBar: AppBar(
@@ -38,11 +43,11 @@ class Questionnaire extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(15.w, 100.h, 15.w, 10.h),
                 width: 350.w,
                 child: Column(
-                  children: const [
-                    Text('睡眠のお困りごとによる、今日一日の活動への支障度についてお尋ねいたします。'),
+                  children: [
+                    const Text('睡眠のお困りごとによる、今日一日の活動への支障度についてお尋ねいたします。'),
                     Padding(
-                      padding: EdgeInsets.only(top: 50),
-                      child: SliderWidget(),
+                      padding: const EdgeInsets.only(top: 50),
+                      child: SliderWidget(key: sliderKey),
                     )
                   ],
                 ),
@@ -61,9 +66,13 @@ class Questionnaire extends StatelessWidget {
                   primary: Colors.white,
                   onPrimary: Colors.black,
                 ),
-                onPressed: () {
-                  // todo ボタンのステータスを変更する必要がある
-                  // firebaseにデータ同期
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
+                      .doc(DateKey.dateFormat())
+                      .set({
+                    'dysfunction': sliderKey.currentState?.currentSliderValue
+                  });
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                 },
               ),
@@ -83,7 +92,7 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-  double _currentSliderValue = 0;
+  double currentSliderValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -113,13 +122,13 @@ class _SliderWidgetState extends State<SliderWidget> {
           ),
         ),
         Slider(
-            value: _currentSliderValue,
+            value: currentSliderValue,
             max: 10,
             divisions: 10,
-            label: _currentSliderValue.round().toString(),
+            label: currentSliderValue.round().toString(),
             onChanged: (double value) {
               setState(() {
-                _currentSliderValue = value;
+                currentSliderValue = value;
               });
             })
       ],

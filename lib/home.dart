@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gussuri/helper/DateKey.dart';
+import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
 import './questionnaire.dart';
 
-class HomePageDart extends StatelessWidget {
-  const HomePageDart({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool? _checkLastNightSleep;
+
+  Future<void> checkLastNightSleep() async {
+    final orderSnap = await FirebaseFirestore.instance
+        .collection(await DeviceData.getDeviceUniqueId())
+        .doc(DateKey.dateFormat())
+        .get();
+    try {
+      orderSnap.get('degree_of_hindrance');
+      if (mounted) {
+        setState(() {
+          _checkLastNightSleep = true;
+        });
+      }
+    } on StateError {
+      if (mounted) {
+        setState(() {
+          _checkLastNightSleep = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLastNightSleep();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +61,8 @@ class HomePageDart extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Expanded(child: Column(
+          Expanded(
+              child: Column(
             children: [
               Container(
                   padding: EdgeInsets.all(30.h),
@@ -35,10 +73,15 @@ class HomePageDart extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
-                      // todo Firebaseにデータ送信
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Questionnaire()));
-                    },
+                    onPressed: _checkLastNightSleep == false
+                        ? () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Questionnaire()));
+                          }
+                        : null,
                   )),
               Container(
                 decoration: const BoxDecoration(color: Color(0xFFBDBDBD)),
@@ -68,10 +111,21 @@ class HomePageDart extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
-                      // todo Firebaseにデータ送信
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Recording()));
-                    },
+                    onPressed: _checkLastNightSleep == true
+                        ? () async {
+                            FirebaseFirestore.instance
+                                .collection(await DeviceData
+                                    .getDeviceUniqueId()) // コレクションID
+                                .doc(DateKey.dateFormat())
+                                .set({
+                              'bed_time': DateKey.datetimeFormat(),
+                            }, SetOptions(merge: true));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Recording()));
+                          }
+                        : null,
                   )),
             ],
           )),

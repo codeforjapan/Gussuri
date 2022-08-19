@@ -5,18 +5,18 @@ class DropBoxWidget extends StatefulWidget {
   const DropBoxWidget({Key? key}) : super(key: key);
 
   @override
-  _DropBoxWidgetState createState() => _DropBoxWidgetState();
+  DropBoxWidgetState createState() => DropBoxWidgetState();
 }
 
-class _DropBoxWidgetState extends State<DropBoxWidget> {
-  final List<DropdownMenuItem<int>> _items = [];
-  int _selectItem = 0;
+class DropBoxWidgetState extends State<DropBoxWidget> {
+  final List<DropdownMenuItem<String>> _items = [];
+  String? selectItem;
 
   @override
   void initState() {
     super.initState();
     setItems();
-    _selectItem = _items[0].value!;
+    selectItem = _items[0].value!;
   }
 
   void setItems() {
@@ -25,14 +25,14 @@ class _DropBoxWidgetState extends State<DropBoxWidget> {
           "--分",
           style: TextStyle(fontSize: 16.0),
         ),
-        value: 0));
+        value: ""));
     for (var i = 60; i < 300; i += 15) {
       _items.add(DropdownMenuItem(
           child: Text(
             "~$i分",
             style: const TextStyle(fontSize: 16.0),
           ),
-          value: i));
+          value: "${i - 15}~$i"));
     }
   }
 
@@ -49,10 +49,10 @@ class _DropBoxWidgetState extends State<DropBoxWidget> {
               itemHeight: 50.0.h,
               isExpanded: true,
               items: _items,
-              value: _selectItem,
+              value: selectItem,
               onChanged: (value) => {
                 setState(() {
-                  _selectItem = value as int;
+                  selectItem = value as String;
                 }),
               },
             )));

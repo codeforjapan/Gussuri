@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening_time.dart';
 import 'package:gussuri/memo.dart';
 import 'package:gussuri/sleepy.dart';
 
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Awaking extends StatelessWidget {
@@ -28,10 +31,8 @@ class Awaking extends StatelessWidget {
             child: const Text('ホーム'),
             style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePageDart()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()));
             },
           )
         ],
@@ -57,9 +58,18 @@ class Awaking extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Memo()));
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'NOA': null,
+                      }, SetOptions(merge: true));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
                     },
                   )),
               Container(
@@ -72,7 +82,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'NOA': 1,
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -89,7 +106,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'NOA': 2,
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -106,7 +130,14 @@ class Awaking extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        FirebaseFirestore.instance
+                            .collection(await DeviceData
+                                .getDeviceUniqueId()) // コレクションID
+                            .doc(DateKey.dateFormat())
+                            .set({
+                          'NOA': '3~',
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -149,9 +180,18 @@ class Awaking extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Memo()));
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'NOA': null,
+                      }, SetOptions(merge: true));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Memo()));
                     },
                   ),
                 )

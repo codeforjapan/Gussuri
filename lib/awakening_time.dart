@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/awakening.dart';
 import 'package:gussuri/memo.dart';
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class AwakingTime extends StatelessWidget {
@@ -26,10 +29,8 @@ class AwakingTime extends StatelessWidget {
             child: const Text('ホーム'),
             style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePageDart()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()));
             },
           )
         ],
@@ -55,7 +56,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'WASO': 0,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -72,7 +80,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'WASO': 30,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -89,7 +104,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'WASO': 60,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -106,7 +128,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'WASO': 120,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -147,7 +176,14 @@ class AwakingTime extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'WASO': null,
+                      }, SetOptions(merge: true));
                       Navigator.push(
                           context,
                           MaterialPageRoute(

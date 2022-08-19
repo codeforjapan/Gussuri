@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/finish.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'helper/DateKey.dart';
+import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Memo extends StatelessWidget {
@@ -9,6 +12,8 @@ class Memo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final valueController = TextEditingController();
+
     return Scaffold(
       backgroundColor: const Color(0xFFBDBDBD),
       appBar: AppBar(
@@ -24,10 +29,8 @@ class Memo extends StatelessWidget {
             child: const Text('ホーム'),
             style: ElevatedButton.styleFrom(primary: Colors.black),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const HomePageDart()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home()));
             },
           )
         ],
@@ -56,14 +59,16 @@ class Memo extends StatelessWidget {
                 ),
                 width: 350.w,
                 child: TextField(
+                  controller: valueController,
                   decoration: InputDecoration(
                     hintText: 'プレースホルダー',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white, width: 2.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 2.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
-
                   ),
                   maxLines: 15,
                   minLines: 15,
@@ -87,8 +92,7 @@ class Memo extends StatelessWidget {
                           primary: Colors.white,
                           onPrimary: Colors.black,
                         ),
-                        onPressed: () => Navigator.of(context).pop()
-                    )),
+                        onPressed: () => Navigator.of(context).pop())),
                 Padding(
                   padding: EdgeInsets.only(right: 28.0.w),
                   child: ElevatedButton(
@@ -98,7 +102,15 @@ class Memo extends StatelessWidget {
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                              await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'comments': valueController.text,
+                      }, SetOptions(merge: true));
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -111,58 +123,6 @@ class Memo extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class SliderWidget extends StatefulWidget {
-  const SliderWidget({Key? key}) : super(key: key);
-
-  @override
-  State<SliderWidget> createState() => _SliderWidgetState();
-}
-
-class _SliderWidgetState extends State<SliderWidget> {
-  double _currentSliderValue = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.h),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(11, (index) => Text('$index')),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  16,
-                  (index) => SizedBox(
-                    height: 8.h,
-                    child: VerticalDivider(
-                      width: 8.w,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        Slider(
-            value: _currentSliderValue,
-            max: 10,
-            divisions: 10,
-            label: _currentSliderValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                _currentSliderValue = value;
-              });
-            })
-      ],
     );
   }
 }
