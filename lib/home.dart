@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
+import 'package:gussuri/sleepyEdit.dart';
 import './questionnaire.dart';
 
 class Home extends StatefulWidget {
@@ -141,7 +142,9 @@ class _HomeState extends State<Home> {
                   primary: Colors.white,
                   onPrimary: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SleepyEdit()));
+                },
               ),
             ),
           ),
