@@ -71,8 +71,8 @@ class _HomeState extends State<Home> {
                     child: const Text('昨日の睡眠'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(315.w, 100.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: _checkLastNightSleep == false
                         ? () {
@@ -109,8 +109,8 @@ class _HomeState extends State<Home> {
                     child: const Text('布団に入ります'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(300.w, 140.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: _checkLastNightSleep == true
                         ? () async {
@@ -139,8 +139,8 @@ class _HomeState extends State<Home> {
                 child: const Text('睡眠記録シート'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(300.w, 60.h),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const SleepyEdit()));
