@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
         .doc(DateKey.dateFormat())
         .get();
     try {
-      orderSnap.get('degree_of_hindrance');
+      orderSnap.get('dysfunction');
       if (mounted) {
         setState(() {
           _checkLastNightSleep = true;
