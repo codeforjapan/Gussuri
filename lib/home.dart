@@ -5,6 +5,7 @@ import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
 import './questionnaire.dart';
+import 'dart:math' as math;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool? _checkLastNightSleep;
+  String _tips= '';
 
   Future<void> checkLastNightSleep() async {
     final orderSnap = await FirebaseFirestore.instance
@@ -37,10 +39,19 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<void> getTips() async {
+    var rand = math.Random();
+    final tips = await FirebaseFirestore.instance
+        .collection('tips')
+        .doc(rand.nextInt(2).toString())
+        .get();
+    _tips = tips.get('content');
+  }
   @override
   void initState() {
     super.initState();
     checkLastNightSleep();
+    getTips();
   }
 
   @override
@@ -93,12 +104,11 @@ class _HomeState extends State<Home> {
                     Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(bottom: 5.h),
-                        child: const Text('入眠アドバイス',
+                        child: const Text('Tips',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ))),
-                    const Text(
-                        '睡眠に関する小ネタが10個くらいがランダムに表示される。ああああああああああああああああああああああああああああああああああああああ')
+                    Text(_tips)
                   ],
                 ),
               ),
