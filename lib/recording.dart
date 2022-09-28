@@ -7,7 +7,9 @@ import 'helper/DateKey.dart';
 import 'helper/DeviceData.dart';
 
 class Recording extends StatelessWidget {
-  const Recording({Key? key}) : super(key: key);
+  const Recording({required this.tips, Key? key}) : super(key: key);
+
+  final String tips;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,24 @@ class Recording extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             )),
         automaticallyImplyLeading: false,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Center(
+            child: ElevatedButton(
+              child: const Text('睡眠記録シート'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(300.w, 50.h),
+                primary: Colors.white,
+                onPrimary: Colors.black,
+              ),
+              onPressed: null,
+            ),
+          ),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -50,12 +70,11 @@ class Recording extends StatelessWidget {
                     Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(bottom: 5.h),
-                        child: const Text('入眠アドバイス',
+                        child: const Text('Tips',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ))),
-                    const Text(
-                        '睡眠に関する小ネタが10個くらいがランダムに表示される。ああああああああああああああああああああああああああああああああああああああ')
+                    Text(tips)
                   ],
                 ),
               ),
@@ -86,22 +105,6 @@ class Recording extends StatelessWidget {
                   )),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 100.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300.w, 60.h),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: null,
-              ),
-            ),
-          ),
         ],
       ),
     );

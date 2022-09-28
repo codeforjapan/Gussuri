@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gussuri/calender.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
@@ -69,6 +70,27 @@ class _HomeState extends State<Home> {
             )),
         automaticallyImplyLeading: false,
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Center(
+            child: ElevatedButton(
+              child: const Text('睡眠記録シート'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(300.w, 50.h),
+                primary: Colors.white,
+                onPrimary: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Calender()));
+              },
+            ),
+          ),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -133,28 +155,12 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Recording()));
+                                    builder: (context) => Recording(tips: _tips,)));
                           }
                         : null,
                   )),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 100.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300.w, 60.h),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ),
         ],
       ),
     );

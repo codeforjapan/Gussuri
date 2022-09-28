@@ -10,7 +10,7 @@ import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Awaking extends StatelessWidget {
-  const Awaking({required this.title, required this.text});
+  const Awaking({required this.title, required this.text, Key? key}) : super(key: key);
 
   final String title, text;
 
@@ -38,6 +38,60 @@ class Awaking extends StatelessWidget {
         ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 28.0.w),
+                  child: ElevatedButton(
+                    child: const Text('前へ'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(70.w, 45.h),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Sleepy(
+                                  title: '寝付くまでにかかった時間',
+                                  text: '寝付くまでにかかった時間')));
+                    },
+                  )),
+              Padding(
+                padding: EdgeInsets.only(right: 28.0.w),
+                child: ElevatedButton(
+                  child: const Text('次へ'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(70.w, 45.h),
+                    primary: Colors.white,
+                    onPrimary: Colors.black,
+                  ),
+                  onPressed: () async {
+                    FirebaseFirestore.instance
+                        .collection(
+                        await DeviceData.getDeviceUniqueId()) // コレクションID
+                        .doc(DateKey.dateFormat())
+                        .set({
+                      'NOA': null,
+                    }, SetOptions(merge: true));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Memo()));
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -146,58 +200,6 @@ class Awaking extends StatelessWidget {
                       })),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 80.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 28.0.w),
-                    child: ElevatedButton(
-                      child: const Text('前へ'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(70.w, 50.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Sleepy(
-                                    title: '寝付くまでにかかった時間',
-                                    text: '寝付くまでにかかった時間')));
-                      },
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(right: 28.0.w),
-                  child: ElevatedButton(
-                    child: const Text('次へ'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(70.w, 50.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () async {
-                      FirebaseFirestore.instance
-                          .collection(
-                              await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
-                          .set({
-                        'NOA': null,
-                      }, SetOptions(merge: true));
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Memo()));
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
         ],
       ),
     );
