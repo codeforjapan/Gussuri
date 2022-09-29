@@ -108,7 +108,7 @@ class Awaking extends StatelessWidget {
                   child: ElevatedButton(
                     child: const Text('0回'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300.w, 80.h),
+                      minimumSize: Size(300.w, 60.h),
                       primary: Colors.white,
                       onPrimary: Colors.black,
                     ),
@@ -132,7 +132,7 @@ class Awaking extends StatelessWidget {
                   child: ElevatedButton(
                       child: const Text('1回'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(300.w, 80.h),
+                        minimumSize: Size(300.w, 60.h),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
@@ -156,7 +156,7 @@ class Awaking extends StatelessWidget {
                   child: ElevatedButton(
                       child: const Text('2回'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(300.w, 80.h),
+                        minimumSize: Size(300.w, 60.h),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
@@ -180,7 +180,7 @@ class Awaking extends StatelessWidget {
                   child: ElevatedButton(
                       child: const Text('3回以上'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(300.w, 80.h),
+                        minimumSize: Size(300.w, 60.h),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
