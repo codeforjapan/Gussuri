@@ -68,7 +68,9 @@ class Memo extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection(await DeviceData
                         .getDeviceUniqueId()) // コレクションID
-                        .doc(DateKey.dateFormat())
+                        .doc(DateKey.year())
+                        .collection(DateKey.month())
+                        .doc(DateKey.day())
                         .set({
                       'comments': valueController.text,
                     }, SetOptions(merge: true));

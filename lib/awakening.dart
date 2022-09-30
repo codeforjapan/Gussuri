@@ -78,7 +78,9 @@ class Awaking extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection(
                         await DeviceData.getDeviceUniqueId()) // コレクションID
-                        .doc(DateKey.dateFormat())
+                        .doc(DateKey.year())
+                        .collection(DateKey.month())
+                        .doc(DateKey.day())
                         .set({
                       'NOA': null,
                     }, SetOptions(merge: true));
@@ -116,7 +118,9 @@ class Awaking extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                               await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'NOA': null,
                       }, SetOptions(merge: true));
@@ -140,7 +144,9 @@ class Awaking extends StatelessWidget {
                         FirebaseFirestore.instance
                             .collection(await DeviceData
                                 .getDeviceUniqueId()) // コレクションID
-                            .doc(DateKey.dateFormat())
+                            .doc(DateKey.year())
+                            .collection(DateKey.month())
+                            .doc(DateKey.day())
                             .set({
                           'NOA': 1,
                         }, SetOptions(merge: true));
@@ -164,7 +170,9 @@ class Awaking extends StatelessWidget {
                         FirebaseFirestore.instance
                             .collection(await DeviceData
                                 .getDeviceUniqueId()) // コレクションID
-                            .doc(DateKey.dateFormat())
+                            .doc(DateKey.year())
+                            .collection(DateKey.month())
+                            .doc(DateKey.day())
                             .set({
                           'NOA': 2,
                         }, SetOptions(merge: true));
@@ -188,7 +196,9 @@ class Awaking extends StatelessWidget {
                         FirebaseFirestore.instance
                             .collection(await DeviceData
                                 .getDeviceUniqueId()) // コレクションID
-                            .doc(DateKey.dateFormat())
+                            .doc(DateKey.year())
+                            .collection(DateKey.month())
+                            .doc(DateKey.day())
                             .set({
                           'NOA': '3~',
                         }, SetOptions(merge: true));

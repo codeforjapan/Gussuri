@@ -22,7 +22,9 @@ class _HomeState extends State<Home> {
   Future<void> checkLastNightSleep() async {
     final orderSnap = await FirebaseFirestore.instance
         .collection(await DeviceData.getDeviceUniqueId())
-        .doc(DateKey.dateFormat())
+        .doc(DateKey.year())
+        .collection(DateKey.month())
+        .doc(DateKey.day())
         .get();
     try {
       orderSnap.get('dysfunction');
@@ -148,7 +150,9 @@ class _HomeState extends State<Home> {
                             FirebaseFirestore.instance
                                 .collection(await DeviceData
                                     .getDeviceUniqueId()) // コレクションID
-                                .doc(DateKey.dateFormat())
+                                .doc(DateKey.year())
+                                .collection(DateKey.month())
+                                .doc(DateKey.day())
                                 .set({
                               'bed_time': DateKey.datetimeFormat(),
                             }, SetOptions(merge: true));

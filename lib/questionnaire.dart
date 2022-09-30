@@ -41,7 +41,9 @@ class Questionnaire extends StatelessWidget {
               onPressed: () async {
                 await FirebaseFirestore.instance
                     .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
-                    .doc(DateKey.dateFormat())
+                    .doc(DateKey.year())
+                    .collection(DateKey.month())
+                    .doc(DateKey.day())
                     .set({
                   'dysfunction': sliderKey.currentState?.currentSliderValue
                 });
