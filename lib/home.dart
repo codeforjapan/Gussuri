@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gussuri/calender.dart';
+import 'package:gussuri/calendar.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Calender()));
+                    MaterialPageRoute(builder: (context) => const Calendar()));
               },
             ),
           ),
