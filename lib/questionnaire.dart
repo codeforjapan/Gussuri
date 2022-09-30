@@ -25,6 +25,32 @@ class Questionnaire extends StatelessWidget {
             )),
         automaticallyImplyLeading: false,
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Center(
+            child: ElevatedButton(
+              child: const Text('保存'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(300.w, 50.h),
+                primary: Colors.white,
+                onPrimary: Colors.black,
+              ),
+              onPressed: () async {
+                await FirebaseFirestore.instance
+                    .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
+                    .doc(DateKey.dateFormat())
+                    .set({
+                  'dysfunction': sliderKey.currentState?.currentSliderValue
+                });
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+              },
+            ),
+          ),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -54,30 +80,6 @@ class Questionnaire extends StatelessWidget {
               ),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 100.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('保存'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300.w, 60.h),
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                ),
-                onPressed: () async {
-                  await FirebaseFirestore.instance
-                      .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
-                      .doc(DateKey.dateFormat())
-                      .set({
-                    'dysfunction': sliderKey.currentState?.currentSliderValue
-                  });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-                },
-              ),
-            ),
-          ),
         ],
       ),
     );

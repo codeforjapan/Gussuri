@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gussuri/calendar.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
-import 'package:gussuri/sleepyEdit.dart';
 import './questionnaire.dart';
+import 'dart:math' as math;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool? _checkLastNightSleep;
+  String _tips= '';
 
   Future<void> checkLastNightSleep() async {
     final orderSnap = await FirebaseFirestore.instance
@@ -38,10 +40,19 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<void> getTips() async {
+    var rand = math.Random();
+    final tips = await FirebaseFirestore.instance
+        .collection('tips')
+        .doc(rand.nextInt(2).toString())
+        .get();
+    _tips = tips.get('content');
+  }
   @override
   void initState() {
     super.initState();
     checkLastNightSleep();
+    getTips();
   }
 
   @override
@@ -58,6 +69,27 @@ class _HomeState extends State<Home> {
               style: TextStyle(color: Colors.black),
             )),
         automaticallyImplyLeading: false,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Center(
+            child: ElevatedButton(
+              child: const Text('睡眠記録シート'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(300.w, 50.h),
+                primary: Colors.white,
+                onPrimary: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Calendar()));
+              },
+            ),
+          ),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -94,12 +126,11 @@ class _HomeState extends State<Home> {
                     Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(bottom: 5.h),
-                        child: const Text('入眠アドバイス',
+                        child: const Text('Tips',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ))),
-                    const Text(
-                        '睡眠に関する小ネタが10個くらいがランダムに表示される。ああああああああああああああああああああああああああああああああああああああ')
+                    Text(_tips)
                   ],
                 ),
               ),
@@ -124,7 +155,7 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Recording()));
+                                    builder: (context) => Recording(tips: _tips,)));
                           }
                         : null,
                   )),

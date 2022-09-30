@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gussuri/calendar.dart';
 import 'package:gussuri/home.dart';
 
 class Finish extends StatelessWidget {
@@ -35,7 +36,12 @@ class Finish extends StatelessWidget {
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
-                      onPressed: () {})),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Calendar()));
+                      })),
               Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(

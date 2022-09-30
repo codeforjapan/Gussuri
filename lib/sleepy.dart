@@ -10,7 +10,7 @@ import 'helper/DeviceData.dart';
 import 'home.dart';
 
 class Sleepy extends StatelessWidget {
-  const Sleepy({required this.title, required this.text});
+  const Sleepy({required this.title, required this.text, Key? key}) : super(key: key);
 
   final String title, text;
 
@@ -40,6 +40,63 @@ class Sleepy extends StatelessWidget {
         ],
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 28.0.w),
+                  child: ElevatedButton(
+                    child: const Text('前へ'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(70.w, 45.h),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Awake(
+                                  title: '目が覚めた時間',
+                                  text: '布団から出るまでにかかった時間')));
+                    },
+                  )),
+              Padding(
+                padding: EdgeInsets.only(right: 28.0.w),
+                child: ElevatedButton(
+                    child: const Text('次へ'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(70.w, 45.h),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                    ),
+                    onPressed: () async {
+                      FirebaseFirestore.instance
+                          .collection(
+                          await DeviceData.getDeviceUniqueId()) // コレクションID
+                          .doc(DateKey.dateFormat())
+                          .set({
+                        'SOL':
+                        dropBoxWidgetKey.currentState?.selectItem == ''
+                            ? null
+                            : dropBoxWidgetKey.currentState?.selectItem,
+                      }, SetOptions(merge: true));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Awaking(
+                                  title: '中途覚醒', text: '途中で目が覚めた回数')));
+                    }),
+              )
+            ],
+          ),
+        )
       ),
       body: Column(
         children: [
@@ -166,61 +223,6 @@ class Sleepy extends StatelessWidget {
                       ))),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 80.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 28.0.w),
-                    child: ElevatedButton(
-                      child: const Text('前へ'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(70.w, 50.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Awake(
-                                    title: '目が覚めた時間',
-                                    text: '布団から出るまでにかかった時間')));
-                      },
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(right: 28.0.w),
-                  child: ElevatedButton(
-                      child: const Text('次へ'),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(70.w, 50.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                      ),
-                      onPressed: () async {
-                        FirebaseFirestore.instance
-                            .collection(
-                            await DeviceData.getDeviceUniqueId()) // コレクションID
-                            .doc(DateKey.dateFormat())
-                            .set({
-                        'SOL':
-                        dropBoxWidgetKey.currentState?.selectItem == ''
-                        ? null
-                            : dropBoxWidgetKey.currentState?.selectItem,
-                        }, SetOptions(merge: true));
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Awaking(
-                                    title: '中途覚醒', text: '途中で目が覚めた回数')));
-                      }),
-                )
-              ],
-            ),
-          ),
         ],
       ),
     );
