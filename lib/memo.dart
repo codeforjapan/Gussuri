@@ -37,91 +37,94 @@ class Memo extends StatelessWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(
-              child: Column(
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF424242),
+        child: SizedBox(
+          width: double.infinity,
+          height: 65.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(15.w, 100.h, 15.w, 10.h),
-                width: 350.w,
-                height: 150.h,
-                child: Column(
-                  children: const [Text('今日の睡眠に関連しそうなこと')],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 35.w, right: 35.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                width: 350.w,
-                child: TextField(
-                  controller: valueController,
-                  decoration: InputDecoration(
-                    hintText: 'プレースホルダー',
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                  ),
-                  maxLines: 15,
-                  minLines: 15,
-                ),
-              ),
-            ],
-          )),
-          Container(
-            width: double.infinity,
-            height: 80.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 28.0.w),
-                    child: ElevatedButton(
-                        child: const Text('前へ'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(70.w, 50.h),
-                          primary: Colors.white,
-                          onPrimary: Colors.black,
-                        ),
-                        onPressed: () => Navigator.of(context).pop())),
-                Padding(
-                  padding: EdgeInsets.only(right: 28.0.w),
+              Padding(
+                  padding: EdgeInsets.only(left: 28.0.w),
                   child: ElevatedButton(
-                    child: const Text('次へ'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(70.w, 50.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
-                    ),
-                    onPressed: () async {
-                      FirebaseFirestore.instance
-                          .collection(
-                              await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
-                          .set({
-                        'comments': valueController.text,
-                      }, SetOptions(merge: true));
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Finish()));
-                    },
+                      child: const Text('前へ'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(70.w, 45.h),
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () => Navigator.of(context).pop())),
+              Padding(
+                padding: EdgeInsets.only(right: 28.0.w),
+                child: ElevatedButton(
+                  child: const Text('次へ'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(70.w, 45.h),
+                    primary: Colors.white,
+                    onPrimary: Colors.black,
                   ),
-                )
+                  onPressed: () async {
+                    FirebaseFirestore.instance
+                        .collection(await DeviceData
+                        .getDeviceUniqueId()) // コレクションID
+                        .doc(DateKey.dateFormat())
+                        .set({
+                      'comments': valueController.text,
+                    }, SetOptions(merge: true));
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Finish()));
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(15.w, 100.h, 15.w, 10.h),
+                  width: 350.w,
+                  height: 150.h,
+                  child: Column(
+                    children: const [Text('今日の睡眠に関連しそうなこと')],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 35.w, right: 35.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: 350.w,
+                  child: TextField(
+                    controller: valueController,
+                    decoration: InputDecoration(
+                      hintText: 'プレースホルダー',
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 10.h),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                    maxLines: 15,
+                    minLines: 15,
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

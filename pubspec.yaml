@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^3.4.4
   device_info_plus: ^4.1.0
   intl: ^0.17.0
+  table_calendar: ^3.0.7
 
 dev_dependencies:
   flutter_test:
