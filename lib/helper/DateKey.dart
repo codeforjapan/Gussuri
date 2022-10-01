@@ -6,10 +6,26 @@ class DateKey {
     throw AssertionError("private Constructor");
   } // private constructor
 
-  static String dateFormat() {
+  static String year() {
     initializeDateFormatting('ja');
     DateTime now = DateTime.now();
-    String date = DateFormat('yyyy-MM-dd').format(now);
+    String date = DateFormat('yyyy').format(now);
+
+    return date;
+  }
+
+  static String month() {
+    initializeDateFormatting('ja');
+    DateTime now = DateTime.now();
+    String date = DateFormat('MM').format(now);
+
+    return date;
+  }
+
+  static String day() {
+    initializeDateFormatting('ja');
+    DateTime now = DateTime.now();
+    String date = DateFormat('dd').format(now);
 
     return date;
   }

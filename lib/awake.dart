@@ -72,7 +72,9 @@ class Awake extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection(
                             await DeviceData.getDeviceUniqueId()) // コレクションID
-                        .doc(DateKey.dateFormat())
+                        .doc(DateKey.year())
+                        .collection(DateKey.month())
+                        .doc(DateKey.day())
                         .set({
                       'TASAFA': dropBoxWidgetKey.currentState?.selectItem == ''
                           ? null
@@ -120,7 +122,9 @@ class Awake extends StatelessWidget {
                           FirebaseFirestore.instance
                               .collection(await DeviceData
                                   .getDeviceUniqueId()) // コレクションID
-                              .doc(DateKey.dateFormat())
+                              .doc(DateKey.year())
+                              .collection(DateKey.month())
+                              .doc(DateKey.day())
                               .set({
                             'TASAFA': '0~15',
                           }, SetOptions(merge: true));
@@ -155,7 +159,9 @@ class Awake extends StatelessWidget {
                             FirebaseFirestore.instance
                                 .collection(await DeviceData
                                     .getDeviceUniqueId()) // コレクションID
-                                .doc(DateKey.dateFormat())
+                                .doc(DateKey.year())
+                                .collection(DateKey.month())
+                                .doc(DateKey.day())
                                 .set({
                               'TASAFA': '16~30',
                             }, SetOptions(merge: true));
@@ -189,7 +195,9 @@ class Awake extends StatelessWidget {
                             FirebaseFirestore.instance
                                 .collection(await DeviceData
                                     .getDeviceUniqueId()) // コレクションID
-                                .doc(DateKey.dateFormat())
+                                .doc(DateKey.year())
+                                .collection(DateKey.month())
+                                .doc(DateKey.day())
                                 .set({
                               'TASAFA': '31~45',
                             }, SetOptions(merge: true));
