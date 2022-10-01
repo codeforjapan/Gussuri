@@ -74,7 +74,9 @@ class AwakingTime extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection(
                         await DeviceData.getDeviceUniqueId()) // コレクションID
-                        .doc(DateKey.dateFormat())
+                        .doc(DateKey.year())
+                        .collection(DateKey.month())
+                        .doc(DateKey.day())
                         .set({
                       'WASO': null,
                     }, SetOptions(merge: true));
@@ -112,7 +114,9 @@ class AwakingTime extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                               await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'WASO': 0,
                       }, SetOptions(merge: true));
@@ -136,7 +140,9 @@ class AwakingTime extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                               await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'WASO': 30,
                       }, SetOptions(merge: true));
@@ -160,7 +166,9 @@ class AwakingTime extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                               await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'WASO': 60,
                       }, SetOptions(merge: true));
@@ -184,7 +192,9 @@ class AwakingTime extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                               await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'WASO': 120,
                       }, SetOptions(merge: true));

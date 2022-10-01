@@ -80,7 +80,9 @@ class Sleepy extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection(
                           await DeviceData.getDeviceUniqueId()) // コレクションID
-                          .doc(DateKey.dateFormat())
+                          .doc(DateKey.year())
+                          .collection(DateKey.month())
+                          .doc(DateKey.day())
                           .set({
                         'SOL':
                         dropBoxWidgetKey.currentState?.selectItem == ''
@@ -128,7 +130,9 @@ class Sleepy extends StatelessWidget {
                           FirebaseFirestore.instance
                               .collection(await DeviceData
                               .getDeviceUniqueId()) // コレクションID
-                              .doc(DateKey.dateFormat())
+                              .doc(DateKey.year())
+                              .collection(DateKey.month())
+                              .doc(DateKey.day())
                               .set({
                           'SOL': '0~15',
                           }, SetOptions(merge: true));
@@ -162,7 +166,9 @@ class Sleepy extends StatelessWidget {
                             FirebaseFirestore.instance
                                 .collection(await DeviceData
                                 .getDeviceUniqueId()) // コレクションID
-                                .doc(DateKey.dateFormat())
+                                .doc(DateKey.year())
+                                .collection(DateKey.month())
+                                .doc(DateKey.day())
                                 .set({
                             'SOL': '16~30',
                             }, SetOptions(merge: true));
@@ -195,7 +201,9 @@ class Sleepy extends StatelessWidget {
                             FirebaseFirestore.instance
                                 .collection(await DeviceData
                                 .getDeviceUniqueId()) // コレクションID
-                                .doc(DateKey.dateFormat())
+                                .doc(DateKey.year())
+                                .collection(DateKey.month())
+                                .doc(DateKey.day())
                                 .set({
                             'SOL': '31~45',
                             }, SetOptions(merge: true));
