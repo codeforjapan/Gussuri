@@ -221,7 +221,7 @@ class Awake extends StatelessWidget {
                           Padding(
                               padding: EdgeInsets.only(bottom: 10.h),
                               child: const Text('46分以上')),
-                          DropBoxWidget(key: dropBoxWidgetKey)
+                          DropBoxWidget(key: dropBoxWidgetKey, value: '',)
                         ],
                       ))),
             ],

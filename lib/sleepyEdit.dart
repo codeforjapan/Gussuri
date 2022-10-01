@@ -23,11 +23,11 @@ class _SleepyState extends State<SleepyEdit> {
   Map<String, dynamic> _sleepyData = {
     "bed_time": null,
     "comments": "",
-    "TASAFA": null,
+    "TASAFA": "",
     "get_up_time": null,
     "dysfunction": null,
     "WASO": null,
-    "SOL": null,
+    "SOL": "",
     "NOA": null
   };
 
@@ -55,6 +55,11 @@ class _SleepyState extends State<SleepyEdit> {
     setState(() {
       _sleepyData[key] = value;
     });
+  }
+
+  String getSleepyOtherTime(String value) {
+    List<String> basicValues = ["00~15", "16~30", "31~45"];
+    return basicValues.contains(value) ? "" : value;
   }
 
   @override
@@ -242,9 +247,13 @@ class _SleepyState extends State<SleepyEdit> {
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 300,
-                                  child: DropBoxWidget(key: sleepyDropBoxKey),
+                                  child: DropBoxWidget(
+                                    key: sleepyDropBoxKey,
+                                    value:
+                                        getSleepyOtherTime(_sleepyData["SOL"]),
+                                  ),
                                 )
                               ],
                             ),
@@ -353,10 +362,13 @@ class _SleepyState extends State<SleepyEdit> {
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 300,
                                   child: DropBoxWidget(
-                                      key: sleepyDropBoxKeySecond),
+                                    key: sleepyDropBoxKeySecond,
+                                    value: getSleepyOtherTime(
+                                        _sleepyData["TASAFA"]),
+                                  ),
                                 )
                               ],
                             ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DropBoxWidget extends StatefulWidget {
-  const DropBoxWidget({Key? key}) : super(key: key);
+  final String value;
+
+  const DropBoxWidget({Key? key, required this.value}) : super(key: key);
 
   @override
   DropBoxWidgetState createState() => DropBoxWidgetState();
@@ -17,6 +19,12 @@ class DropBoxWidgetState extends State<DropBoxWidget> {
     super.initState();
     setItems();
     selectItem = _items[0].value!;
+  }
+
+  @override
+  void didUpdateWidget(DropBoxWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    selectItem = widget.value;
   }
 
   void setItems() {
