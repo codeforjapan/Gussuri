@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/home.dart';
+import 'package:gussuri/sleepyEdit.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
@@ -149,7 +150,9 @@ class _CalendarState extends State<Calendar> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: ListTile(
-                          onTap: () => print(value),
+                          onTap: () => {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SleepyEdit({value: value}, value: value[index].documentId,)))
+                          },
                           title: Text('ベッドに入った時間: ${value[index].bedtime}\nベットから出た時間: ${value[index].getUpTime}'),
                         ),
                       );

@@ -1,11 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/DropBoxWidget.dart';
 import 'package:gussuri/component/TimePicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gussuri/utils.dart';
 import 'home.dart';
 
-class SleepyEdit extends StatelessWidget {
-  const SleepyEdit({Key? key}) : super(key: key);
+class SleepyEdit extends StatefulWidget {
+  final String value;
+
+  const SleepyEdit(Map<List<Event>, List<Event>> map, {Key? key, required this.value}) : super(key: key);
+
+  @override
+  State<SleepyEdit> createState() => _SleepyState();
+}
+
+class _SleepyState extends State<SleepyEdit> {
+  Object _sleepyData = {};
+
+  Future<void> getSleepyData(pathName) async {
+    var paths = pathName.split('/');
+    // NOTE: path[0] = collectionId; path[1],path[2],path[3] = year,month,day
+    final orderSnap = await FirebaseFirestore.instance
+        .collection(paths[0])
+        .doc(paths[1])
+        .collection(paths[2])
+        .doc(paths[3])
+        .get();
+    _sleepyData = orderSnap.data() as Object;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSleepyData(widget.value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +44,9 @@ class SleepyEdit extends StatelessWidget {
         GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY__');
     const timePickerKeySecond =
         GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY2__');
-    const dropBoxWidgetKey =
+    const sleepyDropBoxKey =
         GlobalObjectKey<DropBoxWidgetState>('__DROP_BOX_KEY__');
-    const dropBoxWidgetKeySecond =
+    const sleepyDropBoxKeySecond =
         GlobalObjectKey<DropBoxWidgetState>('__DROP_BOX_KEY2__');
 
     return Scaffold(
@@ -169,7 +199,7 @@ class SleepyEdit extends StatelessWidget {
                                 Text("46分以上", textAlign: TextAlign.left),
                                 SizedBox(
                                   width: 300,
-                                  child: DropBoxWidget(key: dropBoxWidgetKey),
+                                  child: DropBoxWidget(key: sleepyDropBoxKey),
                                 )
                               ],
                             ),
@@ -259,7 +289,7 @@ class SleepyEdit extends StatelessWidget {
                                 SizedBox(
                                   width: 300,
                                   child: DropBoxWidget(
-                                      key: dropBoxWidgetKeySecond),
+                                      key: sleepyDropBoxKeySecond),
                                 )
                               ],
                             ),

@@ -5,7 +5,6 @@ import 'package:gussuri/calendar.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
-import 'package:gussuri/sleepyEdit.dart';
 import './questionnaire.dart';
 import 'dart:math' as math;
 
@@ -166,24 +165,6 @@ class _HomeState extends State<Home> {
                   )),
             ],
           )),
-          Container(
-            width: double.infinity,
-            height: 100.h,
-            decoration: const BoxDecoration(color: Color(0xFF424242)),
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300.w, 60.h),
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SleepyEdit()));
-                },
-              ),
-            ),
-          ),
         ],
       ),
     );
