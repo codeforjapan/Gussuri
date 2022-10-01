@@ -66,8 +66,9 @@ class _CalendarState extends State<Calendar> {
           DateTime.utc(_date.year, _date.month, int.parse(res.id)):
           List.generate(1, (index) {
             return Event(
-              DateFormat('MM/dd H:m').format(DateTime.parse(data['bed_time'])),
-              DateFormat('MM/dd H:m').format(DateTime.parse(data['get_up_time'])),
+                DateFormat('MM/dd H:m').format(DateTime.parse(data['bed_time'])),
+                DateFormat('MM/dd H:m').format(DateTime.parse(data['get_up_time'])),
+                res.reference.path
             );
           })
         });
@@ -92,7 +93,7 @@ class _CalendarState extends State<Calendar> {
           actions: [
             ElevatedButton(
               child: const Text('ホーム'),
-              style: ElevatedButton.styleFrom(primary: Colors.black),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Home()));
