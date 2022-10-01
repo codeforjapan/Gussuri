@@ -233,9 +233,16 @@ class _SleepyState extends State<SleepyEdit> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Column(
-                              children: const [
-                                Text("46分以上", textAlign: TextAlign.left),
-                                SizedBox(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  width: 300,
+                                  child: const Text(
+                                    "46分以上",
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                const SizedBox(
                                   width: 300,
                                   child: DropBoxWidget(key: sleepyDropBoxKey),
                                 )
@@ -337,9 +344,16 @@ class _SleepyState extends State<SleepyEdit> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Column(
-                              children: const [
-                                Text("46分以上", textAlign: TextAlign.left),
-                                SizedBox(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  width: 300,
+                                  child: const Text(
+                                    "46分以上",
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                const SizedBox(
                                   width: 300,
                                   child: DropBoxWidget(
                                       key: sleepyDropBoxKeySecond),
