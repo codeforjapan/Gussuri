@@ -18,6 +18,7 @@ class SleepyEdit extends StatefulWidget {
 }
 
 class _SleepyState extends State<SleepyEdit> {
+  String _editDate = "";
   Map<String, dynamic> _sleepyData = {
     "bed_time": null,
     "comments": "",
@@ -29,8 +30,7 @@ class _SleepyState extends State<SleepyEdit> {
     "NOA": null
   };
 
-  Future<void> getSleepyData(pathName) async {
-    var paths = pathName.split('/');
+  Future<void> getSleepyData(List<String> paths) async {
     // NOTE: path[0] = collectionId; path[1],path[2],path[3] = year,month,day
     final orderSnap = await FirebaseFirestore.instance
         .collection(paths[0])
@@ -46,10 +46,15 @@ class _SleepyState extends State<SleepyEdit> {
     }
   }
 
+  void setEditDate(List<String> paths) {
+    _editDate = '${paths[1]}年${paths[2]}月${paths[3]}日';
+  }
+
   @override
   void initState() {
     super.initState();
-    getSleepyData(widget.value);
+    getSleepyData(widget.value.split('/'));
+    setEditDate(widget.value.split('/'));
   }
 
   @override
@@ -99,13 +104,12 @@ class _SleepyState extends State<SleepyEdit> {
             width: double.infinity,
             height: 60,
             decoration: const BoxDecoration(color: Colors.black),
-            child: const Padding(
-              padding: EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Center(
-                  child: Text(
-                    "20XX年XX月XX日",
+                  child: Text(_editDate,
                     style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                   )),
             ),
           ),
