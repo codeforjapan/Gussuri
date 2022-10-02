@@ -282,6 +282,11 @@ class _SleepyState extends State<SleepyEdit> {
                                     key: sleepyDropBoxKey,
                                     value:
                                         getSleepyOtherTime(_sleepyData["SOL"]),
+                                    onChanged: (value) => {
+                                      setState(() {
+                                        _sleepyData["SOL"] = value;
+                                      })
+                                    },
                                   ),
                                 )
                               ],
@@ -397,6 +402,11 @@ class _SleepyState extends State<SleepyEdit> {
                                     key: sleepyDropBoxKeySecond,
                                     value: getSleepyOtherTime(
                                         _sleepyData["TASAFA"]),
+                                    onChanged: (value) => {
+                                      setState(() {
+                                        _sleepyData["TASAFA"] = value;
+                                      })
+                                    },
                                   ),
                                 )
                               ],
