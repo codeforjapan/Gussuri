@@ -21,10 +21,10 @@ class SleepyEdit extends StatefulWidget {
 class _SleepyState extends State<SleepyEdit> {
   String _editDate = "";
   Map<String, dynamic> _sleepyData = {
-    "bed_time": null,
+    "bed_time": "",
     "comments": "",
     "TASAFA": "",
-    "get_up_time": null,
+    "get_up_time": "",
     "dysfunction": null,
     "WASO": null,
     "SOL": "",
@@ -60,6 +60,10 @@ class _SleepyState extends State<SleepyEdit> {
   String getSleepyOtherTime(String value) {
     List<String> basicValues = ["00~15", "16~30", "31~45"];
     return basicValues.contains(value) ? "" : value;
+  }
+
+  String abstractTimeOfDay(String datetime) {
+    return datetime.isEmpty ? "" : datetime.split(" ")[1];
   }
 
   @override
@@ -138,7 +142,7 @@ class _SleepyState extends State<SleepyEdit> {
                       child: const Text("布団に入った時間")),
                   Container(
                       alignment: Alignment.center,
-                      child: const TimePickerWidget(key: timePickerKey)),
+                      child: TimePickerWidget(key: timePickerKey, value: abstractTimeOfDay(_sleepyData["bed_time"]),)),
                 ],
               ),
               Column(
@@ -149,7 +153,7 @@ class _SleepyState extends State<SleepyEdit> {
                       child: const Text("布団から出た時間")),
                   Container(
                       alignment: Alignment.center,
-                      child: const TimePickerWidget(key: timePickerKeySecond)),
+                      child: TimePickerWidget(key: timePickerKeySecond, value: abstractTimeOfDay(_sleepyData["get_up_time"]),)),
                 ],
               ),
               Column(
