@@ -5,6 +5,7 @@ import 'package:gussuri/component/DropBoxWidget.dart';
 import 'package:gussuri/component/TimePicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/utils.dart';
+import 'calendar.dart';
 import 'home.dart';
 
 class SleepyEdit extends StatefulWidget {
@@ -20,6 +21,7 @@ class SleepyEdit extends StatefulWidget {
 
 class _SleepyState extends State<SleepyEdit> {
   String _editDate = "";
+  List<String> _paths = [];
   Map<String, dynamic> _sleepyData = {
     "bed_time": "",
     "comments": "",
@@ -47,6 +49,22 @@ class _SleepyState extends State<SleepyEdit> {
     }
   }
 
+  Future<void> updateSleepyData(dynamic timePickerKey,
+      dynamic timePickerKeySecond, dynamic context) async {
+    // TODO: timeofdayをdatetime型にする
+    // _sleepyData["bed_time"] = timePickerKey.currentState?.dateTime;
+    // _sleepyData["get_up_time"] = timePickerKeySecond.currentState?.dateTime;
+    // NOTE: path[0] = collectionId; path[1],path[2],path[3] = year,month,day
+    FirebaseFirestore.instance
+        .collection(_paths[0])
+        .doc(_paths[1])
+        .collection(_paths[2])
+        .doc(_paths[3])
+        .set(_sleepyData);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Calendar()));
+  }
+
   void setEditDate(List<String> paths) {
     _editDate = '${paths[1]}年${paths[2]}月${paths[3]}日';
   }
@@ -69,8 +87,9 @@ class _SleepyState extends State<SleepyEdit> {
   @override
   void initState() {
     super.initState();
-    getSleepyData(widget.value.split('/'));
-    setEditDate(widget.value.split('/'));
+    _paths = widget.value.split('/');
+    getSleepyData(_paths);
+    setEditDate(_paths);
   }
 
   @override
@@ -142,7 +161,10 @@ class _SleepyState extends State<SleepyEdit> {
                       child: const Text("布団に入った時間")),
                   Container(
                       alignment: Alignment.center,
-                      child: TimePickerWidget(key: timePickerKey, value: abstractTimeOfDay(_sleepyData["bed_time"]),)),
+                      child: TimePickerWidget(
+                        key: timePickerKey,
+                        value: abstractTimeOfDay(_sleepyData["bed_time"]),
+                      )),
                 ],
               ),
               Column(
@@ -153,7 +175,10 @@ class _SleepyState extends State<SleepyEdit> {
                       child: const Text("布団から出た時間")),
                   Container(
                       alignment: Alignment.center,
-                      child: TimePickerWidget(key: timePickerKeySecond, value: abstractTimeOfDay(_sleepyData["get_up_time"]),)),
+                      child: TimePickerWidget(
+                        key: timePickerKeySecond,
+                        value: abstractTimeOfDay(_sleepyData["get_up_time"]),
+                      )),
                 ],
               ),
               Column(
@@ -565,6 +590,9 @@ class _SleepyState extends State<SleepyEdit> {
                   ),
                   width: 350.w,
                   child: TextField(
+                    onChanged: (text) {
+                      _sleepyData["comments"] = text;
+                    },
                     controller:
                         TextEditingController(text: _sleepyData["comments"]),
                     decoration: InputDecoration(
@@ -597,7 +625,9 @@ class _SleepyState extends State<SleepyEdit> {
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  updateSleepyData(timePickerKey, timePickerKeySecond, context);
+                },
               ),
             ),
           ),
