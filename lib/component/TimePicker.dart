@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class TimePickerWidget extends StatefulWidget {
-  final String value;
-
-  const TimePickerWidget({Key? key, required this.value}) : super(key: key);
+  final DateTime value;
+  final ValueChanged<String?>? onChanged;
+  const TimePickerWidget({Key? key, required this.value, this.onChanged}) : super(key: key);
 
   @override
   TimePickerState createState() => TimePickerState();
@@ -11,60 +12,39 @@ class TimePickerWidget extends StatefulWidget {
 
 class TimePickerState extends State<TimePickerWidget> {
   dynamic dateTime;
+  late final ValueChanged<String?> submitOnChanged;
 
   @override
   void initState() {
     super.initState();
-    dateTime = TimeOfDay.now();
-  }
-
-  TimeOfDay parseTimeOfDay(String time) {
-    return TimeOfDay(
-        hour: int.parse(time.split(":")[0]),
-        minute: int.parse(time.split(":")[1]));
+    dateTime = DateTime.now();
+    if(widget.onChanged != null) {
+      submitOnChanged = widget.onChanged!;
+    }
   }
 
   @override
   void didUpdateWidget(TimePickerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    dateTime = parseTimeOfDay(widget.value);
-  }
-
-  _timePicker(BuildContext context) async {
-    final TimeOfDay? timePicked = await showTimePicker(
-      context: context,
-      initialTime: dateTime,
-    );
-    if (timePicked != null && timePicked != dateTime) {
-      setState(() {
-        dateTime = timePicked;
-      });
-    }
+    dateTime = widget.value;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("${dateTime.hour}時${dateTime.minute}分"),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              minimumSize: const Size(100, 30),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              )),
-          onPressed: () {
-            _timePicker(context);
+    return SizedBox(
+        height: 100,
+        width: 300,
+        child: CupertinoDatePicker(
+          key: UniqueKey(),
+          backgroundColor: Colors.white,
+          mode: CupertinoDatePickerMode.time,
+          initialDateTime: dateTime,
+          onDateTimeChanged: (dt) {
+            setState(() => dateTime = dt);
+            submitOnChanged(dt.toString());
           },
-          child: const Text("時刻を選択"),
-        )
-      ],
-    ));
+          use24hFormat: false,
+          minuteInterval: 1,
+        ));
   }
 }

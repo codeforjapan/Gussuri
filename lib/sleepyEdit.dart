@@ -51,9 +51,6 @@ class _SleepyState extends State<SleepyEdit> {
 
   Future<void> updateSleepyData(dynamic timePickerKey,
       dynamic timePickerKeySecond, dynamic context) async {
-    // TODO: timeofdayをdatetime型にする
-    // _sleepyData["bed_time"] = timePickerKey.currentState?.dateTime;
-    // _sleepyData["get_up_time"] = timePickerKeySecond.currentState?.dateTime;
     // NOTE: path[0] = collectionId; path[1],path[2],path[3] = year,month,day
     FirebaseFirestore.instance
         .collection(_paths[0])
@@ -80,8 +77,8 @@ class _SleepyState extends State<SleepyEdit> {
     return basicValues.contains(value) ? "" : value;
   }
 
-  String abstractTimeOfDay(String datetime) {
-    return datetime.isEmpty ? "" : datetime.split(" ")[1];
+  DateTime convertDateTime(String datetime) {
+    return datetime.isEmpty ? DateTime.now() : DateTime.parse(datetime);
   }
 
   @override
@@ -162,9 +159,13 @@ class _SleepyState extends State<SleepyEdit> {
                   Container(
                       alignment: Alignment.center,
                       child: TimePickerWidget(
-                        key: timePickerKey,
-                        value: abstractTimeOfDay(_sleepyData["bed_time"]),
-                      )),
+                          key: timePickerKey,
+                          value: convertDateTime(_sleepyData["bed_time"]),
+                          onChanged: (value) => {
+                                setState(() {
+                                  _sleepyData["bed_time"] = value;
+                                })
+                              })),
                 ],
               ),
               Column(
@@ -176,9 +177,13 @@ class _SleepyState extends State<SleepyEdit> {
                   Container(
                       alignment: Alignment.center,
                       child: TimePickerWidget(
-                        key: timePickerKeySecond,
-                        value: abstractTimeOfDay(_sleepyData["get_up_time"]),
-                      )),
+                          key: timePickerKeySecond,
+                          value: convertDateTime(_sleepyData["get_up_time"]),
+                          onChanged: (value) => {
+                                setState(() {
+                                  _sleepyData["get_up_time"] = value;
+                                })
+                              })),
                 ],
               ),
               Column(
