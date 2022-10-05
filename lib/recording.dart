@@ -36,8 +36,8 @@ class Recording extends StatelessWidget {
               child: const Text('睡眠記録シート'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(300.w, 50.h),
-                primary: Colors.white,
-                onPrimary: Colors.black,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
               ),
               onPressed: null,
             ),
@@ -55,8 +55,8 @@ class Recording extends StatelessWidget {
                     child: const Text('昨日の睡眠'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(315.w, 100.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: null,
                   )),
@@ -84,8 +84,8 @@ class Recording extends StatelessWidget {
                     child: const Text('布団から出ました'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(300.w, 140.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: () async {
                       FirebaseFirestore.instance
