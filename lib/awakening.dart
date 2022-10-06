@@ -29,7 +29,7 @@ class Awaking extends StatelessWidget {
         actions: [
           ElevatedButton(
             child: const Text('ホーム'),
-            style: ElevatedButton.styleFrom(primary: Colors.black),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const Home()));
@@ -53,8 +53,8 @@ class Awaking extends StatelessWidget {
                     child: const Text('前へ'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(70.w, 45.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -71,8 +71,8 @@ class Awaking extends StatelessWidget {
                   child: const Text('次へ'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(70.w, 45.h),
-                    primary: Colors.white,
-                    onPrimary: Colors.black,
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
                   ),
                   onPressed: () async {
                     FirebaseFirestore.instance
@@ -111,8 +111,8 @@ class Awaking extends StatelessWidget {
                     child: const Text('0回'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(300.w, 60.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: () async {
                       FirebaseFirestore.instance
@@ -137,8 +137,8 @@ class Awaking extends StatelessWidget {
                       child: const Text('1回'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(300.w, 60.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                       ),
                       onPressed: () async {
                         FirebaseFirestore.instance
@@ -163,8 +163,8 @@ class Awaking extends StatelessWidget {
                       child: const Text('2回'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(300.w, 60.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                       ),
                       onPressed: () async {
                         FirebaseFirestore.instance
@@ -189,8 +189,8 @@ class Awaking extends StatelessWidget {
                       child: const Text('3回以上'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(300.w, 60.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                       ),
                       onPressed: () async {
                         FirebaseFirestore.instance

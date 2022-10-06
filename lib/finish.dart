@@ -33,8 +33,8 @@ class Finish extends StatelessWidget {
                       child: const Text('睡眠記録シート'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(300.w, 80.h),
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -48,8 +48,8 @@ class Finish extends StatelessWidget {
                     child: const Text('ホームへ戻る'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(300.w, 80.h),
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                     ),
                     onPressed: () {
                       Navigator.push(

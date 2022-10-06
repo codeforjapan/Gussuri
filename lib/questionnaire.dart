@@ -35,8 +35,8 @@ class Questionnaire extends StatelessWidget {
               child: const Text('保存'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(300.w, 50.h),
-                primary: Colors.white,
-                onPrimary: Colors.black,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
               ),
               onPressed: () async {
                 await FirebaseFirestore.instance
