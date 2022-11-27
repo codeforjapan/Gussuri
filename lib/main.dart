@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gussuri/aquarium.dart';
 import 'firebase_options.dart';
 import './home.dart';
 
@@ -39,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Aquarium(),
+      body: Home(),
     );
   }
 }
