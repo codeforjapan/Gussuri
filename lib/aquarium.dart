@@ -71,6 +71,7 @@ class _AquariumState extends State<Aquarium>
   @override
   Widget build(BuildContext context) {
     int maxWidth = MediaQuery. of(context). size. width.toInt();
+    int maxHeight = MediaQuery. of(context). size. height.toInt();
 
     return Stack(
       children: [
@@ -87,20 +88,20 @@ class _AquariumState extends State<Aquarium>
             ...whales.map((whale) => AnimatedBuilder(
               animation: whale.controller,
               builder: (context, child) => Transform.translate(
-                offset: Offset(200 * shake(whale.controller.value), 0),
+                offset: const Offset(100.0 , 0),
                 child: child,
               ),
               child: const Image(
                 image: AssetImage('images/whale.png'),
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
+                height: 600,
+                width: 800,
+                fit: BoxFit.contain,
               ),
             )),
             ...fishes.map((fish) => AnimatedBuilder(
               animation: fish.controller,
               builder: (context, child) => Transform.translate(
-                offset: Offset(random.nextInt(maxWidth) * shake(fish.controller.value), 0),
+                offset: Offset(random.nextInt(maxWidth).toDouble(), random.nextInt(maxHeight).toDouble()),
                 child: child,
               ),
               child: const Image(
