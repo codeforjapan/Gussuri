@@ -11,8 +11,7 @@ class Aquarium extends StatefulWidget {
   _AquariumState createState() => _AquariumState();
 }
 
-class _AquariumState extends State<Aquarium>
-    with TickerProviderStateMixin {
+class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   late AnimationController controller;
   List<Whale> whales = [];
   List<Fish> fishes = [];
@@ -21,11 +20,13 @@ class _AquariumState extends State<Aquarium>
 
   @override
   void initState() {
+    super.initState();
     Future.delayed(const Duration(seconds: 60), () {
       addWhale();
     });
-    addFish();
-    super.initState();
+    Future.delayed(const Duration(seconds: 1), () {
+      addFish();
+    });
   }
 
   @override
@@ -53,25 +54,27 @@ class _AquariumState extends State<Aquarium>
   }
 
   void addFish() {
-    for(int i = 0; i < 50; i++) {
-      setState(() {
-        fishes.add(Fish.create(
-            AnimationController(duration: const Duration(seconds: 1), vsync: this)
-              ..forward()
-              ..addListener(() {
-                // todo: last以外も対応させたい
-                if (fishes.last.controller.isCompleted) {
-                  fishes.last.controller.repeat();
-                }
-              })));
+    double maxWidth = MediaQuery.of(context).size.width.toDouble();
+    for (int i = 0; i < 50; i++) {
+      var controller =
+          AnimationController(duration: const Duration(seconds: 1), vsync: this)
+            ..forward();
+      var fish = Fish.create(controller, maxWidth);
+      controller.addListener(() {
+        if (fish.controller.isCompleted) {
+          setState(() {});
+          fish.move();
+          // fish.controller.repeat();
+        }
       });
+      setState(() {});
+      fishes.add(fish);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    int maxWidth = MediaQuery. of(context). size. width.toInt();
-    int maxHeight = MediaQuery. of(context). size. height.toInt();
+    int maxHeight = MediaQuery.of(context).size.height.toInt();
 
     return Stack(
       children: [
@@ -86,31 +89,32 @@ class _AquariumState extends State<Aquarium>
             child: Stack(
           children: [
             ...whales.map((whale) => AnimatedBuilder(
-              animation: whale.controller,
-              builder: (context, child) => Transform.translate(
-                offset: const Offset(100.0 , 0),
-                child: child,
-              ),
-              child: const Image(
-                image: AssetImage('images/whale.png'),
-                height: 600,
-                width: 800,
-                fit: BoxFit.contain,
-              ),
-            )),
+                  animation: whale.controller,
+                  builder: (context, child) => Transform.translate(
+                    offset: const Offset(100.0, 0),
+                    child: child,
+                  ),
+                  child: const Image(
+                    image: AssetImage('images/whale.png'),
+                    height: 600,
+                    width: 800,
+                    fit: BoxFit.contain,
+                  ),
+                )),
             ...fishes.map((fish) => AnimatedBuilder(
-              animation: fish.controller,
-              builder: (context, child) => Transform.translate(
-                offset: Offset(random.nextInt(maxWidth).toDouble(), random.nextInt(maxHeight).toDouble()),
-                child: child,
-              ),
-              child: const Image(
-                image: AssetImage('images/fish.gif'),
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
-              ),
-            )),
+                  animation: fish.controller,
+                  builder: (context, child) => Transform.translate(
+                    offset:
+                        Offset(fish.x, random.nextInt(maxHeight).toDouble()),
+                    child: child,
+                  ),
+                  child: const Image(
+                    image: AssetImage('images/fish.gif'),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                )),
           ],
         )),
       ],
