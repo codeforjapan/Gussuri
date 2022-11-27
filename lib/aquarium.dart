@@ -37,17 +37,29 @@ class _AquariumState extends State<Aquarium>
   @override
   Widget build(BuildContext context) {
 
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) => Transform.translate(
-        offset: Offset(200 * shake(controller.value), 0),
-        child: child,
-      ),
-      child: const Image(
-        image: AssetImage('images/fish.gif'),
-        height: 100,
-        width: 100,
-        fit: BoxFit.cover,
+    return Container(
+      child: Stack(
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+                color: Colors.black,
+                  image: DecorationImage(
+                      image: AssetImage('images/background.jpg'), fit: BoxFit.cover)),
+          ),
+          SafeArea(child:  AnimatedBuilder(
+            animation: controller,
+            builder: (context, child) => Transform.translate(
+              offset: Offset(200 * shake(controller.value), 0),
+              child: child,
+            ),
+            child: const Image(
+              image: AssetImage('images/fish.gif'),
+              height: 100,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+          ))
+        ],
       ),
     );
   }
