@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gussuri/Whale.dart';
 import 'component/Fish.dart';
@@ -13,26 +15,21 @@ class _AquariumState extends State<Aquarium>
     with TickerProviderStateMixin {
   late AnimationController controller;
   List<Whale> whales = [];
+  List<Fish> fishes = [];
+
+  final random = Random();
 
   @override
   void initState() {
-    controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this)
-          ..forward()
-          ..addListener(() {
-            if (controller.isCompleted) {
-              controller.repeat();
-            }
-          });
     Future.delayed(const Duration(seconds: 60), () {
       addWhale();
     });
+    addFish();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -55,8 +52,25 @@ class _AquariumState extends State<Aquarium>
     });
   }
 
+  void addFish() {
+    for(int i = 0; i < 50; i++) {
+      setState(() {
+        fishes.add(Fish.create(
+            AnimationController(duration: const Duration(seconds: 1), vsync: this)
+              ..forward()
+              ..addListener(() {
+                // todo: last以外も対応させたい
+                if (fishes.last.controller.isCompleted) {
+                  fishes.last.controller.repeat();
+                }
+              })));
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    int maxWidth = MediaQuery. of(context). size. width.toInt();
 
     return Stack(
       children: [
@@ -83,7 +97,19 @@ class _AquariumState extends State<Aquarium>
                 fit: BoxFit.cover,
               ),
             )),
-            Fish(),
+            ...fishes.map((fish) => AnimatedBuilder(
+              animation: fish.controller,
+              builder: (context, child) => Transform.translate(
+                offset: Offset(random.nextInt(maxWidth) * shake(fish.controller.value), 0),
+                child: child,
+              ),
+              child: const Image(
+                image: AssetImage('images/fish.gif'),
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
+            )),
           ],
         )),
       ],
