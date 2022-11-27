@@ -40,6 +40,7 @@ dependencies:
   device_info_plus: ^4.1.0
   intl: ^0.17.0
   table_calendar: ^3.0.7
+  flutter_gif: any
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  assets:
+    - images/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -68,7 +70,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
-  # An image asset can refer to one or more resolution-specific "variants", see
+  # An images asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
