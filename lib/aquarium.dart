@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gussuri/Whale.dart';
+import 'component/Fish.dart';
 
 class Aquarium extends StatefulWidget {
   const Aquarium({Key? key}) : super(key: key);
@@ -69,19 +70,6 @@ class _AquariumState extends State<Aquarium>
         SafeArea(
             child: Stack(
           children: [
-            AnimatedBuilder(
-              animation: controller,
-              builder: (context, child) => Transform.translate(
-                offset: Offset(200 * shake(controller.value), 0),
-                child: child,
-              ),
-              child: const Image(
-                image: AssetImage('images/fish.gif'),
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
             ...whales.map((whale) => AnimatedBuilder(
               animation: whale.controller,
               builder: (context, child) => Transform.translate(
@@ -94,10 +82,10 @@ class _AquariumState extends State<Aquarium>
                 width: 100,
                 fit: BoxFit.cover,
               ),
-            ))
+            )),
+            Fish(),
           ],
         )),
-        Fish(),
       ],
     );
   }
