@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
+import 'package:gussuri/aquarium.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/recording.dart';
@@ -71,6 +72,26 @@ class _HomeState extends State<Home> {
               style: TextStyle(color: Colors.black),
             )),
         automaticallyImplyLeading: false,
+        actions: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              child: const Text('すいみん槽'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(30.w, 35.h),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                side: const BorderSide(
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Aquarium()));
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         color: const Color(0xFF424242),
