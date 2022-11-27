@@ -19,6 +19,4 @@ class Whale {
   void dispose() {
     controller.dispose();
   }
-
-
 }
