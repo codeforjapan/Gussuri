@@ -15,6 +15,8 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   late AnimationController controller;
   List<Whale> whales = [];
   List<Fish> fishes = [];
+  late int targetFishId;
+  bool _visible = true;
 
   final random = Random();
 
@@ -27,7 +29,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     Future.delayed(const Duration(seconds: 1), () {
       addFish();
     });
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 4), () {
       removeFish();
     });
   }
@@ -59,12 +61,15 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   void addFish() {
     double maxWidth = MediaQuery.of(context).size.width;
     int maxHeight = MediaQuery.of(context).size.height.toInt();
-
-    for (int i = 0; i < 20; i++) {
-      var controller =
-          AnimationController(duration: const Duration(microseconds: 1), vsync: this)
-            ..forward();
-      var fish = Fish.create(controller, maxWidth, random.nextInt(maxWidth.toInt()).toDouble(), random.nextInt(maxHeight).toDouble());
+    for (int i = 0; i < 5; i++) {
+      var controller = AnimationController(
+          duration: const Duration(microseconds: 1), vsync: this)
+        ..forward();
+      var fish = Fish.create(
+          controller,
+          maxWidth,
+          random.nextInt(maxWidth.toInt()).toDouble(),
+          random.nextInt(maxHeight).toDouble());
       controller.addListener(() {
         if (fish.controller.isCompleted) {
           setState(() {});
@@ -74,19 +79,30 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       });
       setState(() {});
       fishes.add(fish);
+      setTargetFish();
     }
   }
 
-  void removeFish() {
-    final removeItemIndex = random.nextInt(fishes.length);
+  void setTargetFish() {
+    final randomItemIndex = random.nextInt(fishes.length);
+    var fish = fishes.elementAt(randomItemIndex);
     setState(() {
-      fishes.removeAt(removeItemIndex);
+      targetFishId = fish.id;
+    });
+  }
+
+  void removeFish() {
+    setState(() {
+      _visible = !_visible;
+      Future.delayed(const Duration(seconds: 1), () {
+        fishes.removeWhere((item) => item.id == targetFishId);
+
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         Container(
@@ -112,18 +128,22 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
                     fit: BoxFit.contain,
                   ),
                 )),
-            ...fishes.map((fish) => AnimatedBuilder(
-                  animation: fish.controller,
-                  builder: (context, child) => Transform.translate(
-                    offset:
-                        Offset(fish.offsetX - 50, fish.offsetY -50),
-                    child: child,
-                  ),
-                  child: const Image(
-                    image: AssetImage('images/fish.gif'),
-                    height: 100,
-                    width: 100,
-                    fit: BoxFit.cover,
+            ...fishes.map((fish) => AnimatedOpacity(
+                  opacity: !_visible && fish.id == targetFishId ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 500),
+                  child: AnimatedBuilder(
+                    animation: fish.controller,
+                    builder: (context, child) => Transform.translate(
+                      offset: Offset(
+                          fish.offsetX - 50, fish.offsetY - 50),
+                      child: child,
+                    ),
+                    child: const Image(
+                      image: AssetImage('images/fish.gif'),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 )),
           ],
