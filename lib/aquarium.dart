@@ -29,7 +29,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     Future.delayed(const Duration(seconds: 1), () {
       addFish();
     });
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       removeFish();
     });
   }
@@ -94,19 +94,18 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   void removeFish() {
     setState(() {
       _visible = !_visible;
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 2), () {
         fishes.removeWhere((item) => item.id == targetFishId);
       });
+
+      if (fishes.length > 5) {
+        Future.delayed(const Duration(seconds: 2), () {
+          setTargetFish();
+          removeFish();
+        });
+      }
     });
   }
-
-  // double fadeFish(int id, double value, double offset) {
-  //   if (targetFishId == id) {
-  //     return shake(value) * offset;
-  //   } else {
-  //    return offset - 50;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
