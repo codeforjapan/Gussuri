@@ -27,6 +27,9 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     Future.delayed(const Duration(seconds: 1), () {
       addFish();
     });
+    Future.delayed(const Duration(seconds: 10), () {
+      removeFish();
+    });
   }
 
   @override
@@ -72,6 +75,13 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       setState(() {});
       fishes.add(fish);
     }
+  }
+
+  void removeFish() {
+    final removeItemIndex = random.nextInt(fishes.length);
+    setState(() {
+      fishes.removeAt(removeItemIndex);
+    });
   }
 
   @override
