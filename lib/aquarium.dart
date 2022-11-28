@@ -54,12 +54,14 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   }
 
   void addFish() {
-    double maxWidth = MediaQuery.of(context).size.width.toDouble();
-    for (int i = 0; i < 50; i++) {
+    double maxWidth = MediaQuery.of(context).size.width;
+    int maxHeight = MediaQuery.of(context).size.height.toInt();
+
+    for (int i = 0; i < 20; i++) {
       var controller =
           AnimationController(duration: const Duration(microseconds: 1), vsync: this)
             ..forward();
-      var fish = Fish.create(controller, maxWidth);
+      var fish = Fish.create(controller, maxWidth, random.nextInt(maxWidth.toInt()).toDouble(), random.nextInt(maxHeight).toDouble());
       controller.addListener(() {
         if (fish.controller.isCompleted) {
           setState(() {});
@@ -74,8 +76,6 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    int maxHeight = MediaQuery.of(context).size.height.toInt();
-    int maxWidth = MediaQuery.of(context).size.width.toInt();
 
     return Stack(
       children: [
@@ -106,7 +106,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
                   animation: fish.controller,
                   builder: (context, child) => Transform.translate(
                     offset:
-                        Offset(random.nextInt(maxWidth).toDouble(), random.nextInt(maxHeight).toDouble()),
+                        Offset(fish.offsetX - 50, fish.offsetY -50),
                     child: child,
                   ),
                   child: const Image(
