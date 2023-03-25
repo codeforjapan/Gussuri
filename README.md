@@ -51,6 +51,6 @@ $ firebase login
 
 $ dart pub global activate flutterfire_cli
 # https://console.firebase.google.com/ このページで対象の projectのidを選択する
-$ flutterfire configure --project=${project id}
+$ flutterfire configure --project=Gussuri-dev
 ```
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
