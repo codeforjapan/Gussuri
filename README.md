@@ -46,11 +46,12 @@ $ flutter run -d ${deviceのid} # この場合、93E3B70F-B378-4295-BC3E-5DAA495
 ## firebaseとの初期接続時
 *事前にfirebaseの環境のご用意と[firebase CLI](https://firebase.google.com/docs/cli?hl=ja)をインストールしている必要があります。
 ```shell
-# それぞれの開発環境で、firestoreセットアップをして以下のコマンドでログインをする
+# それぞれの開発環境で、firestoreセットアップをして以下のコマンドでログインをする　
 $ firebase login
 
 $ dart pub global activate flutterfire_cli
 # https://console.firebase.google.com/ このページで対象の projectのidを選択する
+# Gussuri-devの環境は、Code for japanが開発用に用意したプロジェクトです。必要な場合は招待して対応します
 $ flutterfire configure --project=Gussuri-dev
 ```
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
