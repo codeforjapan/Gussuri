@@ -44,7 +44,8 @@ $ flutter run -d ${deviceのid} # この場合、93E3B70F-B378-4295-BC3E-5DAA495
 * Visual Studio Code　https://code.visualstudio.com/
 
 ## firebaseとの初期接続時
-*事前に[firebase CLI](https://firebase.google.com/docs/cli?hl=ja)をインストールしている必要があります
+*firebaseの環境はご自身で用意いただく必要があります。
+*事前に[firebase CLI](https://firebase.google.com/docs/cli?hl=ja)をインストールしている必要があります。
 ```shell
 # それぞれの開発環境で、firestoreセットアップをして以下のコマンドでログインをする
 $ firebase login
