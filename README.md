@@ -44,7 +44,7 @@ $ flutter run -d ${deviceのid} # この場合、93E3B70F-B378-4295-BC3E-5DAA495
 * Visual Studio Code　https://code.visualstudio.com/
 
 ## firebaseとの初期接続時
-https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
+*事前に[firebase CLI](https://firebase.google.com/docs/cli?hl=ja)をインストールしている必要があります
 ```shell
 # それぞれの開発環境で、firestoreセットアップをして以下のコマンドでログインをする
 $ firebase login
@@ -52,3 +52,4 @@ $ firebase login
 $ dart pub global activate flutterfire_cli
 $ flutterfire configure
 ```
+https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
