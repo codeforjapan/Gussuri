@@ -36,6 +36,13 @@ $ fvm flutter run -d ${deviceのid} # この場合、93E3B70F-B378-4295-BC3E-5DA
 
 ## 推奨環境
 * AndroidStudio　https://developer.android.com/studio
+```
+Android Studio の設定例
+
+Preferences > Language & Frameworks > Flutter の 「SDK」内 Flutter SDK path　に以下のパスを入力します。
+/{プロジェクトまでのパス}/.fvm/flutter_sdk
+```
+
 * Visual Studio Code　https://code.visualstudio.com/
 
 ## firebaseとの初期接続時
