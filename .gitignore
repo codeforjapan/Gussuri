@@ -69,3 +69,4 @@ functions/package-lock.json
 functions/package.json
 assets/
 lib_copy/
+.fvm/flutter_sdk
