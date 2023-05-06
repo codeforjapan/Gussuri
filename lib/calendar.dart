@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gussuri/component/TitleBox.dart';
 import 'package:gussuri/component/header.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/sleepyEdit.dart';
@@ -85,6 +86,7 @@ class _CalendarState extends State<Calendar> {
         appBar: const Header(),
         body: Column(
           children: [
+            TitleBox(text: '睡眠記録カレンダー'),
             TableCalendar(
               firstDay: kFirstDay,
               lastDay: kToday,

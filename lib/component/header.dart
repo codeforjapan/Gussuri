@@ -4,7 +4,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   const Header({Key? key}) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kTextTabBarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             'gussuri',
             style: TextStyle(color: Colors.white),
           ),
+      elevation: 0.0,
+      automaticallyImplyLeading: false,
     );
   }
 }

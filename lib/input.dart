@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/calendar.dart';
+import 'package:gussuri/component/TitleBox.dart';
 import 'package:gussuri/component/header.dart';
+import 'package:intl/intl.dart';
 
 class Input extends StatefulWidget {
   const Input({Key? key}) : super(key: key);
@@ -11,6 +13,9 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +60,7 @@ class _InputState extends State<Input> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            TitleBox(text: formattedDate),
             Expanded(
                 child: SingleChildScrollView(
                         child: Column(
