@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/calendar.dart';
+import 'package:gussuri/component/header.dart';
 
 class Input extends StatefulWidget {
   const Input({Key? key}) : super(key: key);
@@ -14,17 +15,7 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFAFAFA),
-        centerTitle: false,
-        title: Padding(
-            padding: EdgeInsets.only(left: 18.0.w),
-            child: const Text(
-              '',
-              style: TextStyle(color: Colors.black),
-            )),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: const Header(),
       bottomNavigationBar: BottomAppBar(
         color: const Color(0xFF424242),
         child: SizedBox(
