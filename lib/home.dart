@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
-import './questionnaire.dart';
+import 'package:gussuri/input.dart';
 import 'dart:math' as math;
 
 class Home extends StatefulWidget {
@@ -79,7 +79,6 @@ class _HomeState extends State<Home> {
           height: 65.h,
           child: Center(
             child: ElevatedButton(
-              child: const Text('睡眠記録シート'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(300.w, 50.h),
                 backgroundColor: Colors.white,
@@ -89,6 +88,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Calendar()));
               },
+              child: const Text('睡眠記録シート'),
             ),
           ),
         ),
@@ -131,7 +131,7 @@ class _HomeState extends State<Home> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const Questionnaire()));
+                                          const Input()));
                             }
                           : null,
                       child: const Text('睡眠記録'),
