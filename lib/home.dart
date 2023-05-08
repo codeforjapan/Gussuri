@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
+import 'package:gussuri/component/GradientBox.dart';
+import 'package:gussuri/component/header.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
@@ -61,17 +63,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFAFAFA),
-        centerTitle: false,
-        title: Padding(
-            padding: EdgeInsets.only(left: 18.0.w),
-            child: const Text(
-              'ホーム',
-              style: TextStyle(color: Colors.black),
-            )),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: const Header(),
       bottomNavigationBar: BottomAppBar(
         color: const Color(0xFF424242),
         child: SizedBox(
@@ -93,20 +85,7 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color(0xffffefc7),
-                  Color(0xffa4e9ff),
-                  Color(0xff6cb9ff),
-                  Color(0xff180077),
-                  Color(0xff001637),
-        ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
-            )
-        ),
+      body: GradientBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -117,21 +96,19 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.all(30.h),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(280.w, 80.h),
-                        backgroundColor: const Color(0xffFFD069),
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50)
-                        ),
-                        textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
-                      ),
+                          minimumSize: Size(280.w, 80.h),
+                          backgroundColor: const Color(0xffFFD069),
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          textStyle: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
                       onPressed: _checkLastNightSleep == false
                           ? () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Input()));
+                                      builder: (context) => const Input()));
                             }
                           : null,
                       child: const Text('睡眠記録'),
@@ -140,18 +117,19 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.symmetric(vertical: 0.h),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(280.w, 50.h),
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)
-                      ),
-
+                          minimumSize: Size(280.w, 50.h),
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          textStyle: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const Calendar()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Calendar()));
                       },
                       icon: const Icon(Icons.calendar_month),
                       label: const Text('睡眠記録カレンダー'),
@@ -159,7 +137,9 @@ class _HomeState extends State<Home> {
               ],
             )),
             Container(
-              decoration: BoxDecoration(color: const Color(0xFFFFFFFF), borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(20)),
               padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 10.h),
               margin: EdgeInsets.only(bottom: 80.h, left: 20.w, right: 20.w),
               width: double.infinity,
