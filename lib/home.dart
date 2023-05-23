@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
 import 'package:gussuri/component/GradientBox.dart';
-import 'package:gussuri/component/header.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
@@ -63,7 +62,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: const Header(),
       body: GradientBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
