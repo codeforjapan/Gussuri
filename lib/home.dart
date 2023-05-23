@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
 import 'package:gussuri/component/GradientBox.dart';
-import 'package:gussuri/component/header.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
@@ -63,28 +62,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: const Header(),
-      bottomNavigationBar: BottomAppBar(
-        color: const Color(0xFF424242),
-        child: SizedBox(
-          width: double.infinity,
-          height: 65.h,
-          child: Center(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(300.w, 50.h),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Calendar()));
-              },
-              child: const Text('睡眠記録シート'),
-            ),
-          ),
-        ),
-      ),
       body: GradientBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
