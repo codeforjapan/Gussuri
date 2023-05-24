@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gussuri/component/TitleBox.dart';
+import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/sleepyEdit.dart';
 import 'package:intl/intl.dart';

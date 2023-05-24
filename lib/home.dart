@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gussuri/calendar.dart';
-import 'package:gussuri/component/GradientBox.dart';
+import 'package:gussuri/component/gradient_box.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gussuri/calendar.dart';
-import 'package:gussuri/component/GradientBox.dart';
-import 'package:gussuri/component/TitleBox.dart';
-import 'package:gussuri/component/header.dart';
+import 'package:gussuri/component/gradient_box.dart';
+import 'package:gussuri/component/title_box.dart';
 import 'package:intl/intl.dart';
 
 class Input extends StatefulWidget {
@@ -20,30 +18,6 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const Header(),
-        bottomNavigationBar: BottomAppBar(
-          color: const Color(0xFF424242),
-          child: SizedBox(
-            width: double.infinity,
-            height: 65.h,
-            child: Center(
-              child: ElevatedButton(
-                child: const Text('睡眠記録シート'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(300.w, 50.h),
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Calendar()));
-                },
-              ),
-            ),
-          ),
-        ),
         body: SingleChildScrollView(
             child: GradientBox(
                 child: Column(
