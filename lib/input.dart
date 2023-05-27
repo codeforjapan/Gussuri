@@ -83,18 +83,24 @@ class _InputState extends State<Input> {
                       });
                     })),
             InputCard(
-                title: '布団に入った時間',
-                form: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(bottom: 10.h),
-                    child: TimePickerWidget(
-                        key: timePickerKeySecond,
-                        value: DateTime.now(),
-                        onChanged: (value) => {
-                              setState(() {
-                                _sleepyData["bed_time"] = value;
-                              })
-                            }))),
+              title: '布団に入った時間',
+              form: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(bottom: 10.h),
+                  child: TimePickerWidget(
+                      key: timePickerKeySecond,
+                      value: DateTime.now(),
+                      onChanged: (value) => {
+                        setState(() {
+                          _sleepyData["bed_time"] = value;
+                        })
+                      }))
+            ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              padding: EdgeInsets.only(left:20.w),
+              child: Image.asset('images/baku-kun-2.png'),
+            )
           ],
         ))));
   }
