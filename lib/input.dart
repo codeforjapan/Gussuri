@@ -86,6 +86,11 @@ class _InputState extends State<Input> {
                       );
                     }).toList(),
                   )),
+              Container(
+                alignment: Alignment.bottomLeft,
+                padding: EdgeInsets.only(left:20.w),
+                child: Image.asset('images/baku-kun-2.png'),
+              )
             ]),
           ],
         ))));

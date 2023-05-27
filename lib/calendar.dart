@@ -139,6 +139,11 @@ class _CalendarState extends State<Calendar> {
                   );
                 },
               ),
+            ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              padding: const EdgeInsets.only(left:20),
+              child: Image.asset('images/baku-kun-1.png'),
             )
           ],
         ));

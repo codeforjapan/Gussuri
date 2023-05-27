@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: GradientBox(
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -118,12 +119,13 @@ class _HomeState extends State<Home> {
                   color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(20)),
               padding: EdgeInsets.fromLTRB(15.w, 25.h, 15.w, 10.h),
-              margin: EdgeInsets.only(bottom: 80.h, left: 20.w, right: 20.w),
+              margin: EdgeInsets.only(bottom: 0.h, left: 20.w, right: 20.w),
               width: double.infinity,
               height: 130.h,
               child: Column(
                 children: [
                   Container(
+
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: const Text('gussuriチャレンジ',
@@ -135,6 +137,11 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              padding: EdgeInsets.only(left:20.w),
+              child: Image.asset('images/baku-kun-1.png'),
+            )
           ],
         ),
       ),
