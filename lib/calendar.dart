@@ -6,6 +6,7 @@ import 'package:gussuri/sleepyEdit.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
+import 'dart:math';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -52,6 +53,20 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
+  String _getImagePath(DateTime targetDay) {
+    // TODO: その日の記録があるかどうかチェック
+    var random = Random();
+    int scoreNumber = random.nextInt(10);
+    bool result = random.nextBool();
+
+    if (result) {
+      return 'images/evaluation_default.jpg';
+    } else {
+      return 'images/evaluation_$scoreNumber.jpg';
+    }
+
+  }
+
   Future<void> setEvents() async {
     for (var index = 0; index < 2; index++) {
       DateTime _date = DateTime(kFirstDay.year, kFirstDay.month + index);
@@ -85,32 +100,66 @@ class _CalendarState extends State<Calendar> {
         body: Column(
           children: [
             const TitleBox(text: '睡眠記録カレンダー'),
-            TableCalendar(
-              firstDay: kFirstDay,
-              lastDay: kToday,
-              focusedDay: _focusedDay,
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                leftChevronIcon: _leftChevron,
-                rightChevronIcon: _rightChevron,
-                titleCentered: true,
-              ),
-              locale: 'ja_JP',
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              eventLoader: _getEventsForDay,
-              onDaySelected: _onDaySelected,
-              onPageChanged: (focusedDay) {
-                setState(() {
-                  _rightChevron = isSameMonth(kToday, focusedDay)
-                      ? const Icon(Icons.chevron_right, color: Colors.grey)
-                      : const Icon(Icons.chevron_right);
-                  _leftChevron = isSameMonth(kFirstDay, focusedDay)
-                      ? const Icon(Icons.chevron_left, color: Colors.grey)
-                      : const Icon(Icons.chevron_left);
-                });
-                _focusedDay = focusedDay;
+        SizedBox(
+          height: 400,
+          child: TableCalendar(
+            shouldFillViewport: true,
+            firstDay: kFirstDay,
+            lastDay: kToday,
+            focusedDay: _focusedDay,
+            headerStyle: HeaderStyle(
+              formatButtonVisible: false,
+              leftChevronIcon: _leftChevron,
+              rightChevronIcon: _rightChevron,
+              titleCentered: true,
+            ),
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, day, focusedDay) {
+                final imgPath = _getImagePath(day);
+
+                return SizedBox(
+                  width: 200,
+                  height: 250,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '${day.day}',
+                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: ClipOval(
+                              child: Image(
+                                image: AssetImage(imgPath),
+                                width: 28,
+                                height: 28,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                );
               },
             ),
+            locale: 'ja_JP',
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            eventLoader: _getEventsForDay,
+            onDaySelected: _onDaySelected,
+            onPageChanged: (focusedDay) {
+              setState(() {
+                _rightChevron = isSameMonth(kToday, focusedDay)
+                    ? const Icon(Icons.chevron_right, color: Colors.grey)
+                    : const Icon(Icons.chevron_right);
+                _leftChevron = isSameMonth(kFirstDay, focusedDay)
+                    ? const Icon(Icons.chevron_left, color: Colors.grey)
+                    : const Icon(Icons.chevron_left);
+              });
+              _focusedDay = focusedDay;
+            },
+          ),
+        ),
             const SizedBox(height: 8.0),
             Expanded(
               child: ValueListenableBuilder<List<Event>>(
