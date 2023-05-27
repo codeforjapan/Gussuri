@@ -52,16 +52,15 @@ class SlideButtonState extends State<SlideButton>
                       });
                     },
                     style:
-                        ElevatedButton.styleFrom(shape: const CircleBorder()),
+                        ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            backgroundColor: Colors.white
+                        ),
                     child: ClipOval(
-                      child: Image(
-                        image: AssetImage('images/evaluation_$index.jpg'),
-                        color: isSelected[index]
-                            ? Colors.white.withOpacity(0)
-                            : Colors.white.withOpacity(0.6),
-                        colorBlendMode: BlendMode.overlay,
-                        fit: BoxFit.contain,
-                      ),
+                        child: Opacity(
+                          opacity: isSelected[index] ? 1 : 0.5,
+                          child: Image.asset('images/evaluation_$index.jpg'),
+                        )
                     ),
                   ),
                   Text(
@@ -69,7 +68,7 @@ class SlideButtonState extends State<SlideButton>
                     style: TextStyle(
                         color: isSelected[index]
                             ? Colors.black.withOpacity(1)
-                            : Colors.black.withOpacity(0.6)),
+                            : Colors.black.withOpacity(0.4)),
                   )
                 ],
               );
