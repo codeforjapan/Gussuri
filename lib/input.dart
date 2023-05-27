@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/TimePicker.dart';
+import 'package:gussuri/component/awake_form.dart';
 import 'package:gussuri/component/gradient_box.dart';
 import 'package:gussuri/component/image_buttons.dart';
 import 'package:gussuri/component/input_card.dart';
@@ -73,6 +74,18 @@ class _InputState extends State<Input> {
                         _sleepyData['SOL'] = value;
                       });
                     })),
+            AwakeForm(
+              onChangedTimes: (value) {
+                setState(() {
+                  _sleepyData['NOA'] = value;
+                });
+              },
+              onChangedSlide: (value) {
+                setState(() {
+                  _sleepyData['WASO'] = value;
+                });
+              },
+            ),
             InputCard(
                 title: '布団に入ってから眠りにつくまで',
                 form: ImageButton(
