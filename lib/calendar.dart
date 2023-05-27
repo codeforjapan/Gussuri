@@ -21,6 +21,7 @@ class _CalendarState extends State<Calendar> {
   DateTime? _selectedDay;
   Icon _rightChevron = const Icon(Icons.chevron_right, color: Colors.grey);
   Icon _leftChevron = const Icon(Icons.chevron_left);
+  Color selectedColor = const Color.fromRGBO(177, 208, 255, 1);
 
   @override
   void initState() {
@@ -115,6 +116,123 @@ class _CalendarState extends State<Calendar> {
             ),
             calendarBuilders: CalendarBuilders(
               defaultBuilder: (context, day, focusedDay) {
+                return SizedBox(
+                  width: 200,
+                  height: 250,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '${day.day}',
+                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: const ClipOval(
+                              child: Image(
+                                image: AssetImage('images/evaluation_default.jpg'),
+                                width: 28,
+                                height: 28,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+              rangeHighlightBuilder: (context, day, focusedDay) {
+                final imgPath = _getImagePath(day);
+
+                return SizedBox(
+                  width: 200,
+                  height: 250,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '${day.day}',
+                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: ClipOval(
+                              child: Image(
+                                image: AssetImage(imgPath),
+                                width: 28,
+                                height: 28,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+              todayBuilder: (context, day, focusedDay) {
+                final imgPath = _getImagePath(day);
+
+                return SizedBox(
+                  width: 200,
+                  height: 250,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          '${day.day}',
+                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: ClipOval(
+                              child: Image(
+                                image: AssetImage(imgPath),
+                                width: 28,
+                                height: 28,
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+              selectedBuilder: (context, day, focusedDay) {
+                final imgPath = _getImagePath(day);
+
+                return SizedBox(
+                  width: 200,
+                  height: 250,
+                  child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: selectedColor,
+                        borderRadius: BorderRadius.circular(14.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            '${day.day}',
+                            style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: ClipOval(
+                                child: Image(
+                                  image: AssetImage(imgPath),
+                                  width: 28,
+                                  height: 28,
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+
+                  ),
+                );
+              },
+              markerBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
 
                 return SizedBox(
