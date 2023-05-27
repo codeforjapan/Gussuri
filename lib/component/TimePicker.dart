@@ -17,15 +17,9 @@ class TimePickerState extends State<TimePickerWidget> {
   @override
   void initState() {
     super.initState();
-    dateTime = DateTime.now();
     if(widget.onChanged != null) {
       submitOnChanged = widget.onChanged!;
     }
-  }
-
-  @override
-  void didUpdateWidget(TimePickerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
     dateTime = widget.value;
   }
 
