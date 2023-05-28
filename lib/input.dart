@@ -6,6 +6,7 @@ import 'package:gussuri/component/gradient_box.dart';
 import 'package:gussuri/component/image_buttons.dart';
 import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
+import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,7 @@ class _InputState extends State<Input> {
     "SOL": "",
     "NOA": null
   };
+  bool submit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class _InputState extends State<Input> {
               onChanged: (value) {
                 setState(() {
                   _sleepyData['dysfunction'] = value;
+                  submit = true;
                 });
               },
             ),
@@ -96,23 +99,30 @@ class _InputState extends State<Input> {
                       });
                     })),
             InputCard(
-              title: '布団に入った時間',
-              form: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(bottom: 10.h),
-                  child: TimePickerWidget(
-                      key: timePickerKeySecond,
-                      value: DateTime.now(),
-                      onChanged: (value) => {
-                        setState(() {
-                          _sleepyData["bed_time"] = value;
-                        })
-                      }))
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(left:20.w),
-              child: Image.asset('images/baku-kun-2.png'),
+                title: '布団に入った時間',
+                form: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 10.h),
+                    child: TimePickerWidget(
+                        key: timePickerKeySecond,
+                        value: DateTime.now(),
+                        onChanged: (value) => {
+                              setState(() {
+                                _sleepyData["bed_time"] = value;
+                              })
+                            }))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 20.w),
+                  child: Image.asset('images/baku-kun-2.png'),
+                ),
+                SubmitButton(
+                  buttonText: '入力完了',
+                  onPressed: submit ? () {} : null,
+                )
+              ],
             )
           ],
         ))));
