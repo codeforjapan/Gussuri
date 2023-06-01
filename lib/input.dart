@@ -20,16 +20,23 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
   final Map<String, dynamic> _sleepyData = {
-    "bed_time": "",
-    "comments": "",
+    "bed_time": DateTime.now(),
     "TASAFA": "",
-    "get_up_time": "",
-    "dysfunction": null,
+    "get_up_time": DateTime.now(),
+    "dysfunction": 4,
     "WASO": null,
     "SOL": "",
     "NOA": null
   };
-  bool submit = false;
+
+  bool _checkSubmit() {
+    for (final value in _sleepyData.values) {
+      if (value == null || value == "") {
+        return false;
+      }
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +58,6 @@ class _InputState extends State<Input> {
               onChanged: (value) {
                 setState(() {
                   _sleepyData['dysfunction'] = value;
-                  submit = true;
                 });
               },
             ),
@@ -120,7 +126,9 @@ class _InputState extends State<Input> {
                 ),
                 SubmitButton(
                   buttonText: '入力完了',
-                  onPressed: submit ? () {} : null,
+                  onPressed: _checkSubmit() ? () {
+                    print(_sleepyData);
+                  } : null,
                 )
               ],
             )
