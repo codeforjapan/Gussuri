@@ -10,7 +10,7 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 20.w),
+      padding: EdgeInsets.only(right: 20.w, top: 20.h, bottom: 10.h),
       child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
