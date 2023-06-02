@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/image_buttons.dart';
@@ -46,7 +45,7 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            margin: EdgeInsets.only(right: 10.w, left: 10.w, bottom: 5.h),
             child: SizedBox(
               height: 40.h,
               child: ListView.separated(
@@ -59,13 +58,22 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
                       setState(() {
                         isSelected = List.generate(11, (index) => false);
                         isSelected[index] = true;
-                        isChecked = true;
+                        if (index == 0) {
+                          submitOnChangedSlide('0');
+                          isChecked = false;
+                        } else {
+                          isChecked = true;
+                        }
                         submitOnChangedTimes(index);
                       });
                     },
-                    style:
-                    ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black, backgroundColor: Colors.white
+                    style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                      side: BorderSide(
+                        width: 5.0,
+                        color: isSelected[index] ? const Color(0xFF00475C) :const Color(0xFFEFEFEF)
+                      )
                     ),
                     child: Text('$index'),
                   );
@@ -76,23 +84,26 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h),
-              child: Opacity(
-                opacity: isChecked ? 1 : 0.5,
-                child: const Text(
-                  '複数回の場合は平均を教えてください',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              )),
-          ImageButton(
-            disabled: !isChecked,
-              onChanged: (value) {
-            setState(() {
-              submitOnChangedSlide(value);
-            });
-          })
+          Visibility(
+            visible: isChecked,
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h),
+                child: Opacity(
+                  opacity: isChecked ? 1 : 0.5,
+                  child: const Text(
+                    '複数回の場合は平均を教えてください',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                )),
+          ),
+          Visibility(
+              visible: isChecked,
+              child: ImageButton(onChanged: (value) {
+                setState(() {
+                  submitOnChangedSlide(value);
+                });
+              }))
         ]));
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +16,14 @@ class ImageButtonState extends State<ImageButton>
   List<bool> isSelected = List.generate(5, (i) => false);
   late final Function(String?) submitOnChanged;
   bool disabled = false;
-  final List<String> values = [
-    'すぐ\n0-15',
-    'すこし\n16-30',
-    'まぁまぁ\n31-45',
-    'しばらく\n46-60',
-    'めっちゃ\n61-'
-  ];
+
+  final Map<String, String> _values = {
+    'すぐ\n0-15' : '0-15',
+    'すこし\n16-30': '16-30',
+    'まぁまぁ\n31-45': '31-45',
+    'しばらく\n46-60': '46-60',
+    'めっちゃ\n61-': '61-'
+  };
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class ImageButtonState extends State<ImageButton>
           scrollDirection: Axis.horizontal,
           itemCount: isSelected.length,
           itemBuilder: (context, index) {
+            var key = _values.keys.elementAt(index);
             return Column(
               children: [
                 ElevatedButton(
@@ -52,7 +53,7 @@ class ImageButtonState extends State<ImageButton>
                           setState(() {
                             isSelected = List.generate(5, (index) => false);
                             isSelected[index] = true;
-                            submitOnChanged(values[index]);
+                            submitOnChanged(_values[key]);
                           });
                         }
                       : null,
@@ -65,7 +66,7 @@ class ImageButtonState extends State<ImageButton>
                           child: Image.asset('images/time$index.png'))),
                 ),
                 Text(
-                  values[index],
+                  key,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: isSelected[index]
