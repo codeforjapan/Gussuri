@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
@@ -63,15 +64,12 @@ class _CalendarState extends State<Calendar> {
   }
 
   String _getImagePath(DateTime targetDay) {
-    // TODO: その日の記録があるかどうかチェック
-    var random = Random();
-    int scoreNumber = random.nextInt(10);
-    bool result = random.nextBool();
-
-    if (result) {
+    final events = _getEventsForDay(targetDay);
+    if (events.isEmpty) {
       return 'images/evaluation_default.jpg';
     } else {
-      return 'images/evaluation_$scoreNumber.jpg';
+      var dysfunction = events.firstWhere( (e) => e.dysfunction);
+      return 'images/evaluation_$dysfunction.jpg';
     }
   }
 
@@ -131,22 +129,20 @@ class _CalendarState extends State<Calendar> {
                     // NOTE: defaultの日付が出てしまうため
                     return const Text('');
                   },
+                  todayBuilder: (context, day, focusedDay) {
+                    // NOTE: defaultの日付が出てしまうため
+                    return const Text('');
+                  },
                   rangeHighlightBuilder: (context, day, focusedDay) {
                     final imgPath = _getImagePath(day);
                     final today = DateTime.now();
                     final todayDate =
                         DateTime(today.year, today.month, today.day);
                     final dayDate = DateTime(day.year, day.month, day.day);
-                    if (dayDate.isAfter(todayDate)) {
-                      return null;
+                    if (dayDate.isBefore(todayDate) || dayDate == todayDate) {
+                      return CustomCel(imgPath: imgPath, day: day.day);
                     }
-
-                    return CustomCel(imgPath: imgPath, day: day.day);
-                  },
-                  todayBuilder: (context, day, focusedDay) {
-                    final imgPath = _getImagePath(day);
-
-                    return CustomCel(imgPath: imgPath, day: day.day);
+                    return null;
                   },
                   selectedBuilder: (context, day, focusedDay) {
                     final imgPath = _getImagePath(day);
