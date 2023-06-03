@@ -128,6 +128,12 @@ class _CalendarState extends State<Calendar> {
               },
               rangeHighlightBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
+                final today = DateTime.now();
+                final todayDate = DateTime(today.year, today.month, today.day);
+                final dayDate = DateTime(day.year, day.month, day.day);
+                if (dayDate.isAfter(todayDate)) {
+                  return null;
+                }
 
                 return CustomCel(imgPath: imgPath, day: day.day);
               },
