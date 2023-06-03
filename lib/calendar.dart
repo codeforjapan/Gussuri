@@ -70,16 +70,16 @@ class _CalendarState extends State<Calendar> {
 
   Future<void> setEvents() async {
     for (var index = 0; index < 2; index++) {
-      DateTime _date = DateTime(kFirstDay.year, kFirstDay.month + index);
+      DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);
       final orderSnap = await FirebaseFirestore.instance
           .collection(await DeviceData.getDeviceUniqueId())
-          .doc('${_date.year}')
-          .collection(DateFormat('MM').format(_date))
+          .doc('${date.year}')
+          .collection(DateFormat('MM').format(date))
           .get();
       orderSnap.docs.map((e) => e).forEach((res) {
         final data = res.data();
         kEvents.addAll({
-          DateTime.utc(_date.year, _date.month, int.parse(res.id)):
+          DateTime.utc(date.year, date.month, int.parse(res.id)):
           List.generate(1, (index) {
             return Event(
                 DateFormat('MM/dd H:m').format(DateTime.parse(data['bed_time'])),
@@ -116,90 +116,21 @@ class _CalendarState extends State<Calendar> {
             ),
             calendarBuilders: CalendarBuilders(
               defaultBuilder: (context, day, focusedDay) {
-                return SizedBox(
-                  width: 200,
-                  height: 250,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${day.day}',
-                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: const ClipOval(
-                              child: Image(
-                                image: AssetImage('images/evaluation_default.jpg'),
-                                width: 28,
-                                height: 28,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return CustomCel(imgPath: 'images/evaluation_default.jpg', day: day.day);
               },
               rangeHighlightBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
 
-                return SizedBox(
-                  width: 200,
-                  height: 250,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${day.day}',
-                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: ClipOval(
-                              child: Image(
-                                image: AssetImage(imgPath),
-                                width: 28,
-                                height: 28,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return CustomCel(imgPath: imgPath, day: day.day);
               },
               todayBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
 
-                return SizedBox(
-                  width: 200,
-                  height: 250,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${day.day}',
-                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: ClipOval(
-                              child: Image(
-                                image: AssetImage(imgPath),
-                                width: 28,
-                                height: 28,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return CustomCel(imgPath: imgPath, day: day.day);
               },
               selectedBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
-
+                // NOTE:選択された時だけレイアウトが違うので共通化してない
                 return SizedBox(
                   width: 200,
                   height: 250,
@@ -235,30 +166,7 @@ class _CalendarState extends State<Calendar> {
               markerBuilder: (context, day, focusedDay) {
                 final imgPath = _getImagePath(day);
 
-                return SizedBox(
-                  width: 200,
-                  height: 250,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${day.day}',
-                          style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: ClipOval(
-                              child: Image(
-                                image: AssetImage(imgPath),
-                                width: 28,
-                                height: 28,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return CustomCel(imgPath: imgPath, day: day.day);
               },
             ),
             locale: 'ja_JP',
@@ -309,5 +217,44 @@ class _CalendarState extends State<Calendar> {
             )
           ],
         ));
+  }
+}
+
+class CustomCel extends StatelessWidget {
+  final String imgPath;
+  final int day;
+
+  const CustomCel({super.key, required this.imgPath, required this.day});
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      SizedBox(
+        width: 200,
+        height: 250,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                day.toString(),
+                style: const TextStyle().copyWith(fontSize: 13.0, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 3),
+                child: ClipOval(
+                    child: Image(
+                      image: AssetImage(imgPath),
+                      width: 28,
+                      height: 28,
+                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return const Text('Image not found');
+                      }
+                    )),
+              )
+            ],
+          ),
+        ),
+      );
   }
 }
