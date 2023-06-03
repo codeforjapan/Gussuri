@@ -13,9 +13,10 @@ bool isSameMonth(DateTime? a, DateTime? b) {
 class Event {
   final String bedtime;
   final String getUpTime;
+  final int dysfunction;
   final String documentId;
 
-  const Event(this.bedtime, this.getUpTime, this.documentId);
+  const Event(this.bedtime, this.getUpTime, this.dysfunction, this.documentId);
 }
 
 final kEvents = <DateTime, List<Event>>{};

@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'input.dart';
 import 'utils.dart';
-import 'dart:math';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -68,7 +67,7 @@ class _CalendarState extends State<Calendar> {
     if (events.isEmpty) {
       return 'images/evaluation_default.jpg';
     } else {
-      var dysfunction = events.firstWhere( (e) => e.dysfunction);
+      var dysfunction = events.first.dysfunction;
       return 'images/evaluation_$dysfunction.jpg';
     }
   }
@@ -91,6 +90,7 @@ class _CalendarState extends State<Calendar> {
                     .format(DateTime.parse(data['bed_time'])),
                 DateFormat('MM/dd H:m')
                     .format(DateTime.parse(data['get_up_time'])),
+                data['dysfunction'],
                 res.reference.path);
           })
         });
