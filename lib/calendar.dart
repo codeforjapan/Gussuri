@@ -5,6 +5,7 @@ import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/sleepyEdit.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'input.dart';
 import 'utils.dart';
 import 'dart:math';
 
@@ -50,7 +51,14 @@ class _CalendarState extends State<Calendar> {
         _focusedDay = focusedDay;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      if(_getEventsForDay(selectedDay) as bool) {
+        // TODO: Edit pageへ変更
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Input()));
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Input()));
+      }
     }
   }
 
