@@ -156,6 +156,7 @@ class _CalendarState extends State<Calendar> {
                       height: 250,
                       child: Center(
                         child: Container(
+                          margin: const EdgeInsets.only(top: 2),
                           decoration: BoxDecoration(
                             color: selectedColor,
                             borderRadius: BorderRadius.circular(14.0),
@@ -170,7 +171,7 @@ class _CalendarState extends State<Calendar> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 3),
+                                padding: const EdgeInsets.only(top: 2),
                                 child: ClipOval(
                                     child: Image(
                                   image: AssetImage(imgPath),
