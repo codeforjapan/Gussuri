@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
@@ -51,12 +50,13 @@ class _CalendarState extends State<Calendar> {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
       });
+      final events = _getEventsForDay(selectedDay);
 
-      if (_getEventsForDay(selectedDay) as bool) {
-        // TODO: Edit pageへ変更
+      if (events.isEmpty) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const Input()));
       } else {
+        // TODO: Edit page用にパラメータを渡す
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const Input()));
       }
@@ -131,6 +131,10 @@ class _CalendarState extends State<Calendar> {
                     return const Text('');
                   },
                   todayBuilder: (context, day, focusedDay) {
+                    // NOTE: defaultの日付が出てしまうため
+                    return const Text('');
+                  },
+                  markerBuilder: (context, day, focusedDay) {
                     // NOTE: defaultの日付が出てしまうため
                     return const Text('');
                   },
@@ -219,6 +223,7 @@ class _CalendarState extends State<Calendar> {
                         ),
                         child: ListTile(
                           onTap: () => {
+                            // NOTE: edit page新しいのできたら
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -238,7 +243,7 @@ class _CalendarState extends State<Calendar> {
             ),
             Container(
               alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(left:20.w),
+              padding: EdgeInsets.only(left: 20.w),
               child: Image.asset('images/baku-kun-1.png'),
             )
           ],
