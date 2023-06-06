@@ -37,7 +37,7 @@ class TimePickerState extends State<TimePickerWidget> {
             setState(() => dateTime = dt);
             submitOnChanged(dt.toString());
           },
-          use24hFormat: false,
+          use24hFormat: true,
           minuteInterval: 1,
         ));
   }

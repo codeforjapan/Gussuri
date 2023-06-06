@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/sleepyEdit.dart';
@@ -234,6 +235,11 @@ class _CalendarState extends State<Calendar> {
                   );
                 },
               ),
+            ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              padding: EdgeInsets.only(left:20.w),
+              child: Image.asset('images/baku-kun-1.png'),
             )
           ],
         ));
