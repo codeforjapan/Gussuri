@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
@@ -61,8 +60,8 @@ class _CalendarState extends State<Calendar> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Edit(selectedDay, events.first.sleepyData,
-                  events.first.documentId)));
+              builder: (context) =>
+                  Edit(events.first.sleepyData, events.first.documentId)));
     }
   }
 

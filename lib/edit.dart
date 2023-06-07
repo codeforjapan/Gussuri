@@ -10,15 +10,13 @@ import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
-import 'package:gussuri/helper/DateKey.dart';
-import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class Edit extends StatefulWidget {
-  final DateTime date;
   final Map<String, dynamic> sleepyData;
-  final String deviceId;
+  final String path;
 
-  const Edit(this.date, this.sleepyData, this.deviceId, {super.key});
+  const Edit(this.sleepyData, this.path, {super.key});
 
   @override
   State<Edit> createState() => _EditState();
@@ -26,7 +24,7 @@ class Edit extends StatefulWidget {
 
 class _EditState extends State<Edit> {
   late String _formattedDate;
-  late String _deviceId;
+  List<String> _paths = [];
   late Map<String, dynamic> _sleepyData;
 
   bool _checkSubmit() {
@@ -40,10 +38,10 @@ class _EditState extends State<Edit> {
 
   Future<void> _updateSleepyData() async {
     FirebaseFirestore.instance
-        .collection(_deviceId) // コレクションID
-        .doc(DateKey.year())
-        .collection(DateKey.month())
-        .doc(DateKey.day())
+        .collection(_paths[0]) // コレクションID
+        .doc(_paths[1])
+        .collection(_paths[2])
+        .doc(_paths[3])
         .set(_sleepyData)
         .then((value) => Navigator.push(context,
             MaterialPageRoute(builder: (context) => const Calendar())));
@@ -57,20 +55,13 @@ class _EditState extends State<Edit> {
   void initState() {
     super.initState();
     _sleepyData = widget.sleepyData;
-    _deviceId = widget.deviceId;
-    _formattedDate = DateFormat('yyyy年M月d日').format(widget.date);
+    _paths = widget.path.split('/');
+    _formattedDate = '${_paths[1]}年${_paths[2]}月${_paths[3]}日';
   }
 
   @override
   Widget build(BuildContext context) {
-    const timePickerKey =
-        GlobalObjectKey<TimePickerState>('__EDIT_TIME_PICKER_KEY__');
-    const timePickerKeySecond =
-        GlobalObjectKey<TimePickerState>('__EDIT_TIME_PICKER_KEY2__');
-    const imageBoxKey =
-        GlobalObjectKey<ImageButtonState>('__EDIT_IMAGE_BOX_KEY__');
-    const imageBoxKeySecond =
-        GlobalObjectKey<ImageButtonState>('__EDIT_IMAGE_BOX_KEY2__');
+    const uuid = Uuid();
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
@@ -94,7 +85,7 @@ class _EditState extends State<Edit> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: timePickerKey,
+                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
                               value:
                                   convertDateTime(_sleepyData["get_up_time"]),
                               onChanged: (value) => {
@@ -106,7 +97,7 @@ class _EditState extends State<Edit> {
                       title: '目覚めから布団を出るまで',
                       form: ImageButton(
                           value: _sleepyData['SOL'],
-                          key: imageBoxKey,
+                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['SOL'] = value;
@@ -130,7 +121,7 @@ class _EditState extends State<Edit> {
                       title: '布団に入ってから眠りにつくまで',
                       form: ImageButton(
                           value: _sleepyData['TASAFA'],
-                          key: imageBoxKeySecond,
+                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['TASAFA'] = value;
@@ -142,7 +133,7 @@ class _EditState extends State<Edit> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: timePickerKeySecond,
+                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
                               value: convertDateTime(_sleepyData["bed_time"]),
                               onChanged: (value) => {
                                     setState(() {

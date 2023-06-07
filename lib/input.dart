@@ -13,6 +13,7 @@ import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/home.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class Input extends StatefulWidget {
   const Input({Key? key}) : super(key: key);
@@ -55,13 +56,7 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    const timePickerKey =
-        GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY__');
-    const timePickerKeySecond =
-        GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY2__');
-    const imageBoxKey = GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY__');
-    const imageBoxKeySecond =
-        GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY2__');
+    const uuid = Uuid();
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
@@ -85,7 +80,7 @@ class _InputState extends State<Input> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: timePickerKey,
+                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
                               value: DateTime.now(),
                               onChanged: (value) => {
                                     setState(() {
@@ -95,7 +90,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '目覚めから布団を出るまで',
                       form: ImageButton(
-                          key: imageBoxKey,
+                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['SOL'] = value;
@@ -116,7 +111,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '布団に入ってから眠りにつくまで',
                       form: ImageButton(
-                          key: imageBoxKeySecond,
+                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['TASAFA'] = value;
@@ -128,7 +123,7 @@ class _InputState extends State<Input> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: timePickerKeySecond,
+                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
                               value: DateTime.now(),
                               onChanged: (value) => {
                                     setState(() {

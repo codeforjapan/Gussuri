@@ -33,7 +33,7 @@ class ImageButtonState extends State<ImageButton>
     if (widget.onChanged != null) {
       submitOnChanged = widget.onChanged!;
     }
-    if (widget.value != null) {
+    if (widget.value != null && widget.value != '0') {
       isSelected[_values.values.toList().indexOf(widget.value as String)] =
           true;
     }
