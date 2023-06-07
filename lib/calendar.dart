@@ -269,7 +269,7 @@ class CustomCel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imgOpacity = imgPath == 'images/evaluation_default.jpg' ? 0.5 : 1.0;
+    final imgOpacity = imgPath == 'images/evaluation_default.jpg' ? 0.3 : 1.0;
 
     return SizedBox(
       width: 200,
