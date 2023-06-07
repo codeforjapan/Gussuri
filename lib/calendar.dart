@@ -156,6 +156,8 @@ class _CalendarState extends State<Calendar> {
                   },
                   selectedBuilder: (context, day, focusedDay) {
                     final imgPath = _getImagePath(day);
+                    final imgOpacity =
+                        imgPath == 'images/evaluation_default.jpg' ? 0.5 : 1.0;
                     // NOTE:選択された時だけレイアウトが違うので共通化してない
                     return SizedBox(
                       width: 200,
@@ -179,11 +181,14 @@ class _CalendarState extends State<Calendar> {
                               Container(
                                 padding: const EdgeInsets.only(top: 2),
                                 child: ClipOval(
-                                    child: Image(
-                                  image: AssetImage(imgPath),
-                                  width: 28,
-                                  height: 28,
-                                )),
+                                  child: Opacity(
+                                      opacity: imgOpacity,
+                                      child: Image(
+                                        image: AssetImage(imgPath),
+                                        width: 28,
+                                        height: 28,
+                                      )),
+                                ),
                               )
                             ],
                           ),
@@ -264,6 +269,8 @@ class CustomCel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imgOpacity = imgPath == 'images/evaluation_default.jpg' ? 0.5 : 1.0;
+
     return SizedBox(
       width: 200,
       height: 250,
@@ -279,14 +286,17 @@ class CustomCel extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(top: 2),
               child: ClipOval(
-                  child: Image(
-                      image: AssetImage(imgPath),
-                      width: 28,
-                      height: 28,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return const Text('Image not found');
-                      })),
+                child: Opacity(
+                    opacity: imgOpacity,
+                    child: Image(
+                        image: AssetImage(imgPath),
+                        width: 28,
+                        height: 28,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return const Text('Image not found');
+                        })),
+              ),
             )
           ],
         ),
