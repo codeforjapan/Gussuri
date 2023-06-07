@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
@@ -50,16 +51,16 @@ class _CalendarState extends State<Calendar> {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
       });
-      final events = _getEventsForDay(selectedDay);
+    }
+    final events = _getEventsForDay(selectedDay);
 
-      if (events.isEmpty) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Input()));
-      } else {
-        // TODO: Edit page用にパラメータを渡す
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Input()));
-      }
+    if (events.isEmpty) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Input()));
+    } else {
+      // TODO: Edit page用にパラメータを渡す
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Input()));
     }
   }
 
@@ -135,6 +136,10 @@ class _CalendarState extends State<Calendar> {
                     return const Text('');
                   },
                   markerBuilder: (context, day, focusedDay) {
+                    // NOTE: defaultの日付が出てしまうため
+                    return const Text('');
+                  },
+                  singleMarkerBuilder: (context, day, focusedDay) {
                     // NOTE: defaultの日付が出てしまうため
                     return const Text('');
                   },
