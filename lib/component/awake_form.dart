@@ -5,8 +5,15 @@ import 'package:gussuri/component/image_buttons.dart';
 class AwakeForm extends StatefulWidget {
   final ValueChanged<int?>? onChangedTimes;
   final ValueChanged<String?>? onChangedSlide;
+  final String? slideValue;
+  final int? timesValue;
 
-  const AwakeForm({super.key, this.onChangedTimes, this.onChangedSlide});
+  const AwakeForm(
+      {super.key,
+      this.onChangedTimes,
+      this.onChangedSlide,
+      this.slideValue,
+      this.timesValue});
 
   @override
   AwakeFormState createState() => AwakeFormState();
@@ -26,6 +33,13 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
     }
     if (widget.onChangedSlide != null) {
       submitOnChangedSlide = widget.onChangedSlide!;
+    }
+    if (widget.timesValue != null) {
+      int times = widget.timesValue as int;
+      isSelected[times] = true;
+      if (times > 0) {
+        isChecked = true;
+      }
     }
   }
 
@@ -70,11 +84,11 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.black,
                         backgroundColor: Colors.white,
-                      side: BorderSide(
-                        width: 5.0,
-                        color: isSelected[index] ? const Color(0xFF00475C) :const Color(0xFFEFEFEF)
-                      )
-                    ),
+                        side: BorderSide(
+                            width: 5.0,
+                            color: isSelected[index]
+                                ? const Color(0xFF00475C)
+                                : const Color(0xFFEFEFEF))),
                     child: Text('$index'),
                   );
                 },
@@ -99,11 +113,13 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
           ),
           Visibility(
               visible: isChecked,
-              child: ImageButton(onChanged: (value) {
-                setState(() {
-                  submitOnChangedSlide(value);
-                });
-              }))
+              child: ImageButton(
+                  value: widget.slideValue,
+                  onChanged: (value) {
+                    setState(() {
+                      submitOnChangedSlide(value);
+                    });
+                  }))
         ]));
   }
 }

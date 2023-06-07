@@ -63,7 +63,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: GradientBox(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -125,7 +124,6 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Container(
-
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: const Text('gussuriチャレンジ',
@@ -139,7 +137,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.bottomLeft,
-              padding: EdgeInsets.only(left:20.w),
+              padding: EdgeInsets.only(left: 20.w),
               child: Image.asset('images/baku-kun-1.png'),
             )
           ],

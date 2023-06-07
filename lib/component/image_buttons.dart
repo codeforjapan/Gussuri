@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class ImageButton extends StatefulWidget {
   final ValueChanged<String?>? onChanged;
+  final String? value;
   final bool disabled;
 
-  const ImageButton({super.key, this.onChanged, this.disabled = false});
+  const ImageButton(
+      {super.key, this.onChanged, this.disabled = false, this.value});
 
   @override
   ImageButtonState createState() => ImageButtonState();
@@ -18,7 +20,7 @@ class ImageButtonState extends State<ImageButton>
   bool disabled = false;
 
   final Map<String, String> _values = {
-    'すぐ\n0-15' : '0-15',
+    'すぐ\n0-15': '0-15',
     'すこし\n16-30': '16-30',
     'まぁまぁ\n31-45': '31-45',
     'しばらく\n46-60': '46-60',
@@ -30,6 +32,10 @@ class ImageButtonState extends State<ImageButton>
     super.initState();
     if (widget.onChanged != null) {
       submitOnChanged = widget.onChanged!;
+    }
+    if (widget.value != null) {
+      isSelected[_values.values.toList().indexOf(widget.value as String)] =
+          true;
     }
   }
 

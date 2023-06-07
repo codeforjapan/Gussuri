@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
+import 'package:gussuri/edit.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/sleepyEdit.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,6 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     super.initState();
-
     setEvents();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
@@ -58,9 +58,11 @@ class _CalendarState extends State<Calendar> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Input()));
     } else {
-      // TODO: Edit page用にパラメータを渡す
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Input()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Edit(selectedDay, events.first.sleepyData,
+                  events.first.documentId)));
     }
   }
 
@@ -69,7 +71,7 @@ class _CalendarState extends State<Calendar> {
     if (events.isEmpty) {
       return 'images/evaluation_default.jpg';
     } else {
-      var dysfunction = events.first.dysfunction;
+      var dysfunction = events.first.sleepyData['dysfunction'];
       return 'images/evaluation_$dysfunction.jpg';
     }
   }
@@ -87,13 +89,7 @@ class _CalendarState extends State<Calendar> {
         kEvents.addAll({
           DateTime.utc(date.year, date.month, int.parse(res.id)):
               List.generate(1, (index) {
-            return Event(
-                DateFormat('MM/dd H:m')
-                    .format(DateTime.parse(data['bed_time'])),
-                DateFormat('MM/dd H:m')
-                    .format(DateTime.parse(data['get_up_time'])),
-                data['dysfunction'],
-                res.reference.path);
+            return Event(data, res.reference.path);
           })
         });
       });
@@ -157,7 +153,7 @@ class _CalendarState extends State<Calendar> {
                   selectedBuilder: (context, day, focusedDay) {
                     final imgPath = _getImagePath(day);
                     final imgOpacity =
-                        imgPath == 'images/evaluation_default.jpg' ? 0.5 : 1.0;
+                        imgPath == 'images/evaluation_default.jpg' ? 0.3 : 1.0;
                     // NOTE:選択された時だけレイアウトが違うので共通化してない
                     return SizedBox(
                       width: 200,
@@ -243,7 +239,7 @@ class _CalendarState extends State<Calendar> {
                                         )))
                           },
                           title: Text(
-                              'ベッドに入った時間: ${value[index].bedtime}\nベットから出た時間: ${value[index].getUpTime}'),
+                              'ベッドに入った時間: ${value[index].sleepyData['bed_time']}\nベットから出た時間: ${value[index].sleepyData['get_up_time']}'),
                         ),
                       );
                     },
