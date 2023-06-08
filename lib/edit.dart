@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gussuri/calendar.dart';
 import 'package:gussuri/component/TimePicker.dart';
 import 'package:gussuri/component/awake_form.dart';
 import 'package:gussuri/component/gradient_box.dart';
@@ -9,30 +10,22 @@ import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
-import 'package:gussuri/helper/DateKey.dart';
-import 'package:gussuri/helper/DeviceData.dart';
-import 'package:gussuri/home.dart';
-import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-class Input extends StatefulWidget {
-  const Input({Key? key}) : super(key: key);
+class Edit extends StatefulWidget {
+  final Map<String, dynamic> sleepyData;
+  final String path;
+
+  const Edit(this.sleepyData, this.path, {super.key});
 
   @override
-  State<Input> createState() => _InputState();
+  State<Edit> createState() => _EditState();
 }
 
-class _InputState extends State<Input> {
-  String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
-  final Map<String, dynamic> _sleepyData = {
-    "bed_time": DateTime.now(),
-    "TASAFA": "",
-    "get_up_time": DateTime.now(),
-    "dysfunction": 4,
-    "WASO": null,
-    "SOL": "",
-    "NOA": null
-  };
+class _EditState extends State<Edit> {
+  late String _formattedDate;
+  List<String> _paths = [];
+  late Map<String, dynamic> _sleepyData;
 
   bool _checkSubmit() {
     for (final value in _sleepyData.values) {
@@ -43,15 +36,27 @@ class _InputState extends State<Input> {
     return true;
   }
 
-  Future<void> _createSleepyData() async {
+  Future<void> _updateSleepyData() async {
     FirebaseFirestore.instance
-        .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
-        .doc(DateKey.year())
-        .collection(DateKey.month())
-        .doc(DateKey.day())
+        .collection(_paths[0]) // コレクションID
+        .doc(_paths[1])
+        .collection(_paths[2])
+        .doc(_paths[3])
         .set(_sleepyData)
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Home())));
+        .then((value) => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Calendar())));
+  }
+
+  DateTime convertDateTime(String datetime) {
+    return DateTime.parse(datetime);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _sleepyData = widget.sleepyData;
+    _paths = widget.path.split('/');
+    _formattedDate = '${_paths[1]}年${_paths[2]}月${_paths[3]}日';
   }
 
   @override
@@ -65,7 +70,7 @@ class _InputState extends State<Input> {
               child: GradientBox(
                   child: Column(
                 children: [
-                  TitleBox(text: formattedDate),
+                  TitleBox(text: _formattedDate),
                   SlideButton(
                     value: _sleepyData['dysfunction'],
                     onChanged: (value) {
@@ -81,7 +86,8 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: GlobalObjectKey<TimePickerState>(uuid.v4()),
-                              value: DateTime.now(),
+                              value:
+                                  convertDateTime(_sleepyData["get_up_time"]),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["get_up_time"] = value;
@@ -90,6 +96,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '目覚めから布団を出るまで',
                       form: ImageButton(
+                          value: _sleepyData['SOL'],
                           key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
@@ -97,6 +104,8 @@ class _InputState extends State<Input> {
                             });
                           })),
                   AwakeForm(
+                    timesValue: _sleepyData['NOA'],
+                    slideValue: _sleepyData['WASO'],
                     onChangedTimes: (value) {
                       setState(() {
                         _sleepyData['NOA'] = value;
@@ -111,6 +120,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '布団に入ってから眠りにつくまで',
                       form: ImageButton(
+                          value: _sleepyData['TASAFA'],
                           key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
                           onChanged: (value) {
                             setState(() {
@@ -124,7 +134,7 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: GlobalObjectKey<TimePickerState>(uuid.v4()),
-                              value: DateTime.now(),
+                              value: convertDateTime(_sleepyData["bed_time"]),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["bed_time"] = value;
@@ -134,10 +144,10 @@ class _InputState extends State<Input> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       SubmitButton(
-                        buttonText: '入力完了',
+                        buttonText: '編集保存',
                         onPressed: _checkSubmit()
                             ? () {
-                                _createSleepyData();
+                                _updateSleepyData();
                               }
                             : null,
                       )

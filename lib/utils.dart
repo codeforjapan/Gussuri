@@ -9,15 +9,19 @@ bool isSameMonth(DateTime? a, DateTime? b) {
   return a.year == b.year && a.month == b.month;
 }
 
-/// Example event class.
 class Event {
-  final String bedtime;
-  final String getUpTime;
-  final int dysfunction;
+  Map<String, dynamic> sleepyData = {
+    "bed_time": DateTime.now(),
+    "TASAFA": "",
+    "get_up_time": DateTime.now(),
+    "dysfunction": null,
+    "WASO": null,
+    "SOL": "",
+    "NOA": null
+  };
   final String documentId;
 
-  const Event(this.bedtime, this.getUpTime, this.dysfunction, this.documentId);
+  Event(this.sleepyData, this.documentId);
 }
 
 final kEvents = <DateTime, List<Event>>{};
-

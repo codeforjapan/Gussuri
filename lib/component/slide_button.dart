@@ -5,8 +5,9 @@ import 'package:gussuri/component/input_card.dart';
 
 class SlideButton extends StatefulWidget {
   final ValueChanged<int?>? onChanged;
+  final int value;
 
-  const SlideButton({super.key, this.onChanged});
+  const SlideButton({super.key, this.onChanged, required this.value});
 
   @override
   SlideButtonState createState() => SlideButtonState();
@@ -17,16 +18,19 @@ class SlideButtonState extends State<SlideButton>
   List<bool> isSelected = List.generate(11, (i) => false);
   late final Function(int?) submitOnChanged;
 
+  // todo ここを動的に動かしたい
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 140.w);
 
   @override
   void initState() {
     super.initState();
-    isSelected[4] = true;
     if (widget.onChanged != null) {
       submitOnChanged = widget.onChanged!;
     }
+    setState(() {
+      isSelected[widget.value] = true;
+    });
   }
 
   @override
@@ -51,17 +55,14 @@ class SlideButtonState extends State<SlideButton>
                         submitOnChanged(index);
                       });
                     },
-                    style:
-                        ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            backgroundColor: Colors.white
-                        ),
+                    style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        backgroundColor: Colors.white),
                     child: ClipOval(
                         child: Opacity(
-                          opacity: isSelected[index] ? 1 : 0.5,
-                          child: Image.asset('images/evaluation_$index.jpg'),
-                        )
-                    ),
+                      opacity: isSelected[index] ? 1 : 0.5,
+                      child: Image.asset('images/evaluation_$index.jpg'),
+                    )),
                   ),
                   Text(
                     '評価${index + 1}',
