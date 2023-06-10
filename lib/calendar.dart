@@ -54,7 +54,7 @@ class _CalendarState extends State<Calendar> {
 
     if (events.isEmpty) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Input()));
+          context, MaterialPageRoute(builder: (context) => Input(selectedDay)));
     } else {
       Navigator.push(
           context,
