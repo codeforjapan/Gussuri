@@ -53,10 +53,16 @@ class _InputState extends State<Input> {
         .then((value) => Navigator.push(
             context, MaterialPageRoute(builder: (context) => const Home())));
   }
+  final timePickerKey =
+  const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY__');
+  final timePickerKeySecond =
+  const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY2__');
+  final imageBoxKey = const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY__');
+  final imageBoxKeySecond =
+  const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY2__');
 
   @override
   Widget build(BuildContext context) {
-    const uuid = Uuid();
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
@@ -80,7 +86,7 @@ class _InputState extends State<Input> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
+                              key: timePickerKey,
                               value: DateTime.now(),
                               onChanged: (value) => {
                                     setState(() {
@@ -90,7 +96,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '目覚めから布団を出るまで',
                       form: ImageButton(
-                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
+                          key: imageBoxKey,
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['SOL'] = value;
@@ -111,7 +117,7 @@ class _InputState extends State<Input> {
                   InputCard(
                       title: '布団に入ってから眠りにつくまで',
                       form: ImageButton(
-                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
+                          key: imageBoxKeySecond,
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['TASAFA'] = value;
@@ -123,7 +129,7 @@ class _InputState extends State<Input> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
+                              key: timePickerKeySecond,
                               value: DateTime.now(),
                               onChanged: (value) => {
                                     setState(() {
