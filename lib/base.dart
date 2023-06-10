@@ -52,7 +52,7 @@ class Base extends HookWidget {
             .map(
               (tabItem) => BottomNavigationBarItem(
                 icon: Icon(tabItem.icon),
-                label: tabItem.title,
+                label: tabItem.title(context),
               ),
             )
             .toList(),
