@@ -7,7 +7,6 @@ class DateKey {
   } // private constructor
 
   static String year() {
-    initializeDateFormatting('ja');
     DateTime now = DateTime.now();
     String date = DateFormat('yyyy').format(now);
 
@@ -15,7 +14,6 @@ class DateKey {
   }
 
   static String month() {
-    initializeDateFormatting('ja');
     DateTime now = DateTime.now();
     String date = DateFormat('MM').format(now);
 
@@ -23,7 +21,6 @@ class DateKey {
   }
 
   static String day() {
-    initializeDateFormatting('ja');
     DateTime now = DateTime.now();
     String date = DateFormat('dd').format(now);
 
@@ -31,7 +28,6 @@ class DateKey {
   }
 
   static String datetimeFormat() {
-    initializeDateFormatting('ja');
     DateTime now = DateTime.now();
     String dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
