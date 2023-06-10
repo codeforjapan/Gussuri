@@ -4,10 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gussuri/base.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl_standalone.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting();
+  await findSystemLocale();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
