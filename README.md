@@ -57,3 +57,5 @@ $ dart pub global activate flutterfire_cli
 $ flutterfire configure --project=Gussuri-dev
 ```
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
+
+==
