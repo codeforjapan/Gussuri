@@ -4,10 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gussuri/base.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl_standalone.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting();
+  await findSystemLocale();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -24,6 +26,8 @@ class Gussuri extends StatelessWidget {
         builder: (context, child) {
           return const MaterialApp(
             title: 'Gussuri',
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Base(),
           );
         });

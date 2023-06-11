@@ -38,7 +38,7 @@ dependencies:
   firebase_core: ^2.8.0
   cloud_firestore: ^4.4.5
   device_info_plus: ^8.1.0
-  intl: ^0.18.0
+  intl: any
   table_calendar: ^3.0.7
   flutter_gif: any
   flutter_hooks: ^0.18.6
@@ -47,6 +47,8 @@ dependencies:
   path_provider: ^2.0.15
   fluttertoast: ^8.2.2
   flutter_pdfview: ^1.3.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  generate: true
   assets:
     - images/
     - assets/
