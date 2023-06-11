@@ -54,7 +54,7 @@ $ firebase login
 
 $ dart pub global activate flutterfire_cli
 # https://console.firebase.google.com/ 이 페이지에서 대상 프로젝트의 ID를 선택하세요.
-# 対応します Gussuri 개발 환경은 Code for Japan(코드포재맨)이 지원하는 프로젝트입니다. 필요하실 경우 응답 요청을 위해 연락드리겠습니다.
+# Gussuri 개발 환경은 Code for Japan(코드포재맨)이 지원하는 프로젝트입니다. 필요하실 경우 응답 요청을 위해 연락드리겠습니다.
 $ flutterfire configure --project=Gussuri-dev
 ```
 https://firebase.google.com/docs/flutter/setup?hl=ja&platform=ios
