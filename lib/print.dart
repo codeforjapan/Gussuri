@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'pdf_utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Print extends StatefulWidget {
   const Print({super.key});
@@ -19,6 +23,19 @@ class _PrintState extends State<Print> {
     super.initState();
     startDate = DateTime.now().subtract(const Duration(days: 1));
     endDate = DateTime.now();
+  }
+
+  Future savePDF() async {
+    final output = await getApplicationDocumentsDirectory();
+    final file = File('${output.path}/sleep_record.pdf');
+    final pdf = await PdfGenerator.generatePdfDocument();
+    await file.writeAsBytes(await pdf.save());
+
+    Fluttertoast.showToast(
+      msg: 'PDFのダウンロードが完了しました',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   Widget datePickerButton({
@@ -110,8 +127,8 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: () {
-                  print('push print');
+                onPressed: () async {
+                  await savePDF();
                 },
                 child: const Text(
                   '印刷フォーマットに書き出し',
