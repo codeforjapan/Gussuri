@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Input()));
+                                      builder: (context) => Input(DateTime.now())));
                             }
                           : null,
                       child: const Text('睡眠記録'),

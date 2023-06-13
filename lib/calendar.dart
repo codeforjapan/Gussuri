@@ -54,7 +54,7 @@ class _CalendarState extends State<Calendar> {
 
     if (events.isEmpty) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Input()));
+          context, MaterialPageRoute(builder: (context) => Input(selectedDay)));
     } else {
       Navigator.push(
           context,
@@ -210,36 +210,11 @@ class _CalendarState extends State<Calendar> {
             ),
             const SizedBox(height: 8.0),
             Expanded(
-              child: ValueListenableBuilder<List<Event>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 12.0,
-                          vertical: 4.0,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: ListTile(
-                          title: Text(
-                              'ベッドに入った時間: ${value[index].sleepyData['bed_time']}\nベットから出た時間: ${value[index].sleepyData['get_up_time']}'),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            Container(
+                child: Container(
               alignment: Alignment.bottomLeft,
               padding: EdgeInsets.only(left: 20.w),
               child: Image.asset('images/baku-kun-1.png'),
-            )
+            )),
           ],
         ));
   }
