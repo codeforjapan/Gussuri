@@ -45,6 +45,7 @@ dependencies:
   uuid: ^3.0.7
   flutter_localizations:
     sdk: flutter
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:

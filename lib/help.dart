@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/about_me.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/privacy_policy.dart';
-import 'package:gussuri/terms_of_service%20.dart';
+import 'package:gussuri/terms_of_service.dart';
 
 class Help extends StatefulWidget {
   const Help({Key? key}) : super(key: key);
