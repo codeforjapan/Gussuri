@@ -9,20 +9,21 @@ import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
-import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/home.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
 class Input extends StatefulWidget {
-  const Input({Key? key}) : super(key: key);
+  final DateTime selectedDay;
+
+  const Input(this.selectedDay, {super.key});
 
   @override
   State<Input> createState() => _InputState();
 }
 
 class _InputState extends State<Input> {
+  List<String> _targetDays = [];
   String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
   final Map<String, dynamic> _sleepyData = {
     "bed_time": DateTime.now(),
@@ -43,23 +44,32 @@ class _InputState extends State<Input> {
     return true;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+    _targetDays = outputFormat.format(widget.selectedDay).split('-');
+  }
+
   Future<void> _createSleepyData() async {
     FirebaseFirestore.instance
         .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
-        .doc(DateKey.year())
-        .collection(DateKey.month())
-        .doc(DateKey.day())
+        .doc(_targetDays[0])
+        .collection(_targetDays[1])
+        .doc(_targetDays[2])
         .set(_sleepyData)
         .then((value) => Navigator.push(
             context, MaterialPageRoute(builder: (context) => const Home())));
   }
+
   final timePickerKey =
-  const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY__');
+      const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY__');
   final timePickerKeySecond =
-  const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY2__');
-  final imageBoxKey = const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY__');
+      const GlobalObjectKey<TimePickerState>('__TIME_PICKER_KEY2__');
+  final imageBoxKey =
+      const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY__');
   final imageBoxKeySecond =
-  const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY2__');
+      const GlobalObjectKey<ImageButtonState>('__IMAGE_BOX_KEY2__');
 
   @override
   Widget build(BuildContext context) {
