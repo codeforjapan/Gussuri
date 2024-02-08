@@ -46,7 +46,11 @@ class _HelpState extends State<Help> {
                               builder: (context) => listItems[index]['link']));
                     },
                   ));
-            })
+            }),
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text('本アプリケーションは、日本財団の「グーグル基金」の支援金を受けて開発しました'),
+        )
       ],
     ));
   }
