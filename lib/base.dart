@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gussuri/component/header.dart';
 import 'package:gussuri/enums/TabItem.dart';
 import 'package:gussuri/helper/DeviceData.dart';
+import 'package:gussuri/home.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'utils.dart';
@@ -43,6 +44,13 @@ class Base extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentTab = useState(TabItem.home);
+    final currentIndex = useState(0);
+
+    void updateTab(int newIndex, TabItem newTab) {
+      currentIndex.value = newIndex;
+      currentTab.value = newTab;
+    }
+
     return Scaffold(
       appBar: const Header(),
       body: Stack(
@@ -53,9 +61,15 @@ class Base extends HookWidget {
                 child: Navigator(
                   key: _navigatorKeys[tabItem],
                   onGenerateRoute: (settings) {
-                    return MaterialPageRoute<Widget>(
-                      builder: (context) => tabItem.page,
-                    );
+                    if(tabItem.page is Home) {
+                      return MaterialPageRoute<Widget>(
+                        builder: (context) => Home(updateIndex: updateTab),
+                      );
+                    } else {
+                      return MaterialPageRoute<Widget>(
+                        builder: (context) => tabItem.page,
+                      );
+                    }
                   },
                 ),
               ),
@@ -63,7 +77,7 @@ class Base extends HookWidget {
             .toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: TabItem.values.indexOf(currentTab.value),
+        currentIndex: currentIndex.value,
         onTap: (index) {
           final selectedTab = TabItem.values[index];
           if (selectedTab == TabItem.calender) {
@@ -76,6 +90,7 @@ class Base extends HookWidget {
           } else {
             // 未選択
             currentTab.value = selectedTab;
+            currentIndex.value = index;
           }
         },
         items: TabItem.values

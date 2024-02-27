@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gussuri/calendar.dart';
 import 'package:gussuri/component/gradient_box.dart';
+import 'package:gussuri/enums/TabItem.dart';
 import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
@@ -12,7 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final Function? updateIndex;
+
+  const Home({Key? key, this.updateIndex}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -67,7 +69,7 @@ class _HomeState extends State<Home> {
         final data = res.data();
         eventData.addAll({
           DateTime.utc(date.year, date.month, int.parse(res.id)):
-          List.generate(1, (index) {
+              List.generate(1, (index) {
             return Event(data, res.reference.path);
           })
         });
@@ -111,7 +113,8 @@ class _HomeState extends State<Home> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Input(DateTime.now())));
+                                      builder: (context) =>
+                                          Input(DateTime.now())));
                             }
                           : null,
                       child: const Text('睡眠記録'),
@@ -129,10 +132,7 @@ class _HomeState extends State<Home> {
                           textStyle: const TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Calendar()));
+                        widget.updateIndex?.call(1, TabItem.calender);
                       },
                       icon: const Icon(Icons.calendar_month),
                       label: const Text('睡眠記録カレンダー'),
