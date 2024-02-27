@@ -44,7 +44,7 @@ class ImageButtonState extends State<ImageButton>
     disabled = widget.disabled;
 
     return SizedBox(
-      height: 70.h,
+      height: 80.h,
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
