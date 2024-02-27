@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/edit.dart';
-import 'package:gussuri/helper/DeviceData.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'input.dart';
 import 'utils.dart';
@@ -27,7 +25,6 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     super.initState();
-    setEvents();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
@@ -74,30 +71,10 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  Future<void> setEvents() async {
-    for (var index = 0; index < 2; index++) {
-      DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);
-      final orderSnap = await FirebaseFirestore.instance
-          .collection(await DeviceData.getDeviceUniqueId())
-          .doc('${date.year}')
-          .collection(DateFormat('MM').format(date))
-          .get();
-      orderSnap.docs.map((e) => e).forEach((res) {
-        final data = res.data();
-        kEvents.addAll({
-          DateTime.utc(date.year, date.month, int.parse(res.id)):
-              List.generate(1, (index) {
-            return Event(data, res.reference.path);
-          })
-        });
-      });
-    }
-    _selectedEvents.value = _getEventsForDay(_focusedDay);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    Provider.of<CalenderState>(context);
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(

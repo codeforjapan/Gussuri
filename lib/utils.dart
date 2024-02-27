@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 1);
 
@@ -24,4 +26,11 @@ class Event {
   Event(this.sleepyData, this.documentId);
 }
 
-final kEvents = <DateTime, List<Event>>{};
+Map<DateTime, List<Event>> kEvents = <DateTime, List<Event>>{};
+
+class CalenderState with ChangeNotifier {
+  void updateEvent(Map<DateTime, List<Event>> newEvent) {
+    kEvents = newEvent;
+    notifyListeners();
+  }
+}

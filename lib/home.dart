@@ -7,6 +7,9 @@ import 'package:gussuri/helper/DateKey.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
 import 'dart:math' as math;
+import 'package:gussuri/utils.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -51,9 +54,32 @@ class _HomeState extends State<Home> {
     _tips = tips.get('content');
   }
 
+  Future<void> getEvents(context) async {
+    Map<DateTime, List<Event>> eventData = {};
+    for (var index = 0; index < 2; index++) {
+      DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);
+      final orderSnap = await FirebaseFirestore.instance
+          .collection(await DeviceData.getDeviceUniqueId())
+          .doc('${date.year}')
+          .collection(DateFormat('MM').format(date))
+          .get();
+      orderSnap.docs.map((e) => e).forEach((res) {
+        final data = res.data();
+        eventData.addAll({
+          DateTime.utc(date.year, date.month, int.parse(res.id)):
+          List.generate(1, (index) {
+            return Event(data, res.reference.path);
+          })
+        });
+      });
+    }
+    Provider.of<CalenderState>(context, listen: false).updateEvent(eventData);
+  }
+
   @override
   void initState() {
     super.initState();
+    getEvents(context);
     checkLastNightSleep();
     getTips();
   }
