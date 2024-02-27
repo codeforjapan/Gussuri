@@ -25,7 +25,7 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   List<String> _targetDays = [];
   String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
-  final Map<String, dynamic> _sleepyData = {
+  Map<String, dynamic> _sleepyData = {
     "bed_time": DateTime.now(),
     "TASAFA": "",
     "get_up_time": DateTime.now(),
@@ -48,7 +48,17 @@ class _InputState extends State<Input> {
   void initState() {
     super.initState();
     DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+    formattedDate = DateFormat('yyyy年M月d日').format(widget.selectedDay);
     _targetDays = outputFormat.format(widget.selectedDay).split('-');
+    _sleepyData = {
+      "bed_time": widget.selectedDay,
+      "TASAFA": "",
+      "get_up_time": widget.selectedDay,
+      "dysfunction": 4,
+      "WASO": null,
+      "SOL": "",
+      "NOA": null
+    };
   }
 
   Future<void> _createSleepyData() async {
@@ -97,7 +107,12 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: timePickerKey,
-                              value: DateTime.now(),
+                              value: DateTime(
+                                  widget.selectedDay.year,
+                                  widget.selectedDay.month,
+                                  widget.selectedDay.day,
+                                  09,
+                                  widget.selectedDay.minute).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["get_up_time"] = value;
@@ -140,7 +155,12 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: timePickerKeySecond,
-                              value: DateTime.now(),
+                              value: DateTime(
+                                  widget.selectedDay.year,
+                                  widget.selectedDay.month,
+                                  widget.selectedDay.day,
+                                  22,
+                                  widget.selectedDay.minute).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["bed_time"] = value;
