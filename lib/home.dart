@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Input(DateTime.now())));
+                                          Input(DateTime.now(), nextPage: Home(updateIndex: widget.updateIndex))));
                             }
                           : null,
                       child: const Text('睡眠記録'),

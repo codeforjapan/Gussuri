@@ -10,13 +10,13 @@ import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
-import 'package:gussuri/home.dart';
 import 'package:intl/intl.dart';
 
 class Input extends StatefulWidget {
   final DateTime selectedDay;
+  final Widget nextPage;
 
-  const Input(this.selectedDay, {super.key});
+  const Input(this.selectedDay, {super.key, required this.nextPage});
 
   @override
   State<Input> createState() => _InputState();
@@ -68,8 +68,9 @@ class _InputState extends State<Input> {
         .collection(_targetDays[1])
         .doc(_targetDays[2])
         .set(_sleepyData)
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Home())));
+        .then((value) => Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (context) => widget.nextPage),
+            (_) => false));
   }
 
   final timePickerKey =

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gussuri/calendar.dart';
 import 'package:gussuri/component/header.dart';
 import 'package:gussuri/enums/TabItem.dart';
 import 'package:gussuri/helper/DeviceData.dart';
@@ -64,6 +65,10 @@ class Base extends HookWidget {
                     if(tabItem.page is Home) {
                       return MaterialPageRoute<Widget>(
                         builder: (context) => Home(updateIndex: updateTab),
+                      );
+                    } else if(tabItem.page is Calendar) {
+                      return MaterialPageRoute<Widget>(
+                        builder: (context) => Calendar(updateIndex: updateTab),
                       );
                     } else {
                       return MaterialPageRoute<Widget>(
