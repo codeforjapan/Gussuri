@@ -51,9 +51,19 @@ class _InputState extends State<Input> {
     formattedDate = DateFormat('yyyy年M月d日').format(widget.selectedDay);
     _targetDays = outputFormat.format(widget.selectedDay).split('-');
     _sleepyData = {
-      "bed_time": widget.selectedDay,
+      "bed_time": DateTime(
+          widget.selectedDay.year,
+          widget.selectedDay.month,
+          widget.selectedDay.day,
+          22,
+          0).toLocal(),
       "TASAFA": "",
-      "get_up_time": widget.selectedDay,
+      "get_up_time": DateTime(
+          widget.selectedDay.year,
+          widget.selectedDay.month,
+          widget.selectedDay.day,
+          9,
+          0).toLocal(),
       "dysfunction": 4,
       "WASO": null,
       "SOL": "",
@@ -112,8 +122,8 @@ class _InputState extends State<Input> {
                                   widget.selectedDay.year,
                                   widget.selectedDay.month,
                                   widget.selectedDay.day,
-                                  09,
-                                  widget.selectedDay.minute).toLocal(),
+                                  9,
+                                  0).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["get_up_time"] = value;
@@ -161,7 +171,7 @@ class _InputState extends State<Input> {
                                   widget.selectedDay.month,
                                   widget.selectedDay.day,
                                   22,
-                                  widget.selectedDay.minute).toLocal(),
+                                  0).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["bed_time"] = value;
