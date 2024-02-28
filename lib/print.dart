@@ -37,7 +37,7 @@ class _PrintState extends State<Print> {
     String deviceUniqueId = await DeviceData.getDeviceUniqueId();
 
     List<List<dynamic>> rows = [];
-    rows.add(['bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA']);
+    rows.add(['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA']);
 
     for (DateTime date = startDate;
     date.isBefore(endDate.add(const Duration(days: 1)));
@@ -55,13 +55,17 @@ class _PrintState extends State<Print> {
 
       if (daySnapshot.exists) {
         var data = daySnapshot.data() as Map<String, dynamic>;
-        rows.add(data.values.map((e) {
-          if(e is Timestamp) {
-            return e.toDate().toLocal().toString();
-          } else {
-            return e.toString();
-          }
-        }).toList());
+        List<dynamic> row = [
+          DateFormat('yyyy-MM-dd').format(DateTime.parse(parseFormat(data['bed_time']))),
+          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
+          data['TASAFA'],
+          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
+          data['dysfunction'],
+          data['WASO'],
+          data['SOL'],
+          data['NOA'],
+        ];
+        rows.add(row);
       }
     }
 
@@ -88,6 +92,14 @@ class _PrintState extends State<Print> {
       setState(() {
         isGeneratingCsv = false;
       });
+    }
+  }
+
+  String parseFormat(dynamic date) {
+    if(date is Timestamp) {
+      return date.toDate().toLocal().toString();
+    } else {
+      return date.toString();
     }
   }
 
