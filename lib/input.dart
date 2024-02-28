@@ -10,13 +10,13 @@ import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
-import 'package:gussuri/home.dart';
 import 'package:intl/intl.dart';
 
 class Input extends StatefulWidget {
   final DateTime selectedDay;
+  final Widget nextPage;
 
-  const Input(this.selectedDay, {super.key});
+  const Input(this.selectedDay, {super.key, required this.nextPage});
 
   @override
   State<Input> createState() => _InputState();
@@ -25,7 +25,7 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
   List<String> _targetDays = [];
   String formattedDate = DateFormat('yyyy年M月d日').format(DateTime.now());
-  final Map<String, dynamic> _sleepyData = {
+  Map<String, dynamic> _sleepyData = {
     "bed_time": DateTime.now(),
     "TASAFA": "",
     "get_up_time": DateTime.now(),
@@ -48,7 +48,17 @@ class _InputState extends State<Input> {
   void initState() {
     super.initState();
     DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+    formattedDate = DateFormat('yyyy年M月d日').format(widget.selectedDay);
     _targetDays = outputFormat.format(widget.selectedDay).split('-');
+    _sleepyData = {
+      "bed_time": widget.selectedDay,
+      "TASAFA": "",
+      "get_up_time": widget.selectedDay,
+      "dysfunction": 4,
+      "WASO": null,
+      "SOL": "",
+      "NOA": null
+    };
   }
 
   Future<void> _createSleepyData() async {
@@ -58,8 +68,9 @@ class _InputState extends State<Input> {
         .collection(_targetDays[1])
         .doc(_targetDays[2])
         .set(_sleepyData)
-        .then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Home())));
+        .then((value) => Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (context) => widget.nextPage),
+            (_) => false));
   }
 
   final timePickerKey =
@@ -97,7 +108,12 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: timePickerKey,
-                              value: DateTime.now(),
+                              value: DateTime(
+                                  widget.selectedDay.year,
+                                  widget.selectedDay.month,
+                                  widget.selectedDay.day,
+                                  09,
+                                  widget.selectedDay.minute).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["get_up_time"] = value;
@@ -140,7 +156,12 @@ class _InputState extends State<Input> {
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
                               key: timePickerKeySecond,
-                              value: DateTime.now(),
+                              value: DateTime(
+                                  widget.selectedDay.year,
+                                  widget.selectedDay.month,
+                                  widget.selectedDay.day,
+                                  22,
+                                  widget.selectedDay.minute).toLocal(),
                               onChanged: (value) => {
                                     setState(() {
                                       _sleepyData["bed_time"] = value;

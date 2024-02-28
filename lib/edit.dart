@@ -47,8 +47,14 @@ class _EditState extends State<Edit> {
             MaterialPageRoute(builder: (context) => const Calendar())));
   }
 
-  DateTime convertDateTime(String datetime) {
-    return DateTime.parse(datetime);
+  DateTime convertDateTime(dynamic datetime) {
+    if (datetime is String) {
+      return DateTime.parse(datetime);
+    } else if (datetime is Timestamp) {
+      return datetime.toDate();
+    } else {
+      return datetime;
+    }
   }
 
   @override
