@@ -121,6 +121,9 @@ class _CalendarState extends State<Calendar> {
                   rightChevronIcon: _rightChevron,
                   titleCentered: true,
                 ),
+                calendarStyle: const CalendarStyle(
+                  outsideDaysVisible: false,
+                ),
                 calendarBuilders: CalendarBuilders(
                   defaultBuilder: (context, day, focusedDay) {
                     // NOTE: defaultの日付が出てしまうため
