@@ -99,7 +99,10 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                     padding: EdgeInsets.all(30.h),
-                    child: ElevatedButton(
+                    child: _checkLastNightSleep == true ? const Text('睡眠記録の入力は終了しております', style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),) : ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size(280.w, 80.h),
                           backgroundColor: const Color(0xffFFD069),
@@ -118,7 +121,8 @@ class _HomeState extends State<Home> {
                             }
                           : null,
                       child: const Text('睡眠記録'),
-                    )),
+                    )
+                ),
                 Container(
                     padding: EdgeInsets.symmetric(vertical: 0.h),
                     child: ElevatedButton.icon(
