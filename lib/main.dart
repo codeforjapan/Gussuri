@@ -33,6 +33,7 @@ class Gussuri extends StatelessWidget {
             title: 'Gussuri',
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
+            debugShowCheckedModeBanner: false,
             home: Base(),
           );
         });
