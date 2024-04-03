@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                     padding: EdgeInsets.all(30.h),
-                    child: _checkLastNightSleep == true ? const Text('睡眠記録の入力は終了しております', style: TextStyle(
+                    child: _checkLastNightSleep == true ? const Text('睡眠記録の入力は完了しております', style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),) : ElevatedButton(
