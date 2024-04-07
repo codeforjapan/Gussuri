@@ -161,7 +161,7 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: cb88851781a24e031d1b58e0bd01eb1f46b044b5
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseCrashlytics: 86d5bce01f42fa1db265f87ff1d591f04db610ec
-  FirebaseFirestore: 4e32f3bf7ed59f574416e46ddfdfac418f42eab6
+  FirebaseFirestore: 584e3f563142f63d20e9ec9c505370d674d44eba
   FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
   FirebaseSessions: f06853e30f99fe42aa511014d7ee6c8c319f08a3
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
