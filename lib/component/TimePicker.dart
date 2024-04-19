@@ -24,7 +24,7 @@ class TimePickerState extends State<TimePickerWidget> {
 
   void _onDateTimeChanged(DateTime dt) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
+    _debounce = Timer(const Duration(milliseconds: 200), () {
       setState(() {
         dateTime = dt;
         if (widget.onChanged != null) {
@@ -32,6 +32,11 @@ class TimePickerState extends State<TimePickerWidget> {
         }
       });
     });
+  }
+
+  void finalizeChanges() {
+    _debounce?.cancel();
+    widget.onChanged?.call(dateTime.toString());
   }
 
   @override

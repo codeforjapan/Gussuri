@@ -153,6 +153,7 @@ class _EditState extends State<Edit> {
                         buttonText: '編集保存',
                         onPressed: _checkSubmit()
                             ? () {
+                                GlobalObjectKey<TimePickerState>(uuid.v4()).currentState?.finalizeChanges();
                                 _updateSleepyData();
                               }
                             : null,

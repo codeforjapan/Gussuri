@@ -184,6 +184,8 @@ class _InputState extends State<Input> {
                         buttonText: '入力完了',
                         onPressed: _checkSubmit()
                             ? () {
+                                  timePickerKey.currentState?.finalizeChanges();
+                                  timePickerKeySecond.currentState?.finalizeChanges();
                                 _createSleepyData();
                               }
                             : null,
