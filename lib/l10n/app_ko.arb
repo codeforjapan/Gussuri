@@ -4,6 +4,7 @@
   "challengeThird": "술을 마시면 수면에 도움이 되는 것처럼 보이지만 실제로는 수면의 질을 떨어뜨립니다. 술은 수면이 아니라 무의식상태를 유도하여 뇌가 휴식할 수 없게 만듭니다.",
   "home": "홈",
   "record": "수면 기록하기",
+  "recordComplete": "당신은 수면 기록 입력을 완료했습니다",
   "calender": "수면 일지 달력",
   "challenge": "Gussuri 챌린지",
   "inputLastnight": "오늘의 수면은 어땠나요?",
