@@ -31,6 +31,8 @@
   "printDownload": "PDF 다운로드",
   "printId": "내보낼 ID",
   "printLimit": "데이터 저장 기간은 ××일입니다.",
+  "csvDownloadCompleted": "CSV 다운로드가 완료되었습니다",
+  "csvGenerationFailed": "CSV 생성에 실패했습니다. 잠시 후에 다시 시도해 주세요",
   "help": "지원",
   "helpHowToUse": "앱 사용법",
   "helpPrivacyPolicy": "개인정보 처리방침",

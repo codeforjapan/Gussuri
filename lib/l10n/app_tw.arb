@@ -31,6 +31,8 @@
   "printDownload": "匯出 PDF 檔",
   "printId": "複製檔案 ID",
   "printLimit": "",
+  "csvDownloadCompleted": "CSV 下載已完成",
+  "csvGenerationFailed": "CSV 生成失敗，請稍後再試",
   "help": "求助",
   "helpHowToUse": "如何使用",
   "helpPrivacyPolicy": "隱私政策",

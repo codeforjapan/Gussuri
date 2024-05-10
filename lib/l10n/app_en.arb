@@ -31,6 +31,8 @@
   "printDownload": "Download PDF",
   "printId": "Output ID",
   "printLimit": "You can save the data for XX days.",
+  "csvDownloadCompleted": "CSV download completed",
+  "csvGenerationFailed": "Failed to generate CSV. Please try again later",
   "help": "Help",
   "helpHowToUse": "How to use this app",
   "helpPrivacyPolicy": "Privacy Policy",

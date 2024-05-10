@@ -8,6 +8,7 @@ import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Print extends StatefulWidget {
   const Print({super.key});
@@ -29,7 +30,7 @@ class _PrintState extends State<Print> {
     endDate = today;
   }
 
-  Future saveCSV() async {
+  Future saveCSV(String completeMsg, String failMsg) async {
     setState(() {
       isGeneratingCsv = true;
     });
@@ -76,14 +77,14 @@ class _PrintState extends State<Print> {
     await file.writeAsString(csvData);
 
     Fluttertoast.showToast(
-      msg: 'CSVのダウンロードが完了しました',
+      msg: completeMsg,
       backgroundColor: Colors.green,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
     );
     } catch (e) {
       Fluttertoast.showToast(
-        msg: 'CSVの生成に失敗しました。しばらく時間をおいて再度お試しください。',
+        msg: failMsg,
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.red,
         gravity: ToastGravity.BOTTOM,
@@ -132,7 +133,7 @@ class _PrintState extends State<Print> {
         }
       },
       child: Text(
-        DateFormat('yyyy年MM月dd日').format(selectedDate),
+        DateFormat('yyyy/MM/dd').format(selectedDate),
         style: const TextStyle(fontSize: 20),
       ),
     );
@@ -140,18 +141,20 @@ class _PrintState extends State<Print> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
         body: Column(
       children: [
-        const TitleBox(text: '睡眠記録の印刷'),
+        TitleBox(text: localizations.printSleepLog),
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.only(left: 20.w, top: 10.h),
-            child: const Text(
-              '印刷期間',
+            child: Text(
+              localizations.printDuration,
               textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -192,10 +195,10 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: isGeneratingCsv ? null : saveCSV,
-                child: const Text(
-                  '印刷フォーマットに書き出し',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvDownloadCompleted, localizations.csvGenerationFailed),
+                child: Text(
+                  localizations.printPrintData,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             )
