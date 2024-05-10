@@ -90,6 +90,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: GradientBox(
@@ -101,7 +103,7 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                     padding: EdgeInsets.all(30.h),
-                    child: _checkLastNightSleep == true ? Text(AppLocalizations.of(context)?.recordComplete ??'睡眠記録の入力は完了しております', style: const TextStyle(
+                    child: _checkLastNightSleep == true ? Text(localizations.recordComplete, style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),) : ElevatedButton(
@@ -122,7 +124,7 @@ class _HomeState extends State<Home> {
                                           Input(DateTime.now(), nextPage: Home(updateIndex: widget.updateIndex))));
                             }
                           : null,
-                      child: Text(AppLocalizations.of(context)?.record ?? '睡眠記録'),
+                      child: Text(localizations.record),
                     )
                 ),
                 Container(
@@ -141,7 +143,7 @@ class _HomeState extends State<Home> {
                         widget.updateIndex?.call(1, TabItem.calender);
                       },
                       icon: const Icon(Icons.calendar_month),
-                      label: Text(AppLocalizations.of(context)?.calendar ?? '睡眠記録カレンダー'),
+                      label: Text(localizations.calendar),
                     )),
               ],
             )),
@@ -158,7 +160,7 @@ class _HomeState extends State<Home> {
                   Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(bottom: 10.h),
-                      child: Text(AppLocalizations.of(context)?.challenge ?? 'gussuriチャレンジ',
+                      child: Text(localizations.challenge,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
