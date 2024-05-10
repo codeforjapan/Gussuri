@@ -32,14 +32,6 @@ class ImageButtonState extends State<ImageButton>
   @override
   void initState() {
     super.initState();
-    // final localizations = AppLocalizations.of(context)!;
-    // _values = {
-    //   localizations.rateImmediately: '0-15',
-    //   localizations.rateLittle: '16-30',
-    //   localizations.rateSoso: '31-45',
-    //   localizations.rateWhile: '46-60',
-    //   localizations.rateLong: '61-'
-    // };
     if (widget.onChanged != null) {
       submitOnChanged = widget.onChanged!;
     }
