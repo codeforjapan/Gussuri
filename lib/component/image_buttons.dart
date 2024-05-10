@@ -19,7 +19,6 @@ class ImageButtonState extends State<ImageButton>
   List<bool> isSelected = List.generate(5, (i) => false);
   late final Function(String?) submitOnChanged;
   bool disabled = false;
-  // late Map<String, String> _values;
 
   final Map<String, String> _values = {
     '0': '0-15',
