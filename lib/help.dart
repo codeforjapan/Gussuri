@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/privacy_policy.dart';
 import 'package:gussuri/terms_of_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Help extends StatefulWidget {
   const Help({Key? key}) : super(key: key);
@@ -12,19 +13,21 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
-  final List<Map<String, dynamic>> listItems = [
-    // {"title": 'このアプリの使い方', "link": const AboutMe()},
-    {"title": 'プライバシーポリシー', "link": const PrivacyPolicy()},
-    {"title": '利用規約', "link": const TermsOfService()},
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final List<Map<String, dynamic>> listItems = [
+      // {"title": 'このアプリの使い方', "link": const AboutMe()},
+      {"title": localizations.helpPrivacyPolicy, "link": const PrivacyPolicy()},
+      {"title": localizations.helpTermsOfService, "link": const TermsOfService()},
+    ];
+
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const TitleBox(text: 'ヘルプ'),
+        TitleBox(text: localizations.help),
         ListView.builder(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
@@ -49,7 +52,7 @@ class _HelpState extends State<Help> {
             }),
         Container(
           padding: const EdgeInsets.all(8.0),
-          child: const Text('本アプリケーションは、日本財団の「グーグル基金」の支援金を受けて開発しました'),
+          child: Text(localizations.googleFond),
         )
       ],
     ));
