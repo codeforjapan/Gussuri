@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'input.dart';
 import 'utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Calendar extends StatefulWidget {
   final Function? updateIndex;
@@ -107,7 +108,7 @@ class _CalendarState extends State<Calendar> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            const TitleBox(text: '睡眠記録カレンダー'),
+            TitleBox(text: AppLocalizations.of(context)?.calendar ?? '睡眠記録カレンダー'),
             SizedBox(
               height: 400,
               child: TableCalendar(
@@ -199,7 +200,7 @@ class _CalendarState extends State<Calendar> {
                     );
                   },
                 ),
-                locale: 'ja_JP',
+                locale: Localizations.localeOf(context).languageCode,
                 selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                 eventLoader: _getEventsForDay,
                 onDaySelected: _onDaySelected,
