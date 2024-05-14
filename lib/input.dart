@@ -11,6 +11,7 @@ import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Input extends StatefulWidget {
   final DateTime selectedDay;
@@ -48,7 +49,7 @@ class _InputState extends State<Input> {
   void initState() {
     super.initState();
     DateFormat outputFormat = DateFormat('yyyy-MM-dd');
-    formattedDate = DateFormat('yyyy年M月d日').format(widget.selectedDay);
+    formattedDate = DateFormat('yyyy/M/d').format(widget.selectedDay);
     _targetDays = outputFormat.format(widget.selectedDay).split('-');
     _sleepyData = {
       "bed_time": DateTime(
@@ -94,6 +95,8 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
@@ -112,7 +115,7 @@ class _InputState extends State<Input> {
                     },
                   ),
                   InputCard(
-                      title: '布団を出た時間',
+                      title: localizations.inputGetUpTime,
                       form: Container(
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
@@ -130,7 +133,7 @@ class _InputState extends State<Input> {
                                     })
                                   }))),
                   InputCard(
-                      title: '目覚めから布団を出るまで',
+                      title: localizations.inputWakeingUp,
                       form: ImageButton(
                           key: imageBoxKey,
                           onChanged: (value) {
@@ -151,7 +154,7 @@ class _InputState extends State<Input> {
                     },
                   ),
                   InputCard(
-                      title: '布団に入ってから眠りにつくまで',
+                      title: localizations.inputBetweenBedToSleep,
                       form: ImageButton(
                           key: imageBoxKeySecond,
                           onChanged: (value) {
@@ -160,7 +163,7 @@ class _InputState extends State<Input> {
                             });
                           })),
                   InputCard(
-                      title: '布団に入った時間',
+                      title: localizations.inputTimeInBed,
                       form: Container(
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
@@ -181,7 +184,7 @@ class _InputState extends State<Input> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       SubmitButton(
-                        buttonText: '入力完了',
+                        buttonText: localizations.inputComplete,
                         onPressed: _checkSubmit()
                             ? () {
                                   timePickerKey.currentState?.finalizeChanges();

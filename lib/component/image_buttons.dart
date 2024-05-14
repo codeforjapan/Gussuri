@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageButton extends StatefulWidget {
   final ValueChanged<String?>? onChanged;
@@ -20,11 +21,11 @@ class ImageButtonState extends State<ImageButton>
   bool disabled = false;
 
   final Map<String, String> _values = {
-    'すぐ\n0-15': '0-15',
-    'すこし\n16-30': '16-30',
-    'まぁまぁ\n31-45': '31-45',
-    'しばらく\n46-60': '46-60',
-    'めっちゃ\n61-': '61-'
+    '0': '0-15',
+    '1': '16-30',
+    '2': '31-45',
+    '3': '46-60',
+    '4': '61-'
   };
 
   @override
@@ -42,6 +43,15 @@ class ImageButtonState extends State<ImageButton>
   @override
   Widget build(BuildContext context) {
     disabled = widget.disabled;
+    final localizations = AppLocalizations.of(context)!;
+
+    final List<String> labels = [
+      localizations.rateImmediately,
+      localizations.rateLittle,
+      localizations.rateSoso,
+      localizations.rateWhile,
+      localizations.rateLong
+    ];
 
     return SizedBox(
       height: 80.h,
@@ -72,7 +82,7 @@ class ImageButtonState extends State<ImageButton>
                           child: Image.asset('images/time$index.png'))),
                 ),
                 Text(
-                  key,
+                  labels[int.parse(key)],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: isSelected[index]

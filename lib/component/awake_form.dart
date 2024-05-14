@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/image_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AwakeForm extends StatefulWidget {
   final ValueChanged<int?>? onChangedTimes;
@@ -52,10 +53,10 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
         child: Column(children: [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.h),
-            child: const Text(
-              '途中で目が覚めた',
+            child: Text(
+              AppLocalizations.of(context)?.inputAwakeingAfter ?? '途中で目が覚めた',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -104,10 +105,10 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
                 padding: EdgeInsets.symmetric(vertical: 20.h),
                 child: Opacity(
                   opacity: isChecked ? 1 : 0.5,
-                  child: const Text(
-                    '複数回の場合は平均を教えてください',
+                  child: Text(
+                    AppLocalizations.of(context)?.inputAwakeingAfterAverageTime ?? '複数回の場合は平均を教えてください',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 )),
           ),

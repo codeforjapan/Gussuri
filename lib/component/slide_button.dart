@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/input_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SlideButton extends StatefulWidget {
   final ValueChanged<int?>? onChanged;
@@ -35,8 +36,10 @@ class SlideButtonState extends State<SlideButton>
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return InputCard(
-      title: '前日夜から当日朝の睡眠で\n休養は取れましたか？',
+      title: localizations.inputLastnight,
       form: SizedBox(
         height: 70.h,
         child: ListView.builder(
@@ -65,7 +68,7 @@ class SlideButtonState extends State<SlideButton>
                     )),
                   ),
                   Text(
-                    '評価${index + 1}',
+                    '${localizations.rate} ${index + 1}',
                     style: TextStyle(
                         color: isSelected[index]
                             ? Colors.black.withOpacity(1)

@@ -10,6 +10,8 @@ import 'dart:math' as math;
 import 'package:gussuri/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class Home extends StatefulWidget {
   final Function? updateIndex;
@@ -88,6 +90,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: GradientBox(
@@ -99,7 +103,7 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                     padding: EdgeInsets.all(30.h),
-                    child: _checkLastNightSleep == true ? const Text('睡眠記録の入力は完了しております', style: TextStyle(
+                    child: _checkLastNightSleep == true ? Text(localizations.recordComplete, style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),) : ElevatedButton(
@@ -120,7 +124,7 @@ class _HomeState extends State<Home> {
                                           Input(DateTime.now(), nextPage: Home(updateIndex: widget.updateIndex))));
                             }
                           : null,
-                      child: const Text('睡眠記録'),
+                      child: Text(localizations.record),
                     )
                 ),
                 Container(
@@ -139,7 +143,7 @@ class _HomeState extends State<Home> {
                         widget.updateIndex?.call(1, TabItem.calender);
                       },
                       icon: const Icon(Icons.calendar_month),
-                      label: const Text('睡眠記録カレンダー'),
+                      label: Text(localizations.calendar),
                     )),
               ],
             )),
@@ -156,12 +160,12 @@ class _HomeState extends State<Home> {
                   Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(bottom: 10.h),
-                      child: const Text('gussuriチャレンジ',
-                          style: TextStyle(
+                      child: Text(localizations.challenge,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ))),
-                  Text(_tips)
+                  Text(AppLocalizations.of(context)?.challengeFirst ??_tips)
                 ],
               ),
             ),
