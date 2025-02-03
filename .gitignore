@@ -49,6 +49,7 @@ app.*.map.json
 lib/firebase_options.dart
 /android/
 /ios/
+!/ios/Runner/
 /linux/
 /macos/
 /windows/
