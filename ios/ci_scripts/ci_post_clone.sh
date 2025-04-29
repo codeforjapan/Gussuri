@@ -32,5 +32,8 @@ brew install cocoapods
 
 # Install CocoaPods dependencies.
 cd ios && pod install # run `pod install` in the `ios` directory.
+echo "$FIREBASE_OPTIONS" | base64 --decode > "$CI_PRIMARY_REPOSITORY_PATH/lib/firebase_options.dart"
+
+echo "$FIREBASE_APP_ID" |  base64 --decode >  "$CI_PRIMARY_REPOSITORY_PATH/ios/firebase_app_id_file.json"
 
 exit 0
