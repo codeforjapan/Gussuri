@@ -16,22 +16,48 @@ class SlideButton extends StatefulWidget {
 
 class SlideButtonState extends State<SlideButton>
     with TickerProviderStateMixin {
-  List<bool> isSelected = List.generate(11, (i) => false);
+  List<bool> isSelected = List.generate(11, (_) => false);
   late final Function(int?) submitOnChanged;
-
-  // todo ここを動的に動かしたい
-  final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: 140.w);
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    if (widget.onChanged != null) {
-      submitOnChanged = widget.onChanged!;
-    }
-    setState(() {
-      isSelected[widget.value] = true;
+    submitOnChanged = widget.onChanged ?? (_) {};
+
+    int reversedIndex = 10 - widget.value;
+    isSelected[reversedIndex] = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo((reversedIndex * 40).w);
     });
+  }
+
+  void scrollToIndex(int index) {
+    double position = index * 40.w;
+    _scrollController.animateTo(
+      position,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void scrollLeft() {
+    double newOffset = (_scrollController.offset - 40.w).clamp(0, _scrollController.position.maxScrollExtent);
+    _scrollController.animateTo(
+      newOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void scrollRight() {
+    double newOffset = (_scrollController.offset + 40.w).clamp(0, _scrollController.position.maxScrollExtent);
+    _scrollController.animateTo(
+      newOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -40,43 +66,64 @@ class SlideButtonState extends State<SlideButton>
 
     return InputCard(
       title: localizations.inputLastnight,
-      form: SizedBox(
-        height: 70.h,
-        child: ListView.builder(
-            shrinkWrap: true,
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            itemCount: isSelected.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isSelected = List.generate(11, (index) => false);
-                        isSelected[index] = true;
-                        submitOnChanged(index);
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        backgroundColor: Colors.white),
-                    child: ClipOval(
-                        child: Opacity(
-                      opacity: isSelected[index] ? 1 : 0.5,
-                      child: Image.asset('images/evaluation_$index.jpg'),
-                    )),
-                  ),
-                  Text(
-                    '${localizations.rate} ${index + 1}',
-                    style: TextStyle(
-                        color: isSelected[index]
-                            ? Colors.black.withOpacity(1)
-                            : Colors.black.withOpacity(0.4)),
-                  )
-                ],
-              );
-            }),
+      form: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_left, size: 32),
+            onPressed: scrollLeft,
+          ),
+
+          Expanded(
+            child: SizedBox(
+              height: 70.h,
+              child: ListView.builder(
+                shrinkWrap: true,
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                itemCount: isSelected.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            isSelected.fillRange(0, isSelected.length, false);
+                            isSelected[index] = true;
+                            submitOnChanged(10 - index);
+                            scrollToIndex(index);
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            backgroundColor: Colors.white),
+                        child: ClipOval(
+                          child: Opacity(
+                            opacity: isSelected[index] ? 1 : 0.5,
+                            child: Image.asset('images/evaluation_${10 - index}.jpg'),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '${localizations.rate} $index',
+                        style: TextStyle(
+                            color: isSelected[index]
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.4)),
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+
+          IconButton(
+            icon: const Icon(Icons.arrow_right, size: 32),
+            onPressed: scrollRight,
+          ),
+        ],
       ),
     );
   }
