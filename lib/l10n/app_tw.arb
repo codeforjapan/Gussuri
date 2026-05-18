@@ -37,5 +37,22 @@
   "helpHowToUse": "如何使用",
   "helpPrivacyPolicy": "隱私政策",
   "helpTermsOfService": "服務條款",
-    "googleFond": "本應用程式是在日本財團的「谷歌基金」支持下開發的"
+    "googleFond": "本應用程式是在日本財團的「谷歌基金」支持下開發的",
+  "aboutMePage1Title": "歡迎使用 Gussuri",
+  "aboutMePage1Body": "每天早上記錄睡眠，了解自己的睡眠規律。",
+  "aboutMePage2Title": "每天早上記錄吧",
+  "aboutMePage2Body": "透過首頁的「紀錄當晚睡眠」按鈕，可以記錄昨晚的睡眠情況。每天持續記錄，就能看出睡眠的變化。",
+  "aboutMePage3Title": "評估睡眠品質",
+  "aboutMePage3Body": "評估從前一天晚上到當天早上的睡眠，讓您感受到多少休息，以0到10來評分。",
+  "aboutMePage4Title": "記錄時間",
+  "aboutMePage4Body": "輸入上床時間（就寢時刻）和起床時間（離床時刻）。",
+  "aboutMePage5Title": "記錄夜間醒來情況",
+  "aboutMePage5Body": "記錄夜間醒來的次數以及保持清醒的總時間。",
+  "aboutMePage6Title": "記錄入睡和起床時間",
+  "aboutMePage6Body": "記錄上床後到入睡所花的時間，以及早上醒來後到離床所花的時間。",
+  "aboutMePage7Title": "用月曆回顧",
+  "aboutMePage7Body": "記錄的資料會顯示在月曆中。點選日期可以查看詳情或進行編輯。",
+  "aboutMeSkip": "跳過",
+  "aboutMeNext": "下一步",
+  "aboutMeDone": "開始使用"
 }

@@ -37,5 +37,22 @@
   "helpHowToUse": "このアプリの使い方",
   "helpPrivacyPolicy": "プライバシーポリシー",
   "helpTermsOfService": "利用規約",
-  "googleFond": "本アプリケーションは、日本財団の「グーグル基金」の支援金を受けて開発しました"
+  "googleFond": "本アプリケーションは、日本財団の「グーグル基金」の支援金を受けて開発しました",
+  "aboutMePage1Title": "ぐっすりへようこそ",
+  "aboutMePage1Body": "毎朝の睡眠を記録して、自分の睡眠パターンを知ろう。",
+  "aboutMePage2Title": "毎朝、記録しよう",
+  "aboutMePage2Body": "ホーム画面の「睡眠記録」ボタンから、昨夜の睡眠を記録できます。毎朝続けることで睡眠の変化が見えてきます。",
+  "aboutMePage3Title": "睡眠の質を評価しよう",
+  "aboutMePage3Body": "前日の夜から当日の朝の睡眠で、どれだけ休養が取れたかを0〜10で評価します。",
+  "aboutMePage4Title": "時刻を記録しよう",
+  "aboutMePage4Body": "布団に入った時間（就床時刻）と、布団から出た時間（起床時刻）を入力します。",
+  "aboutMePage5Title": "夜中の目覚めを記録しよう",
+  "aboutMePage5Body": "夜中に目が覚めた回数と、目覚めていた合計時間を記録します。",
+  "aboutMePage6Title": "入眠・起床の時間を記録しよう",
+  "aboutMePage6Body": "布団に入ってから眠りにつくまでの時間と、朝目が覚めてから布団を出るまでの時間を記録します。",
+  "aboutMePage7Title": "カレンダーで振り返ろう",
+  "aboutMePage7Body": "記録したデータはカレンダーに一覧表示されます。日付をタップすると詳細の確認・編集ができます。",
+  "aboutMeSkip": "スキップ",
+  "aboutMeNext": "次へ",
+  "aboutMeDone": "はじめる"
 }
