@@ -41,45 +41,37 @@ class AboutMePage extends StatelessWidget {
                 opacity: fadeAnimation,
                 child: SlideTransition(
                   position: slideAnimation,
-                  child: illustration,
-                ),
-              ),
-              SizedBox(height: 40.h),
-              FadeTransition(
-                opacity: fadeAnimation,
-                child: SlideTransition(
-                  position: slideAnimation,
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      shadows: const [
-                        Shadow(
-                          color: Colors.black26,
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
+                  child: Column(
+                    children: [
+                      illustration,
+                      SizedBox(height: 40.h),
+                      Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          shadows: const [
+                            Shadow(
+                              color: Colors.black26,
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              FadeTransition(
-                opacity: fadeAnimation,
-                child: SlideTransition(
-                  position: slideAnimation,
-                  child: Text(
-                    description,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontSize: 15.sp,
-                      height: 1.7,
-                    ),
+                      ),
+                      SizedBox(height: 16.h),
+                      Text(
+                        description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 15.sp,
+                          height: 1.7,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
