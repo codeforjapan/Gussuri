@@ -254,33 +254,36 @@ class _EvaluationSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [0, 3, 5, 7, 10].map((i) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6.w),
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 6,
-                  offset: const Offset(0, 3),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [0, 3, 5, 7, 10].map((i) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  'images/evaluation_$i.jpg',
+                  width: 54.w,
+                  height: 54.w,
+                  fit: BoxFit.cover,
                 ),
-              ],
-            ),
-            child: ClipOval(
-              child: Image.asset(
-                'images/evaluation_$i.jpg',
-                width: 54.w,
-                height: 54.w,
-                fit: BoxFit.cover,
               ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }
@@ -303,18 +306,21 @@ class _TimeSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(5, (i) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6.w),
-          child: Image.asset(
-            'images/time$i.png',
-            width: 48.w,
-            height: 48.w,
-          ),
-        );
-      }),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(5, (i) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            child: Image.asset(
+              'images/time$i.png',
+              width: 48.w,
+              height: 48.w,
+            ),
+          );
+        }),
+      ),
     );
   }
 }
