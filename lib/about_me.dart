@@ -15,6 +15,8 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
   late final AnimationController _animController;
   late final Animation<double> _fadeAnim;
   late final Animation<Offset> _slideAnim;
+  static final _staticFade = kAlwaysCompleteAnimation;
+  static final _staticSlide = const AlwaysStoppedAnimation<Offset>(Offset.zero);
   int _currentPage = 0;
 
   static const int _totalPages = 7;
@@ -82,10 +84,11 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
+          PageView.builder(
             controller: _pageController,
             onPageChanged: _onPageChanged,
-            children: _buildPages(l),
+            itemCount: _totalPages,
+            itemBuilder: (context, index) => _buildPage(l, index),
           ),
           if (!isLast)
             Positioned(
@@ -144,65 +147,77 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
     );
   }
 
-  List<Widget> _buildPages(AppLocalizations l) {
-    return [
-      AboutMePage(
-        title: l.aboutMePage1Title,
-        description: l.aboutMePage1Body,
-        illustration: Image.asset('images/baku-kun-1.png', height: 200.h),
-        gradientColors: _gradients[0],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage2Title,
-        description: l.aboutMePage2Body,
-        illustration: Image.asset('images/whale.png', height: 180.h),
-        gradientColors: _gradients[1],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage3Title,
-        description: l.aboutMePage3Body,
-        illustration: const _EvaluationSample(),
-        gradientColors: _gradients[2],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage4Title,
-        description: l.aboutMePage4Body,
-        illustration: Image.asset('images/baku-kun-2.png', height: 200.h),
-        gradientColors: _gradients[3],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage5Title,
-        description: l.aboutMePage5Body,
-        illustration: const _MoonIllustration(),
-        gradientColors: _gradients[4],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage6Title,
-        description: l.aboutMePage6Body,
-        illustration: const _TimeSample(),
-        gradientColors: _gradients[5],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-      AboutMePage(
-        title: l.aboutMePage7Title,
-        description: l.aboutMePage7Body,
-        illustration: const _CalendarIllustration(),
-        gradientColors: _gradients[6],
-        fadeAnimation: _fadeAnim,
-        slideAnimation: _slideAnim,
-      ),
-    ];
+  Widget _buildPage(AppLocalizations l, int index) {
+    final isActive = index == _currentPage;
+    final fade = isActive ? _fadeAnim : _staticFade;
+    final slide = isActive ? _slideAnim : _staticSlide;
+
+    switch (index) {
+      case 0:
+        return AboutMePage(
+          title: l.aboutMePage1Title,
+          description: l.aboutMePage1Body,
+          illustration: Image.asset('images/baku-kun-1.png', height: 200.h),
+          gradientColors: _gradients[0],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 1:
+        return AboutMePage(
+          title: l.aboutMePage2Title,
+          description: l.aboutMePage2Body,
+          illustration: Image.asset('images/whale.png', height: 180.h),
+          gradientColors: _gradients[1],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 2:
+        return AboutMePage(
+          title: l.aboutMePage3Title,
+          description: l.aboutMePage3Body,
+          illustration: const _EvaluationSample(),
+          gradientColors: _gradients[2],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 3:
+        return AboutMePage(
+          title: l.aboutMePage4Title,
+          description: l.aboutMePage4Body,
+          illustration: Image.asset('images/baku-kun-2.png', height: 200.h),
+          gradientColors: _gradients[3],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 4:
+        return AboutMePage(
+          title: l.aboutMePage5Title,
+          description: l.aboutMePage5Body,
+          illustration: const _MoonIllustration(),
+          gradientColors: _gradients[4],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 5:
+        return AboutMePage(
+          title: l.aboutMePage6Title,
+          description: l.aboutMePage6Body,
+          illustration: const _TimeSample(),
+          gradientColors: _gradients[5],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 6:
+      default:
+        return AboutMePage(
+          title: l.aboutMePage7Title,
+          description: l.aboutMePage7Body,
+          illustration: const _CalendarIllustration(),
+          gradientColors: _gradients[6],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+    }
   }
 }
 
