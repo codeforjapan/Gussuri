@@ -4,7 +4,7 @@ import 'package:gussuri/help.dart';
 import 'package:gussuri/home.dart';
 import 'package:gussuri/print.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 enum TabItem {
   home(

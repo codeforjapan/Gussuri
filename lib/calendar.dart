@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'input.dart';
 import 'utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 class Calendar extends StatefulWidget {
   final Function? updateIndex;

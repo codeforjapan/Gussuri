@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/privacy_policy.dart';
 import 'package:gussuri/terms_of_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 class Help extends StatefulWidget {
   const Help({Key? key}) : super(key: key);

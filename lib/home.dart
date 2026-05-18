@@ -10,7 +10,7 @@ import 'dart:math' as math;
 import 'package:gussuri/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 
 class Home extends StatefulWidget {

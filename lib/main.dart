@@ -8,7 +8,7 @@ import 'package:gussuri/utils.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:intl/intl_standalone.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,12 +38,13 @@ class Gussuri extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         builder: (context, child) {
-          return const MaterialApp(
+          return MaterialApp(
             title: 'Gussuri',
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
-            home: Base(),
+            theme: ThemeData(useMaterial3: false),
+            home: const Base(),
           );
         });
   }

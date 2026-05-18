@@ -33,6 +33,7 @@
 
 # Web related
 lib/generated_plugin_registrant.dart
+lib/gen_l10n/
 
 # Symbolication related
 app.*.symbols
@@ -70,5 +71,6 @@ functions/package-lock.json
 functions/package.json
 assets/
 lib_copy/
-.fvm/flutter_sdk
-.fvm/*
+
+# FVM Version Cache
+.fvm/

@@ -8,7 +8,7 @@ import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 class Print extends StatefulWidget {
   const Print({super.key});
