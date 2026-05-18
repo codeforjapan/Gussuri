@@ -8,24 +8,25 @@ class DeviceData {
   } // private constructor
 
   static Future<String> getDeviceUniqueId() async {
-    var deviceIdentifier = 'unknown';
-    var deviceInfo = DeviceInfoPlugin();
+    final deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isAndroid) {
-      var androidInfo = await deviceInfo.androidInfo;
-      deviceIdentifier = androidInfo.id!;
+      final androidInfo = await deviceInfo.androidInfo;
+      // v12: androidInfo.id is non-nullable String
+      return androidInfo.id;
     } else if (Platform.isIOS) {
-      var iosInfo = await deviceInfo.iosInfo;
-      deviceIdentifier = iosInfo.identifierForVendor!;
+      final iosInfo = await deviceInfo.iosInfo;
+      // v12: identifierForVendor is nullable String?
+      return iosInfo.identifierForVendor ?? 'unknown';
     } else if (Platform.isLinux) {
-      var linuxInfo = await deviceInfo.linuxInfo;
-      deviceIdentifier = linuxInfo.machineId!;
+      final linuxInfo = await deviceInfo.linuxInfo;
+      // v12: machineId is nullable String?
+      return linuxInfo.machineId ?? 'unknown';
     } else if (kIsWeb) {
-      var webInfo = await deviceInfo.webBrowserInfo;
-      deviceIdentifier = webInfo.vendor! +
-          webInfo.userAgent! +
-          webInfo.hardwareConcurrency.toString();
+      final webInfo = await deviceInfo.webBrowserInfo;
+      // v12: vendor and userAgent are nullable String?
+      return '${webInfo.vendor ?? ''}${webInfo.userAgent ?? ''}${webInfo.hardwareConcurrency}';
     }
-    return deviceIdentifier;
+    return 'unknown';
   }
 }
