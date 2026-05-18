@@ -1,32 +1,51 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class DeviceData {
   DeviceData._() {
     throw AssertionError("private Constructor");
-  } // private constructor
+  }
 
-  static Future<String> getDeviceUniqueId() async {
+  static const _storage = FlutterSecureStorage();
+  static const _key = 'device_unique_id';
+
+  // 同時呼び出しのレース条件を防ぐためFutureをキャッシュ
+  static Future<String>? _cachedFuture;
+
+  static Future<String> getDeviceUniqueId() {
+    _cachedFuture ??= _resolveId();
+    return _cachedFuture!;
+  }
+
+  static Future<String> _resolveId() async {
+    final stored = await _storage.read(key: _key);
+    if (stored != null) return stored;
+
+    // 初回 or 移行: 既存の identifierForVendor を引き継いで Keychain に保存
+    final id = await _fetchRawDeviceId();
+    await _storage.write(key: _key, value: id);
+    return id;
+  }
+
+  static Future<String> _fetchRawDeviceId() async {
     final deviceInfo = DeviceInfoPlugin();
-
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfo.androidInfo;
-      // v12: androidInfo.id is non-nullable String
       return androidInfo.id;
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfo.iosInfo;
-      // v12: identifierForVendor is nullable String?
-      return iosInfo.identifierForVendor ?? 'unknown';
+      // null の場合は 'unknown' でなく UUID を生成（コレクション衝突を防ぐ）
+      return iosInfo.identifierForVendor ?? const Uuid().v4();
     } else if (Platform.isLinux) {
       final linuxInfo = await deviceInfo.linuxInfo;
-      // v12: machineId is nullable String?
-      return linuxInfo.machineId ?? 'unknown';
+      return linuxInfo.machineId ?? const Uuid().v4();
     } else if (kIsWeb) {
       final webInfo = await deviceInfo.webBrowserInfo;
-      // v12: vendor and userAgent are nullable String?
       return '${webInfo.vendor ?? ''}${webInfo.userAgent ?? ''}${webInfo.hardwareConcurrency}';
     }
-    return 'unknown';
+    return const Uuid().v4();
   }
 }
