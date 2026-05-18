@@ -5,7 +5,7 @@ import 'package:gussuri/component/title_box.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsOfService extends StatefulWidget {
-  const TermsOfService({Key? key}) : super(key: key);
+  const TermsOfService({super.key});
 
   @override
   State<TermsOfService> createState() => _TermsOfServiceState();

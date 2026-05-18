@@ -14,7 +14,7 @@ import 'gen_l10n/app_localizations.dart';
 class Calendar extends StatefulWidget {
   final Function? updateIndex;
 
-  const Calendar({Key? key, this.updateIndex}) : super(key: key);
+  const Calendar({super.key, this.updateIndex});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -68,7 +68,7 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  Future<void> getEvents(context) async {
+  Future<void> getEvents(BuildContext context) async {
     Map<DateTime, List<Event>> eventData = {};
     for (var index = 0; index < 2; index++) {
       DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);

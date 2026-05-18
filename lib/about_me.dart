@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gussuri/component/title_box.dart';
 
 class AboutMe extends StatefulWidget {
-  const AboutMe({Key? key}) : super(key: key);
+  const AboutMe({super.key});
 
   @override
   State<AboutMe> createState() => _AboutMeState();

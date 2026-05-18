@@ -5,7 +5,7 @@ import 'package:gussuri/component/title_box.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicy extends StatefulWidget {
-  const PrivacyPolicy({Key? key}) : super(key: key);
+  const PrivacyPolicy({super.key});
 
   @override
   State<PrivacyPolicy> createState() => _PrivacyPolicyState();

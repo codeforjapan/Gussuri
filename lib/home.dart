@@ -16,7 +16,7 @@ import 'gen_l10n/app_localizations.dart';
 class Home extends StatefulWidget {
   final Function? updateIndex;
 
-  const Home({Key? key, this.updateIndex}) : super(key: key);
+  const Home({super.key, this.updateIndex});
 
   @override
   State<Home> createState() => _HomeState();
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
     _tips = tips.get('content');
   }
 
-  Future<void> getEvents(context) async {
+  Future<void> getEvents(BuildContext context) async {
     Map<DateTime, List<Event>> eventData = {};
     for (var index = 0; index < 2; index++) {
       DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);

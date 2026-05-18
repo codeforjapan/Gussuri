@@ -10,7 +10,7 @@ class PdfGenerator {
     final ttf = pw.Font.ttf(fontData.buffer.asByteData());
 
     // todo Create format
-    pw.Widget _buildRow(String label, String value) {
+    pw.Widget buildRow(String label, String value) {
       return pw.Padding(
         padding: pw.EdgeInsets.symmetric(vertical: 5),
         child: pw.Row(
@@ -56,11 +56,11 @@ class PdfGenerator {
                   ),
                 ),
                 pw.SizedBox(height: 20),
-                _buildRow('日付', '2023年06月10日'),
-                _buildRow('就寝時間', '23:00'),
-                _buildRow('起床時間', '07:00'),
-                _buildRow('睡眠時間', '8時間'),
-                _buildRow('睡眠効果', '★★★★'),
+                buildRow('日付', '2023年06月10日'),
+                buildRow('就寝時間', '23:00'),
+                buildRow('起床時間', '07:00'),
+                buildRow('睡眠時間', '8時間'),
+                buildRow('睡眠効果', '★★★★'),
               ],
             ),
           ),

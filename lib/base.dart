@@ -20,7 +20,7 @@ final _navigatorKeys = <TabItem, GlobalKey<NavigatorState>>{
 class Base extends HookWidget {
   const Base({super.key});
 
-  Future<void> getEvents(context) async {
+  Future<void> getEvents(BuildContext context) async {
     Map<DateTime, List<Event>> eventData = {};
     for (var index = 0; index < 2; index++) {
       DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);

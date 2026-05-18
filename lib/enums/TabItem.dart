@@ -4,7 +4,7 @@ import 'package:gussuri/help.dart';
 import 'package:gussuri/home.dart';
 import 'package:gussuri/print.dart';
 
-import 'gen_l10n/app_localizations.dart';
+import '../gen_l10n/app_localizations.dart';
 
 enum TabItem {
   home(
@@ -45,8 +45,6 @@ extension TabItemExtension on TabItem {
         return AppLocalizations.of(context)?.print ?? '印刷';
       case TabItem.help:
         return AppLocalizations.of(context)?.help ?? 'ヘルプ';
-      default:
-        return '';
     }
   }
 }

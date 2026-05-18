@@ -6,7 +6,7 @@ import 'package:gussuri/terms_of_service.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class Help extends StatefulWidget {
-  const Help({Key? key}) : super(key: key);
+  const Help({super.key});
 
   @override
   State<Help> createState() => _HelpState();
