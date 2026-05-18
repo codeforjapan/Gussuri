@@ -166,7 +166,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
         return AboutMePage(
           title: l.aboutMePage2Title,
           description: l.aboutMePage2Body,
-          illustration: Image.asset('images/whale.png', height: 180.h),
+          illustration: Image.asset('images/baku-kun-1.png', height: 180.h),
           gradientColors: _gradients[1],
           fadeAnimation: fade,
           slideAnimation: slide,
