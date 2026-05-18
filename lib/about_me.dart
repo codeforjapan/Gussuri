@@ -117,6 +117,11 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
                     _DotIndicator(
                       total: _totalPages,
                       current: _currentPage,
+                      onTap: (i) => _pageController.animateToPage(
+                        i,
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeInOut,
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: _next,
@@ -224,24 +229,32 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
 class _DotIndicator extends StatelessWidget {
   final int total;
   final int current;
+  final ValueChanged<int> onTap;
 
-  const _DotIndicator({required this.total, required this.current});
+  const _DotIndicator({
+    required this.total,
+    required this.current,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: List.generate(total, (i) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          width: i == current ? 24.w : 8.w,
-          height: 8.h,
-          margin: EdgeInsets.only(right: 6.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: i == current
-                ? Colors.white
-                : Colors.white.withValues(alpha: 0.4),
+        return GestureDetector(
+          onTap: () => onTap(i),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            width: i == current ? 24.w : 8.w,
+            height: 8.h,
+            margin: EdgeInsets.only(right: 6.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: i == current
+                  ? Colors.white
+                  : Colors.white.withValues(alpha: 0.4),
+            ),
           ),
         );
       }),
