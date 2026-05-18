@@ -73,4 +73,7 @@ assets/
 lib_copy/
 
 # FVM Version Cache
-.fvm/
+# .fvm/flutter_sdk と .fvm/versions/ を無視（大容量の SDK 本体）
+.fvm/flutter_sdk
+.fvm/versions/
+# .fvm/fvm_config.json はトラッキング対象（チームで SDK バージョンを共有するため）

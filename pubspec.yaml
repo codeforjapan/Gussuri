@@ -44,7 +44,7 @@ flutter:
     - assets/
   uses-material-design: true
 
-flutter_icons:
+flutter_launcher_icons:
   ios: true
   image_path_ios: "assets/icon-ios.png"
   remove_alpha_ios: true
