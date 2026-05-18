@@ -10,7 +10,6 @@ import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
-import 'package:uuid/uuid.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class Edit extends StatefulWidget {
@@ -27,6 +26,10 @@ class _EditState extends State<Edit> {
   late String _formattedDate;
   List<String> _paths = [];
   late Map<String, dynamic> _sleepyData;
+
+  // 定数キー: build() をまたいで同一インスタンスを参照するために State フィールドとして定義
+  final _getUpTimeKey = const GlobalObjectKey<TimePickerState>('__EDIT_GET_UP_TIME_KEY__');
+  final _bedTimeKey   = const GlobalObjectKey<TimePickerState>('__EDIT_BED_TIME_KEY__');
 
   bool _checkSubmit() {
     for (final value in _sleepyData.values) {
@@ -69,7 +72,6 @@ class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    const uuid = Uuid();
 
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -94,7 +96,7 @@ class _EditState extends State<Edit> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
+                              key: _getUpTimeKey,
                               value:
                                   convertDateTime(_sleepyData["get_up_time"]),
                               onChanged: (value) => {
@@ -106,7 +108,7 @@ class _EditState extends State<Edit> {
                       title: localizations.inputWakeingUp,
                       form: ImageButton(
                           value: _sleepyData['SOL'],
-                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
+                          key: const GlobalObjectKey<ImageButtonState>('__EDIT_SOL_KEY__'),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['SOL'] = value;
@@ -130,7 +132,7 @@ class _EditState extends State<Edit> {
                       title: localizations.inputBetweenBedToSleep,
                       form: ImageButton(
                           value: _sleepyData['TASAFA'],
-                          key: GlobalObjectKey<ImageButtonState>(uuid.v4()),
+                          key: const GlobalObjectKey<ImageButtonState>('__EDIT_TASAFA_KEY__'),
                           onChanged: (value) {
                             setState(() {
                               _sleepyData['TASAFA'] = value;
@@ -142,7 +144,7 @@ class _EditState extends State<Edit> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10.h),
                           child: TimePickerWidget(
-                              key: GlobalObjectKey<TimePickerState>(uuid.v4()),
+                              key: _bedTimeKey,
                               value: convertDateTime(_sleepyData["bed_time"]),
                               onChanged: (value) => {
                                     setState(() {
@@ -156,7 +158,8 @@ class _EditState extends State<Edit> {
                         buttonText: localizations.inputComplete,
                         onPressed: _checkSubmit()
                             ? () {
-                                GlobalObjectKey<TimePickerState>(uuid.v4()).currentState?.finalizeChanges();
+                                _getUpTimeKey.currentState?.finalizeChanges();
+                                _bedTimeKey.currentState?.finalizeChanges();
                                 _updateSleepyData();
                               }
                             : null,
