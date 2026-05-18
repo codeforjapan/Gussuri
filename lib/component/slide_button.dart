@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/input_card.dart';
-import 'gen_l10n/app_localizations.dart';
+import '../gen_l10n/app_localizations.dart';
 
 class SlideButton extends StatefulWidget {
   final ValueChanged<int?>? onChanged;
@@ -110,7 +109,7 @@ class SlideButtonState extends State<SlideButton>
                         style: TextStyle(
                             color: isSelected[index]
                                 ? Colors.black
-                                : Colors.black.withOpacity(0.4)),
+                                : Colors.black.withValues(alpha: 0.4)),
                       )
                     ],
                   );

@@ -1,7 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/image_buttons.dart';
-import 'gen_l10n/app_localizations.dart';
+import '../gen_l10n/app_localizations.dart';
 
 class AwakeForm extends StatefulWidget {
   final ValueChanged<int?>? onChangedTimes;
@@ -36,7 +36,7 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
       submitOnChangedSlide = widget.onChangedSlide!;
     }
     if (widget.timesValue != null) {
-      int times = widget.timesValue as int;
+      final int times = widget.timesValue!;
       isSelected[times] = true;
       if (times > 0) {
         isChecked = true;
@@ -48,7 +48,7 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Card(
         margin: EdgeInsets.only(top: 10.h, right: 20.w, left: 20.w),
-        color: Colors.white.withOpacity(0.8),
+        color: Colors.white.withValues(alpha: 0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
           Padding(

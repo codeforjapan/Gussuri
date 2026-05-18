@@ -5,7 +5,7 @@ import 'dart:async';
 class TimePickerWidget extends StatefulWidget {
   final DateTime value;
   final ValueChanged<String?>? onChanged;
-  const TimePickerWidget({Key? key, required this.value, this.onChanged}) : super(key: key);
+  const TimePickerWidget({super.key, required this.value, this.onChanged});
 
   @override
   TimePickerState createState() => TimePickerState();
