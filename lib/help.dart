@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:gussuri/about_me.dart';
+import 'package:gussuri/about_me.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/privacy_policy.dart';
 import 'package:gussuri/terms_of_service.dart';
@@ -18,7 +18,7 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final List<Map<String, dynamic>> listItems = [
-      // {"title": 'このアプリの使い方', "link": const AboutMe()},
+      {"title": localizations.helpHowToUse, "link": const AboutMe()},
       {"title": localizations.helpPrivacyPolicy, "link": const PrivacyPolicy()},
       {"title": localizations.helpTermsOfService, "link": const TermsOfService()},
     ];
