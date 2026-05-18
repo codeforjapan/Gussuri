@@ -57,6 +57,8 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
 
   void _onPageChanged(int page) {
     setState(() => _currentPage = page);
+    // 同じAnimationを全ページで共有しているため、ページ切替時に
+    // reset+forwardすることで可視ページだけアニメーションが見える
     _animController.reset();
     _animController.forward();
   }
@@ -67,7 +69,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
-    } else {
+    } else if (Navigator.canPop(context)) {
       Navigator.pop(context);
     }
   }
@@ -94,7 +96,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     l.aboutMeSkip,
-                    style: const TextStyle(color: Colors.white70, fontSize: 16),
+                    style: TextStyle(color: Colors.white70, fontSize: 16.sp),
                   ),
                 ),
               ),
@@ -108,7 +110,6 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
                 padding: EdgeInsets.fromLTRB(28.w, 0, 28.w, 28.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _DotIndicator(
                       total: _totalPages,
