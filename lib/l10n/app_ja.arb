@@ -52,7 +52,8 @@
   "aboutMePage6Body": "布団に入ってから眠りにつくまでの時間と、朝目が覚めてから布団を出るまでの時間を記録します。",
   "aboutMePage7Title": "カレンダーで振り返ろう",
   "aboutMePage7Body": "記録したデータはカレンダーに一覧表示されます。日付をタップすると詳細の確認・編集ができます。",
-  "aboutMeSkip": "スキップ",
+  "aboutMePage8Title": "データをエクスポートしよう",
+  "aboutMePage8Body": "印刷タブから、指定した期間の睡眠記録をCSVファイルとして書き出すことができます。",
   "aboutMeNext": "次へ",
   "aboutMeDone": "はじめる"
 }

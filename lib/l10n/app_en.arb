@@ -52,7 +52,8 @@
   "aboutMePage6Body": "Record how long it took to fall asleep after getting into bed, and how long after waking up before you got out of bed.",
   "aboutMePage7Title": "Review with the calendar",
   "aboutMePage7Body": "Your recorded data is displayed in the calendar. Tap a date to view details or edit the entry.",
-  "aboutMeSkip": "Skip",
+  "aboutMePage8Title": "Export your data",
+  "aboutMePage8Body": "From the Export tab, you can export your sleep records for a selected period as a CSV file.",
   "aboutMeNext": "Next",
   "aboutMeDone": "Get Started"
 }

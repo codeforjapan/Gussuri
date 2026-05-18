@@ -19,7 +19,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
   static final _staticSlide = const AlwaysStoppedAnimation<Offset>(Offset.zero);
   int _currentPage = 0;
 
-  static const int _totalPages = 7;
+  static const int _totalPages = 8;
 
   static const List<List<Color>> _gradients = [
     [Color(0xFFFFF0C7), Color(0xFFFFE4A3)],
@@ -29,6 +29,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
     [Color(0xFF2699E8), Color(0xFF0D5DB5)],
     [Color(0xFF0D5DB5), Color(0xFF002F7A)],
     [Color(0xFF002F7A), Color(0xFF001637)],
+    [Color(0xFF001637), Color(0xFF000A1F)],
   ];
 
   @override
@@ -90,20 +91,6 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
             itemCount: _totalPages,
             itemBuilder: (context, index) => _buildPage(l, index),
           ),
-          if (!isLast)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: SafeArea(
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    l.aboutMeSkip,
-                    style: TextStyle(color: Colors.white70, fontSize: 16.sp),
-                  ),
-                ),
-              ),
-            ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -213,12 +200,21 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
           slideAnimation: slide,
         );
       case 6:
-      default:
         return AboutMePage(
           title: l.aboutMePage7Title,
           description: l.aboutMePage7Body,
           illustration: const _CalendarIllustration(),
           gradientColors: _gradients[6],
+          fadeAnimation: fade,
+          slideAnimation: slide,
+        );
+      case 7:
+      default:
+        return AboutMePage(
+          title: l.aboutMePage8Title,
+          description: l.aboutMePage8Body,
+          illustration: const _ExportIllustration(),
+          gradientColors: _gradients[7],
           fadeAnimation: fade,
           slideAnimation: slide,
         );
@@ -345,6 +341,19 @@ class _CalendarIllustration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       Icons.calendar_month,
+      size: 130.w,
+      color: Colors.white.withValues(alpha: 0.9),
+    );
+  }
+}
+
+class _ExportIllustration extends StatelessWidget {
+  const _ExportIllustration();
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.file_download_outlined,
       size: 130.w,
       color: Colors.white.withValues(alpha: 0.9),
     );
