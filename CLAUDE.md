@@ -40,7 +40,7 @@ fvm flutter test
 ### 画面構成（TabItem enum）
 - `Home`（`home.dart`）: 今日の睡眠記録ボタン + gussuri チャレンジTips
 - `Calendar`（`calendar.dart`）: `table_calendar` で睡眠記録一覧。日付タップで Input / Edit へ遷移
-- `Print`（`print.dart`）: 指定期間の CSV エクスポート
+- `Print`（`print.dart`）: 指定期間の CSV エクスポート。iOS の `share_plus` v10 は `Share.shareXFiles()` に `sharePositionOrigin` が必須のため、各ボタンに `GlobalKey` を持たせ `RenderBox.localToGlobal` で Rect を算出して渡している
 - `Help`（`help.dart`）: プライバシーポリシー・利用規約リンク
 
 ### ナビゲーション
@@ -48,6 +48,8 @@ fvm flutter test
 
 ### 状態管理
 `provider` パッケージ。`CalenderState`（`utils.dart`）が `kEvents`（`Map<DateTime, List<Event>>`）をアプリ全体で共有。`getEvents()` はデバイスIDを使い Firestore から取得する処理だが、`base.dart`・`home.dart`・`calendar.dart` に重複実装されている。
+
+データ保存後は `CalenderState.upsertEvent(date, event)` を呼ぶことでキャッシュを経由せず `kEvents` を即時更新する（`input.dart`・`edit.dart` で実装済み）。`_loadedMonths` キャッシュを持つため Firestore を再取得してもカレンダーに反映されないが、`upsertEvent` はこれを回避する。
 
 ### デバイスID管理（`lib/helper/DeviceData.dart`）
 `DeviceData.getDeviceUniqueId()` はシングルトン Future でレース条件を防ぐ。初回呼び出し時に Keychain を確認し、なければ `identifierForVendor`（iOS）または `androidInfo.id`（Android）を取得して保存する。`identifierForVendor` が null の場合は UUID を生成（シミュレータ等での衝突防止）。
@@ -87,8 +89,8 @@ fvm flutter test
 1. **カレンダーの表示範囲が狭い**
    - `kFirstDay` が「今月の1ヶ月前」のみ。`getEvents` も直近2ヶ月しか取得しない
 
-2. **`pdf_utils.dart` が未完成**
-   - 値がハードコードのスタブ状態。`Print` タブは CSV エクスポートのみ動作しており PDF 機能は未接続
+2. **PDF出力ボタンが未接続**
+   - `pdf_utils.dart` の `SleepLogPdfGenerator` は実装済み（NCNP 睡眠記録シート形式）。`print.dart` のボタンはフォーマット確認待ちでコメントアウト中
 
 3. **`about_me.dart`（使い方ページ）がスタブ**
    - `help.dart` でコメントアウトされており実質未実装
