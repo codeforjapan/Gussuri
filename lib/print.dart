@@ -24,6 +24,7 @@ class _PrintState extends State<Print> {
   bool isGeneratingCsv = false;
   bool isGeneratingPdf = false;
   final _csvButtonKey = GlobalKey();
+  // ignore: unused_field
   final _pdfButtonKey = GlobalKey();
 
   Rect _buttonRect(GlobalKey key) {
@@ -237,30 +238,31 @@ class _PrintState extends State<Print> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 12.h),
-              child: ElevatedButton(
-                key: _pdfButtonKey,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isGeneratingPdf ? Colors.grey : Colors.blueAccent,
-                  foregroundColor: Colors.white,
-                  minimumSize: Size(280.w, 50.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onPressed: isGeneratingPdf
-                    ? null
-                    : () => savePDF(
-                          localizations.csvGenerationFailed,
-                          shareOrigin: _buttonRect(_pdfButtonKey),
-                        ),
-                child: Text(
-                  localizations.printExportPdf,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            )
+            // TODO: PDF export button — re-enable once PDF format is finalized
+            // Padding(
+            //   padding: EdgeInsets.only(top: 12.h),
+            //   child: ElevatedButton(
+            //     key: _pdfButtonKey,
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: isGeneratingPdf ? Colors.grey : Colors.blueAccent,
+            //       foregroundColor: Colors.white,
+            //       minimumSize: Size(280.w, 50.h),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(50),
+            //       ),
+            //     ),
+            //     onPressed: isGeneratingPdf
+            //         ? null
+            //         : () => savePDF(
+            //               localizations.csvGenerationFailed,
+            //               shareOrigin: _buttonRect(_pdfButtonKey),
+            //             ),
+            //     child: Text(
+            //       localizations.printExportPdf,
+            //       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // )
           ],
         )
       ],
