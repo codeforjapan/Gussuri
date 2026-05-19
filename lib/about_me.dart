@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gussuri/base.dart';
 import 'package:gussuri/component/about_me_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class AboutMe extends StatefulWidget {
-  const AboutMe({super.key});
+  final bool isOnboarding;
+  const AboutMe({super.key, this.isOnboarding = false});
 
   @override
   State<AboutMe> createState() => _AboutMeState();
@@ -66,12 +69,20 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
     _animController.forward();
   }
 
-  void _next() {
+  Future<void> _next() async {
     if (_currentPage < _totalPages - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
+    } else if (widget.isOnboarding) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('hasSeenOnboarding', true);
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const Base()),
+        );
+      }
     } else if (Navigator.canPop(context)) {
       Navigator.pop(context);
     }

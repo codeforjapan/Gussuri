@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gussuri/about_me.dart';
 import 'package:gussuri/base.dart';
 import 'package:gussuri/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:intl/intl_standalone.dart';
 import 'gen_l10n/app_localizations.dart';
@@ -23,16 +25,20 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+  final prefs = await SharedPreferences.getInstance();
+  final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
   runApp(
     ChangeNotifierProvider(
       create: (context) => CalenderState(),
-      child: const Gussuri(),
+      child: Gussuri(showOnboarding: !hasSeenOnboarding),
     ),
   );
 }
 
 class Gussuri extends StatelessWidget {
-  const Gussuri({super.key});
+  final bool showOnboarding;
+  const Gussuri({super.key, required this.showOnboarding});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -44,7 +50,7 @@ class Gussuri extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(useMaterial3: false),
-            home: const Base(),
+            home: showOnboarding ? const AboutMe(isOnboarding: true) : const Base(),
           );
         });
   }
