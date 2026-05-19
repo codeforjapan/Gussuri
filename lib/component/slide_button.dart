@@ -39,7 +39,8 @@ class SlideButtonState extends State<SlideButton>
 
   void _jumpTo(int index) {
     if (!mounted || !_scrollController.hasClients) return;
-    final target = (index * _itemW)
+    final viewport = _scrollController.position.viewportDimension;
+    final target = (index * _itemW - (viewport - _itemW) / 2)
         .clamp(0.0, _scrollController.position.maxScrollExtent);
     _scrollController.jumpTo(target);
   }
