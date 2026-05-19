@@ -81,4 +81,10 @@ class CalenderState with ChangeNotifier {
     kEvents = newEvent;
     notifyListeners();
   }
+
+  void upsertEvent(DateTime date, Event event) {
+    final key = DateTime.utc(date.year, date.month, date.day);
+    kEvents[key] = [event];
+    notifyListeners();
+  }
 }

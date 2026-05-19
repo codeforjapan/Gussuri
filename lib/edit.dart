@@ -10,6 +10,8 @@ import 'package:gussuri/component/input_card.dart';
 import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
+import 'package:gussuri/utils.dart';
+import 'package:provider/provider.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class Edit extends StatefulWidget {
@@ -41,14 +43,22 @@ class _EditState extends State<Edit> {
   }
 
   Future<void> _updateSleepyData() async {
-    FirebaseFirestore.instance
-        .collection(_paths[0]) // コレクションID
+    final ref = FirebaseFirestore.instance
+        .collection(_paths[0])
         .doc(_paths[1])
         .collection(_paths[2])
-        .doc(_paths[3])
-        .set(_sleepyData)
-        .then((value) => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const Calendar())));
+        .doc(_paths[3]);
+    await ref.set(_sleepyData);
+    if (!mounted) return;
+    final date = DateTime(
+      int.parse(_paths[1]),
+      int.parse(_paths[2]),
+      int.parse(_paths[3]),
+    );
+    Provider.of<CalenderState>(context, listen: false)
+        .upsertEvent(date, Event(_sleepyData, ref.path));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Calendar()));
   }
 
   DateTime convertDateTime(dynamic datetime) {

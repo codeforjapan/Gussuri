@@ -10,7 +10,9 @@ import 'package:gussuri/component/slide_button.dart';
 import 'package:gussuri/component/submit_button.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
+import 'package:gussuri/utils.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class Input extends StatefulWidget {
@@ -73,15 +75,20 @@ class _InputState extends State<Input> {
   }
 
   Future<void> _createSleepyData() async {
-    FirebaseFirestore.instance
-        .collection(await DeviceData.getDeviceUniqueId()) // コレクションID
+    final deviceId = await DeviceData.getDeviceUniqueId();
+    final ref = FirebaseFirestore.instance
+        .collection(deviceId)
         .doc(_targetDays[0])
         .collection(_targetDays[1])
-        .doc(_targetDays[2])
-        .set(_sleepyData)
-        .then((value) => Navigator.pushAndRemoveUntil(
-            context, MaterialPageRoute(builder: (context) => widget.nextPage),
-            (_) => false));
+        .doc(_targetDays[2]);
+    await ref.set(_sleepyData);
+    if (!mounted) return;
+    Provider.of<CalenderState>(context, listen: false)
+        .upsertEvent(widget.selectedDay, Event(_sleepyData, ref.path));
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => widget.nextPage),
+        (_) => false);
   }
 
   final timePickerKey =
