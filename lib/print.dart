@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
+import 'package:gussuri/pdf_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -21,6 +22,7 @@ class _PrintState extends State<Print> {
   late DateTime startDate;
   late DateTime endDate;
   bool isGeneratingCsv = false;
+  bool isGeneratingPdf = false;
 
   @override
   void initState() {
@@ -86,6 +88,30 @@ class _PrintState extends State<Print> {
       }
     } finally {
       if (mounted) setState(() => isGeneratingCsv = false);
+    }
+  }
+
+  Future<void> savePDF(String failMsg) async {
+    setState(() => isGeneratingPdf = true);
+    try {
+      final file = await SleepLogPdfGenerator.generateAndSave(
+        startDate: startDate,
+        endDate: endDate,
+      );
+      final fileName =
+          'sleep_log_${DateFormat('yyyyMMdd').format(startDate)}-${DateFormat('yyyyMMdd').format(endDate)}.pdf';
+      await Share.shareXFiles(
+        [XFile(file.path, mimeType: 'application/pdf')],
+        fileNameOverrides: [fileName],
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isGeneratingPdf = false);
     }
   }
 
@@ -191,6 +217,24 @@ class _PrintState extends State<Print> {
                 onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvGenerationFailed),
                 child: Text(
                   localizations.printPrintData,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 12.h),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isGeneratingPdf ? Colors.grey : Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  minimumSize: Size(280.w, 50.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onPressed: isGeneratingPdf ? null : () => savePDF(localizations.csvGenerationFailed),
+                child: Text(
+                  localizations.printExportPdf,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),

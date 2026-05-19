@@ -33,6 +33,7 @@
   "printLimit": "データ保存期間は××日間です。",
   "csvDownloadCompleted": "CSVのダウンロードが完了しました",
   "csvGenerationFailed": "CSVの生成に失敗しました。しばらく時間をおいて再度お試しください",
+  "printExportPdf": "PDF睡眠記録シートを書き出し",
   "help": "ヘルプ",
   "helpHowToUse": "このアプリの使い方",
   "helpPrivacyPolicy": "プライバシーポリシー",

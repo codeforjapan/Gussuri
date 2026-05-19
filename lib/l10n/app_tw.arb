@@ -33,6 +33,7 @@
   "printLimit": "",
   "csvDownloadCompleted": "CSV 下載已完成",
   "csvGenerationFailed": "CSV 生成失敗，請稍後再試",
+  "printExportPdf": "匯出 PDF 睡眠記錄表",
   "help": "求助",
   "helpHowToUse": "如何使用",
   "helpPrivacyPolicy": "隱私政策",
