@@ -23,6 +23,14 @@ class _PrintState extends State<Print> {
   late DateTime endDate;
   bool isGeneratingCsv = false;
   bool isGeneratingPdf = false;
+  final _csvButtonKey = GlobalKey();
+  final _pdfButtonKey = GlobalKey();
+
+  Rect _buttonRect(GlobalKey key) {
+    final box = key.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) return Rect.zero;
+    return box.localToGlobal(Offset.zero) & box.size;
+  }
 
   @override
   void initState() {
@@ -32,7 +40,7 @@ class _PrintState extends State<Print> {
     endDate = today;
   }
 
-  Future<void> saveCSV(String failMsg) async {
+  Future<void> saveCSV(String failMsg, {required Rect shareOrigin}) async {
     setState(() => isGeneratingCsv = true);
     try {
       final deviceUniqueId = await DeviceData.getDeviceUniqueId();
@@ -79,6 +87,7 @@ class _PrintState extends State<Print> {
       await Share.shareXFiles(
         [XFile(file.path, mimeType: 'text/csv')],
         fileNameOverrides: [fileName],
+        sharePositionOrigin: shareOrigin,
       );
     } catch (e) {
       if (mounted) {
@@ -91,7 +100,7 @@ class _PrintState extends State<Print> {
     }
   }
 
-  Future<void> savePDF(String failMsg) async {
+  Future<void> savePDF(String failMsg, {required Rect shareOrigin}) async {
     setState(() => isGeneratingPdf = true);
     try {
       final file = await SleepLogPdfGenerator.generateAndSave(
@@ -103,12 +112,12 @@ class _PrintState extends State<Print> {
       await Share.shareXFiles(
         [XFile(file.path, mimeType: 'application/pdf')],
         fileNameOverrides: [fileName],
+        sharePositionOrigin: shareOrigin,
       );
-    } catch (e, st) {
-      debugPrint('PDF generation error: $e\n$st');
+    } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$e'), backgroundColor: Colors.red),
+          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -207,6 +216,7 @@ class _PrintState extends State<Print> {
             Padding(
               padding: EdgeInsets.only(top: 20.h),
               child: ElevatedButton(
+                key: _csvButtonKey,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isGeneratingCsv ? Colors.grey : Colors.amber,
                   foregroundColor: Colors.black,
@@ -215,7 +225,12 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvGenerationFailed),
+                onPressed: isGeneratingCsv
+                    ? null
+                    : () => saveCSV(
+                          localizations.csvGenerationFailed,
+                          shareOrigin: _buttonRect(_csvButtonKey),
+                        ),
                 child: Text(
                   localizations.printPrintData,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -225,6 +240,7 @@ class _PrintState extends State<Print> {
             Padding(
               padding: EdgeInsets.only(top: 12.h),
               child: ElevatedButton(
+                key: _pdfButtonKey,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isGeneratingPdf ? Colors.grey : Colors.blueAccent,
                   foregroundColor: Colors.white,
@@ -233,7 +249,12 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: isGeneratingPdf ? null : () => savePDF(localizations.csvGenerationFailed),
+                onPressed: isGeneratingPdf
+                    ? null
+                    : () => savePDF(
+                          localizations.csvGenerationFailed,
+                          shareOrigin: _buttonRect(_pdfButtonKey),
+                        ),
                 child: Text(
                   localizations.printExportPdf,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
