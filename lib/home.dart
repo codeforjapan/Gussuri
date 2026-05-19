@@ -26,35 +26,38 @@ class _HomeState extends State<Home> {
   String _tips = '';
 
   Future<void> checkLastNightSleep() async {
-    final orderSnap = await FirebaseFirestore.instance
-        .collection(await DeviceData.getDeviceUniqueId())
-        .doc(DateKey.year())
-        .collection(DateKey.month())
-        .doc(DateKey.day())
-        .get();
     try {
-      orderSnap.get('dysfunction');
-      if (mounted) {
-        setState(() {
+      final orderSnap = await FirebaseFirestore.instance
+          .collection(await DeviceData.getDeviceUniqueId())
+          .doc(DateKey.year())
+          .collection(DateKey.month())
+          .doc(DateKey.day())
+          .get();
+      if (!mounted) return;
+      setState(() {
+        try {
+          orderSnap.get('dysfunction');
           _checkLastNightSleep = true;
-        });
-      }
-    } on StateError {
-      if (mounted) {
-        setState(() {
+        } on StateError {
           _checkLastNightSleep = false;
-        });
-      }
+        }
+      });
+    } catch (_) {
+      if (mounted) setState(() => _checkLastNightSleep = false);
     }
   }
 
   Future<void> getTips() async {
-    var rand = math.Random();
-    final tips = await FirebaseFirestore.instance
-        .collection('tips')
-        .doc(rand.nextInt(2).toString())
-        .get();
-    _tips = tips.get('content');
+    try {
+      var rand = math.Random();
+      final tips = await FirebaseFirestore.instance
+          .collection('tips')
+          .doc(rand.nextInt(2).toString())
+          .get();
+      _tips = tips.get('content') as String;
+    } catch (_) {
+      // _tips は challengeFirst ロケール文字列で上書きされるためフォールバック不要
+    }
   }
 
   @override

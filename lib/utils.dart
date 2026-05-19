@@ -70,7 +70,9 @@ class CalenderState with ChangeNotifier {
     for (var i = 0; i < toFetch.length; i++) {
       final date = toFetch[i];
       for (final res in snaps[i].docs) {
-        kEvents[DateTime.utc(date.year, date.month, int.parse(res.id))] =
+        final day = int.tryParse(res.id);
+        if (day == null) continue;
+        kEvents[DateTime.utc(date.year, date.month, day)] =
             [Event(res.data(), res.reference.path)];
       }
     }

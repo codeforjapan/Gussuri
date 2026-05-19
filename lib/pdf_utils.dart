@@ -147,17 +147,21 @@ class SleepLogPdfGenerator {
         if (day == null) continue;
         final date = DateTime(year, month, day);
         if (date.isBefore(startDate) || date.isAfter(endDate)) continue;
-        final d = doc.data();
-        records.add(SleepDayRecord(
-          date:            date,
-          bedTime:         parseTs(d['bed_time']),
-          getUpTime:       parseTs(d['get_up_time']),
-          sleepOnsetField: (d['TASAFA'] ?? '') as String,
-          wakeToRiseField: (d['SOL']    ?? '') as String,
-          wasoField:       (d['WASO']   ?? '') as String,
-          noa:             (d['NOA']    as int?) ?? 0,
-          dysfunction:     (d['dysfunction'] as int?) ?? 0,
-        ));
+        try {
+          final d = doc.data();
+          records.add(SleepDayRecord(
+            date:            date,
+            bedTime:         parseTs(d['bed_time']),
+            getUpTime:       parseTs(d['get_up_time']),
+            sleepOnsetField: (d['TASAFA'] ?? '') as String,
+            wakeToRiseField: (d['SOL']    ?? '') as String,
+            wasoField:       (d['WASO']   ?? '') as String,
+            noa:             (d['NOA']    as int?) ?? 0,
+            dysfunction:     (d['dysfunction'] as int?) ?? 0,
+          ));
+        } catch (_) {
+          continue;
+        }
       }
     }
     return records;

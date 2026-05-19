@@ -20,7 +20,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime _focusedDay = DateTime.utc(kToday.year, kToday.month, kToday.day);
-  DateTime? _selectedDay;
+  late DateTime _selectedDay;
   Icon _rightChevron = const Icon(Icons.chevron_right, color: Colors.grey);
   Icon _leftChevron = const Icon(Icons.chevron_left);
   Color selectedColor = const Color.fromRGBO(177, 208, 255, 1);
@@ -30,7 +30,7 @@ class _CalendarState extends State<Calendar> {
     super.initState();
     Provider.of<CalenderState>(context, listen: false).loadEvents();
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
   }
 
   @override
