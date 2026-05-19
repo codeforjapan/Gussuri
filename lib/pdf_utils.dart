@@ -116,36 +116,50 @@ class SleepLogPdfGenerator {
     DateTime endDate,
   ) async {
     final deviceId = await DeviceData.getDeviceUniqueId();
-    final records  = <SleepDayRecord>[];
 
+    // 月単位でまとめて並列取得
+    final monthKeys = <String, (String, String)>{};
     for (var date = startDate;
         !date.isAfter(endDate);
         date = date.add(const Duration(days: 1))) {
-      final snap = await FirebaseFirestore.instance
-          .collection(deviceId)
-          .doc(date.year.toString())
-          .collection(date.month.toString().padLeft(2, '0'))
-          .doc(date.day.toString().padLeft(2, '0'))
-          .get();
-
-      if (!snap.exists) continue;
-      final d = snap.data()!;
-
-      DateTime parseTs(dynamic v) =>
-          v is Timestamp ? v.toDate().toLocal() : DateTime.parse(v.toString());
-
-      records.add(SleepDayRecord(
-        date:             date,
-        bedTime:          parseTs(d['bed_time']),
-        getUpTime:        parseTs(d['get_up_time']),
-        sleepOnsetField:  (d['TASAFA'] ?? '') as String,
-        wakeToRiseField:  (d['SOL']    ?? '') as String,
-        wasoField:        (d['WASO']   ?? '') as String,
-        noa:              (d['NOA']    as int?) ?? 0,
-        dysfunction:      (d['dysfunction'] as int?) ?? 0,
-      ));
+      final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+      monthKeys[key] = (date.year.toString(), date.month.toString().padLeft(2, '0'));
     }
+    final monthList = monthKeys.values.toList();
+    final snaps = await Future.wait(
+      monthList.map((ym) => FirebaseFirestore.instance
+          .collection(deviceId)
+          .doc(ym.$1)
+          .collection(ym.$2)
+          .get()),
+    );
 
+    DateTime parseTs(dynamic v) =>
+        v is Timestamp ? v.toDate().toLocal() : DateTime.parse(v.toString());
+
+    final records = <SleepDayRecord>[];
+    for (var i = 0; i < snaps.length; i++) {
+      final (yearStr, monthStr) = monthList[i];
+      final year  = int.parse(yearStr);
+      final month = int.parse(monthStr);
+      for (final doc in snaps[i].docs) {
+        final day = int.tryParse(doc.id);
+        if (day == null) continue;
+        final date = DateTime(year, month, day);
+        if (date.isBefore(startDate) || date.isAfter(endDate)) continue;
+        final d = doc.data();
+        records.add(SleepDayRecord(
+          date:            date,
+          bedTime:         parseTs(d['bed_time']),
+          getUpTime:       parseTs(d['get_up_time']),
+          sleepOnsetField: (d['TASAFA'] ?? '') as String,
+          wakeToRiseField: (d['SOL']    ?? '') as String,
+          wasoField:       (d['WASO']   ?? '') as String,
+          noa:             (d['NOA']    as int?) ?? 0,
+          dysfunction:     (d['dysfunction'] as int?) ?? 0,
+        ));
+      }
+    }
     return records;
   }
 

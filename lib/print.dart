@@ -50,24 +50,35 @@ class _PrintState extends State<Print> {
         ['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA'],
       ];
 
+      // 月単位でまとめて並列取得
+      final monthKeys = <String, (String, String)>{};
       for (DateTime date = startDate;
-          date.isBefore(endDate.add(const Duration(days: 1)));
+          !date.isAfter(endDate);
           date = date.add(const Duration(days: 1))) {
-        final year = date.year.toString();
-        final month = date.month.toString().padLeft(2, '0');
-        final day = date.day.toString().padLeft(2, '0');
-
-        final snap = await FirebaseFirestore.instance
+        final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+        monthKeys[key] = (date.year.toString(), date.month.toString().padLeft(2, '0'));
+      }
+      final monthList = monthKeys.values.toList();
+      final snaps = await Future.wait(
+        monthList.map((ym) => FirebaseFirestore.instance
             .collection(deviceUniqueId)
-            .doc(year)
-            .collection(month)
-            .doc(day)
-            .get();
+            .doc(ym.$1)
+            .collection(ym.$2)
+            .get()),
+      );
 
-        if (snap.exists) {
-          final data = snap.data()!;
+      for (var i = 0; i < snaps.length; i++) {
+        final (yearStr, monthStr) = monthList[i];
+        final year = int.parse(yearStr);
+        final month = int.parse(monthStr);
+        for (final doc in snaps[i].docs) {
+          final day = int.tryParse(doc.id);
+          if (day == null) continue;
+          final date = DateTime(year, month, day);
+          if (date.isBefore(startDate) || date.isAfter(endDate)) continue;
+          final data = doc.data();
           rows.add([
-            DateFormat('yyyy-MM-dd').format(DateTime.parse(parseFormat(data['bed_time']))),
+            DateFormat('yyyy-MM-dd').format(date),
             DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
             data['TASAFA'],
             DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
