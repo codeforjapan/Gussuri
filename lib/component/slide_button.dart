@@ -98,9 +98,6 @@ class SlideButtonState extends State<SlideButton>
                             isSelected[index] = true;
                           });
                           submitOnChanged(10 - index);
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            if (mounted) _jumpTo(index);
-                          });
                         },
                         style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),
