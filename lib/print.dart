@@ -7,7 +7,7 @@ import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share_plus/share_plus.dart';
 import 'gen_l10n/app_localizations.dart';
 
 class Print extends StatefulWidget {
@@ -30,69 +30,62 @@ class _PrintState extends State<Print> {
     endDate = today;
   }
 
-  Future saveCSV(String completeMsg, String failMsg) async {
-    setState(() {
-      isGeneratingCsv = true;
-    });
+  Future<void> saveCSV(String failMsg) async {
+    setState(() => isGeneratingCsv = true);
     try {
-    String deviceUniqueId = await DeviceData.getDeviceUniqueId();
+      final deviceUniqueId = await DeviceData.getDeviceUniqueId();
 
-    List<List<dynamic>> rows = [];
-    rows.add(['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA']);
+      final rows = <List<dynamic>>[
+        ['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA'],
+      ];
 
-    for (DateTime date = startDate;
-    date.isBefore(endDate.add(const Duration(days: 1)));
-    date = date.add(const Duration(days: 1))) {
-      String year = date.year.toString();
-      String month = date.month.toString().padLeft(2, '0');
-      String day = date.day.toString().padLeft(2, '0');
+      for (DateTime date = startDate;
+          date.isBefore(endDate.add(const Duration(days: 1)));
+          date = date.add(const Duration(days: 1))) {
+        final year = date.year.toString();
+        final month = date.month.toString().padLeft(2, '0');
+        final day = date.day.toString().padLeft(2, '0');
 
-      var daySnapshot = await FirebaseFirestore.instance
-          .collection(deviceUniqueId)
-          .doc(year)
-          .collection(month)
-          .doc(day)
-          .get();
+        final snap = await FirebaseFirestore.instance
+            .collection(deviceUniqueId)
+            .doc(year)
+            .collection(month)
+            .doc(day)
+            .get();
 
-      if (daySnapshot.exists) {
-        var data = daySnapshot.data() as Map<String, dynamic>;
-        List<dynamic> row = [
-          DateFormat('yyyy-MM-dd').format(DateTime.parse(parseFormat(data['bed_time']))),
-          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
-          data['TASAFA'],
-          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
-          data['dysfunction'],
-          data['WASO'],
-          data['SOL'],
-          data['NOA'],
-        ];
-        rows.add(row);
+        if (snap.exists) {
+          final data = snap.data()!;
+          rows.add([
+            DateFormat('yyyy-MM-dd').format(DateTime.parse(parseFormat(data['bed_time']))),
+            DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
+            data['TASAFA'],
+            DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
+            data['dysfunction'],
+            data['WASO'],
+            data['SOL'],
+            data['NOA'],
+          ]);
+        }
       }
-    }
 
-    String csvData = const ListToCsvConverter().convert(rows);
+      final csvData = const ListToCsvConverter().convert(rows);
+      final dir = await getTemporaryDirectory();
+      final fileName = 'sleep_record_${DateFormat('yyyyMMdd').format(startDate)}-${DateFormat('yyyyMMdd').format(endDate)}.csv';
+      final file = File('${dir.path}/$fileName');
+      await file.writeAsString(csvData);
 
-    final output = await getApplicationDocumentsDirectory();
-    final file = File('${output.path}/sleep_record_${DateFormat('yyyy-MM-dd-Hm').format(DateTime.now())}.csv');
-    await file.writeAsString(csvData);
-
-    Fluttertoast.showToast(
-      msg: completeMsg,
-      backgroundColor: Colors.green,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-    );
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: failMsg,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.red,
-        gravity: ToastGravity.BOTTOM,
+      await Share.shareXFiles(
+        [XFile(file.path, mimeType: 'text/csv')],
+        fileNameOverrides: [fileName],
       );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
+        );
+      }
     } finally {
-      setState(() {
-        isGeneratingCsv = false;
-      });
+      if (mounted) setState(() => isGeneratingCsv = false);
     }
   }
 
@@ -195,7 +188,7 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvDownloadCompleted, localizations.csvGenerationFailed),
+                onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvGenerationFailed),
                 child: Text(
                   localizations.printPrintData,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
