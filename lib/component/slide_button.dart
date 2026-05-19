@@ -90,8 +90,10 @@ class SlideButtonState extends State<SlideButton>
                           setState(() {
                             isSelected.fillRange(0, isSelected.length, false);
                             isSelected[index] = true;
-                            submitOnChanged(10 - index);
-                            scrollToIndex(index);
+                          });
+                          submitOnChanged(10 - index);
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (mounted) scrollToIndex(index);
                           });
                         },
                         style: ElevatedButton.styleFrom(
