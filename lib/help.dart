@@ -63,10 +63,13 @@ class _HelpState extends State<Help> {
           padding: const EdgeInsets.all(8.0),
           child: Text(localizations.googleFond),
         ),
+        const Spacer(),
         FutureBuilder<String>(
           future: _deviceIdFuture,
           builder: (context, snap) {
-            return Padding(
+            return SafeArea(
+              top: false,
+              child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 4, 8, 8),
               child: Row(
                 children: [
@@ -89,7 +92,7 @@ class _HelpState extends State<Help> {
                     ),
                 ],
               ),
-            );
+            ));
           },
         )
       ],
