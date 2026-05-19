@@ -104,10 +104,11 @@ class _PrintState extends State<Print> {
         [XFile(file.path, mimeType: 'application/pdf')],
         fileNameOverrides: [fileName],
       );
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('PDF generation error: $e\n$st');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
+          SnackBar(content: Text('$e'), backgroundColor: Colors.red),
         );
       }
     } finally {
