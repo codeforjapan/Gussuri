@@ -4,7 +4,7 @@ import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
 
 final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 1);
+final kFirstDay = DateTime(kToday.year - 3, kToday.month);
 
 bool isSameMonth(DateTime? a, DateTime? b) {
   if (a == null || b == null) {
@@ -32,43 +32,49 @@ class Event {
 Map<DateTime, List<Event>> kEvents = <DateTime, List<Event>>{};
 
 class CalenderState with ChangeNotifier {
-  // Caches the in-flight Future so concurrent callers share the same load.
-  Future<void>? _loadFuture;
+  final _loadedMonths = <String>{};
+  Future<void>? _initialFuture;
 
-  /// Loads events once; subsequent calls are no-ops until [reloadEvents] is called.
+  /// 起動時：前月・当月の2ヶ月だけ取得
   Future<void> loadEvents() {
-    _loadFuture ??= _fetchEvents();
-    return _loadFuture!;
+    _initialFuture ??= _fetchMonths([
+      DateTime(kToday.year, kToday.month - 1),
+      DateTime(kToday.year, kToday.month),
+    ]);
+    return _initialFuture!;
   }
 
-  /// Forces a fresh fetch from Firestore.
-  Future<void> reloadEvents() {
-    _loadFuture = _fetchEvents();
-    return _loadFuture!;
+  /// カレンダーページ切替時：その月だけオンデマンド取得
+  Future<void> loadMonth(DateTime month) {
+    return _fetchMonths([DateTime(month.year, month.month)]);
   }
 
-  Future<void> _fetchEvents() async {
+  Future<void> _fetchMonths(List<DateTime> months) async {
+    // 取得前に即マーク → 並行呼び出しでも二重取得しない
+    final toFetch = months.where((m) {
+      final key = DateFormat('yyyy-MM').format(m);
+      if (_loadedMonths.contains(key)) return false;
+      _loadedMonths.add(key);
+      return true;
+    }).toList();
+    if (toFetch.isEmpty) return;
+
     final deviceId = await DeviceData.getDeviceUniqueId();
-    final months = List.generate(
-      2,
-      (i) => DateTime(kFirstDay.year, kFirstDay.month + i),
-    );
     final snaps = await Future.wait(
-      months.map((date) => FirebaseFirestore.instance
+      toFetch.map((date) => FirebaseFirestore.instance
           .collection(deviceId)
           .doc('${date.year}')
           .collection(DateFormat('MM').format(date))
           .get()),
     );
-    final Map<DateTime, List<Event>> eventData = {};
-    for (var i = 0; i < months.length; i++) {
-      final date = months[i];
+    for (var i = 0; i < toFetch.length; i++) {
+      final date = toFetch[i];
       for (final res in snaps[i].docs) {
-        eventData[DateTime.utc(date.year, date.month, int.parse(res.id))] =
+        kEvents[DateTime.utc(date.year, date.month, int.parse(res.id))] =
             [Event(res.data(), res.reference.path)];
       }
     }
-    updateEvent(eventData);
+    notifyListeners();
   }
 
   void updateEvent(Map<DateTime, List<Event>> newEvent) {

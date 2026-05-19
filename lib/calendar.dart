@@ -180,6 +180,7 @@ class _CalendarState extends State<Calendar> {
                 eventLoader: _getEventsForDay,
                 onDaySelected: _onDaySelected,
                 onPageChanged: (focusedDay) {
+                  context.read<CalenderState>().loadMonth(focusedDay);
                   setState(() {
                     _rightChevron = isSameMonth(kToday, focusedDay)
                         ? const Icon(Icons.chevron_right, color: Colors.grey)
