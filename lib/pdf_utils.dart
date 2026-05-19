@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:gussuri/helper/DeviceData.dart';
 import 'package:intl/intl.dart';
@@ -78,11 +77,8 @@ class SleepLogPdfGenerator {
     required DateTime startDate,
     required DateTime endDate,
   }) async {
-    debugPrint('[PDF] step1: fetching records');
     final records = await _fetchRecords(startDate, endDate);
-    debugPrint('[PDF] step2: ${records.length} records fetched. loading font');
     final font    = await _loadFont();
-    debugPrint('[PDF] step3: font loaded. building document');
     final pdf     = pw.Document();
 
     // Split into pages of _rowsPerPage
@@ -105,15 +101,11 @@ class SleepLogPdfGenerator {
       ));
     }
 
-    debugPrint('[PDF] step4: pages built. saving');
     final dir      = await getTemporaryDirectory();
     final fileName =
         'sleep_log_${DateFormat('yyyyMMdd').format(startDate)}-${DateFormat('yyyyMMdd').format(endDate)}.pdf';
     final file = File('${dir.path}/$fileName');
-    final bytes = await pdf.save();
-    debugPrint('[PDF] step5: bytes=${bytes.length}. writing file');
-    await file.writeAsBytes(bytes);
-    debugPrint('[PDF] step6: done. path=${file.path}');
+    await file.writeAsBytes(await pdf.save());
     return file;
   }
 
