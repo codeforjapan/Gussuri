@@ -21,7 +21,7 @@ class AwakeForm extends StatefulWidget {
 }
 
 class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
-  List<bool> isSelected = List.generate(10, (i) => false);
+  List<bool> isSelected = List.generate(11, (i) => false);
   bool isChecked = false;
   late final Function(int?) submitOnChangedTimes;
   late final Function(String?) submitOnChangedSlide;
