@@ -27,7 +27,7 @@ flutter pub global activate flutterfire_cli
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
 # Install CocoaPods using Homebrew.
-HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
+export HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 # Install CocoaPods dependencies.
@@ -35,5 +35,28 @@ cd ios && pod install # run `pod install` in the `ios` directory.
 echo "$FIREBASE_OPTIONS" | base64 --decode > "$CI_PRIMARY_REPOSITORY_PATH/lib/firebase_options.dart"
 
 echo "$FIREBASE_APP_ID" |  base64 --decode >  "$CI_PRIMARY_REPOSITORY_PATH/ios/firebase_app_id_file.json"
+
+# Generate firebase.json from firebase_app_id_file.json (required by flutterfire upload-crashlytics-symbols)
+python3 - "$CI_PRIMARY_REPOSITORY_PATH" << 'PYEOF'
+import json, sys
+repo = sys.argv[1]
+with open(f"{repo}/ios/firebase_app_id_file.json") as f:
+    app_id = json.load(f)
+firebase = {
+    "flutter": {
+        "platforms": {
+            "ios": {
+                "default": {
+                    "projectId": app_id["FIREBASE_PROJECT_ID"],
+                    "appId": app_id["GOOGLE_APP_ID"],
+                    "uploadDebugSymbols": True
+                }
+            }
+        }
+    }
+}
+with open(f"{repo}/firebase.json", "w") as f:
+    json.dump(firebase, f)
+PYEOF
 
 exit 0
