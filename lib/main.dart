@@ -15,9 +15,23 @@ import 'gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await findSystemLocale();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } on FirebaseException catch (e) {
+    if (e.code != 'duplicate-app') {
+      runApp(MaterialApp(
+        home: Scaffold(body: Center(child: SelectableText('Firebase init error:\n$e'))),
+      ));
+      return;
+    }
+  } catch (e, s) {
+    runApp(MaterialApp(
+      home: Scaffold(body: Center(child: SelectableText('Firebase init error:\n$e\n$s'))),
+    ));
+    return;
+  }
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
