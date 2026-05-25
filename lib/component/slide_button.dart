@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/input_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../gen_l10n/app_localizations.dart';
 
 class SlideButton extends StatefulWidget {
   final ValueChanged<int?>? onChanged;
@@ -20,41 +19,47 @@ class SlideButtonState extends State<SlideButton>
   late final Function(int?) submitOnChanged;
   final ScrollController _scrollController = ScrollController();
 
+  // Must match itemExtent on the ListView
+  static double get _itemW => 56.w;
+
   @override
   void initState() {
     super.initState();
     submitOnChanged = widget.onChanged ?? (_) {};
-
-    int reversedIndex = 10 - widget.value;
-    isSelected[reversedIndex] = true;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo((reversedIndex * 40).w);
-    });
+    final idx = 10 - widget.value;
+    isSelected[idx] = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _jumpTo(idx));
   }
 
-  void scrollToIndex(int index) {
-    double position = index * 40.w;
-    _scrollController.animateTo(
-      position,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _jumpTo(int index) {
+    if (!mounted || !_scrollController.hasClients) return;
+    final viewport = _scrollController.position.viewportDimension;
+    final target = (index * _itemW - (viewport - _itemW) / 2)
+        .clamp(0.0, _scrollController.position.maxScrollExtent);
+    _scrollController.jumpTo(target);
   }
 
   void scrollLeft() {
-    double newOffset = (_scrollController.offset - 40.w).clamp(0, _scrollController.position.maxScrollExtent);
+    if (!_scrollController.hasClients) return;
     _scrollController.animateTo(
-      newOffset,
+      (_scrollController.offset - _itemW)
+          .clamp(0.0, _scrollController.position.maxScrollExtent),
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
 
   void scrollRight() {
-    double newOffset = (_scrollController.offset + 40.w).clamp(0, _scrollController.position.maxScrollExtent);
+    if (!_scrollController.hasClients) return;
     _scrollController.animateTo(
-      newOffset,
+      (_scrollController.offset + _itemW)
+          .clamp(0.0, _scrollController.position.maxScrollExtent),
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -74,7 +79,6 @@ class SlideButtonState extends State<SlideButton>
             icon: const Icon(Icons.arrow_left, size: 32),
             onPressed: scrollLeft,
           ),
-
           Expanded(
             child: SizedBox(
               height: 70.h,
@@ -82,43 +86,50 @@ class SlideButtonState extends State<SlideButton>
                 shrinkWrap: true,
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
+                itemExtent: _itemW,
                 itemCount: isSelected.length,
                 itemBuilder: (context, index) {
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
                             isSelected.fillRange(0, isSelected.length, false);
                             isSelected[index] = true;
-                            submitOnChanged(10 - index);
-                            scrollToIndex(index);
                           });
+                          submitOnChanged(10 - index);
                         },
                         style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            backgroundColor: Colors.white),
+                          shape: const CircleBorder(),
+                          backgroundColor: Colors.white,
+                          fixedSize: Size(44.w, 44.w),
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         child: ClipOval(
                           child: Opacity(
                             opacity: isSelected[index] ? 1 : 0.5,
-                            child: Image.asset('images/evaluation_${10 - index}.jpg'),
+                            child: Image.asset(
+                                'images/evaluation_${10 - index}.jpg'),
                           ),
                         ),
                       ),
                       Text(
                         '${localizations.rate} $index',
                         style: TextStyle(
-                            color: isSelected[index]
-                                ? Colors.black
-                                : Colors.black.withOpacity(0.4)),
-                      )
+                          fontSize: 10,
+                          color: isSelected[index]
+                              ? Colors.black
+                              : Colors.black.withValues(alpha: 0.4),
+                        ),
+                      ),
                     ],
                   );
                 },
               ),
             ),
           ),
-
           IconButton(
             icon: const Icon(Icons.arrow_right, size: 32),
             onPressed: scrollRight,

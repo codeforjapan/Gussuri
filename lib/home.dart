@@ -8,15 +8,14 @@ import 'package:gussuri/helper/DeviceData.dart';
 import 'package:gussuri/input.dart';
 import 'dart:math' as math;
 import 'package:gussuri/utils.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 
 class Home extends StatefulWidget {
   final Function? updateIndex;
 
-  const Home({Key? key, this.updateIndex}) : super(key: key);
+  const Home({super.key, this.updateIndex});
 
   @override
   State<Home> createState() => _HomeState();
@@ -27,63 +26,44 @@ class _HomeState extends State<Home> {
   String _tips = '';
 
   Future<void> checkLastNightSleep() async {
-    final orderSnap = await FirebaseFirestore.instance
-        .collection(await DeviceData.getDeviceUniqueId())
-        .doc(DateKey.year())
-        .collection(DateKey.month())
-        .doc(DateKey.day())
-        .get();
     try {
-      orderSnap.get('dysfunction');
-      if (mounted) {
-        setState(() {
+      final orderSnap = await FirebaseFirestore.instance
+          .collection(await DeviceData.getDeviceUniqueId())
+          .doc(DateKey.year())
+          .collection(DateKey.month())
+          .doc(DateKey.day())
+          .get();
+      if (!mounted) return;
+      setState(() {
+        try {
+          orderSnap.get('dysfunction');
           _checkLastNightSleep = true;
-        });
-      }
-    } on StateError {
-      if (mounted) {
-        setState(() {
+        } on StateError {
           _checkLastNightSleep = false;
-        });
-      }
+        }
+      });
+    } catch (_) {
+      if (mounted) setState(() => _checkLastNightSleep = false);
     }
   }
 
   Future<void> getTips() async {
-    var rand = math.Random();
-    final tips = await FirebaseFirestore.instance
-        .collection('tips')
-        .doc(rand.nextInt(2).toString())
-        .get();
-    _tips = tips.get('content');
-  }
-
-  Future<void> getEvents(context) async {
-    Map<DateTime, List<Event>> eventData = {};
-    for (var index = 0; index < 2; index++) {
-      DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);
-      final orderSnap = await FirebaseFirestore.instance
-          .collection(await DeviceData.getDeviceUniqueId())
-          .doc('${date.year}')
-          .collection(DateFormat('MM').format(date))
+    try {
+      var rand = math.Random();
+      final tips = await FirebaseFirestore.instance
+          .collection('tips')
+          .doc(rand.nextInt(2).toString())
           .get();
-      orderSnap.docs.map((e) => e).forEach((res) {
-        final data = res.data();
-        eventData.addAll({
-          DateTime.utc(date.year, date.month, int.parse(res.id)):
-              List.generate(1, (index) {
-            return Event(data, res.reference.path);
-          })
-        });
-      });
+      _tips = tips.get('content') as String;
+    } catch (_) {
+      // _tips は challengeFirst ロケール文字列で上書きされるためフォールバック不要
     }
-    Provider.of<CalenderState>(context, listen: false).updateEvent(eventData);
   }
 
   @override
   void initState() {
     super.initState();
-    getEvents(context);
+    Provider.of<CalenderState>(context, listen: false).loadEvents();
     checkLastNightSleep();
     getTips();
   }

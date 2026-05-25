@@ -1,6 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../gen_l10n/app_localizations.dart';
 
 class ImageButton extends StatefulWidget {
   final ValueChanged<String?>? onChanged;
@@ -35,7 +35,7 @@ class ImageButtonState extends State<ImageButton>
       submitOnChanged = widget.onChanged!;
     }
     if (widget.value != null && widget.value != '0') {
-      isSelected[_values.values.toList().indexOf(widget.value as String)] =
+      isSelected[_values.values.toList().indexOf(widget.value!)] =
           true;
     }
   }
@@ -86,8 +86,8 @@ class ImageButtonState extends State<ImageButton>
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: isSelected[index]
-                          ? Colors.black.withOpacity(1)
-                          : Colors.black.withOpacity(0.4)),
+                          ? Colors.black
+                          : Colors.black.withValues(alpha: 0.4)),
                 )
               ],
             );

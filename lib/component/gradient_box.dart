@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GradientBox extends StatelessWidget {
   final Widget child;
 
-  const GradientBox({Key? key, required this.child}) : super(key: key);
+  const GradientBox({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

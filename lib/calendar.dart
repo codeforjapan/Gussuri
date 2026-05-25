@@ -1,20 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/edit.dart';
-import 'package:gussuri/helper/DeviceData.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'input.dart';
 import 'utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'gen_l10n/app_localizations.dart';
 
 class Calendar extends StatefulWidget {
   final Function? updateIndex;
 
-  const Calendar({Key? key, this.updateIndex}) : super(key: key);
+  const Calendar({super.key, this.updateIndex});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -23,7 +20,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime _focusedDay = DateTime.utc(kToday.year, kToday.month, kToday.day);
-  DateTime? _selectedDay;
+  late DateTime _selectedDay;
   Icon _rightChevron = const Icon(Icons.chevron_right, color: Colors.grey);
   Icon _leftChevron = const Icon(Icons.chevron_left);
   Color selectedColor = const Color.fromRGBO(177, 208, 255, 1);
@@ -31,9 +28,9 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     super.initState();
-    getEvents(context);
+    Provider.of<CalenderState>(context, listen: false).loadEvents();
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
   }
 
   @override
@@ -66,28 +63,6 @@ class _CalendarState extends State<Calendar> {
               builder: (context) =>
                   Edit(events.first.sleepyData, events.first.documentId)));
     }
-  }
-
-  Future<void> getEvents(context) async {
-    Map<DateTime, List<Event>> eventData = {};
-    for (var index = 0; index < 2; index++) {
-      DateTime date = DateTime(kFirstDay.year, kFirstDay.month + index);
-      final orderSnap = await FirebaseFirestore.instance
-          .collection(await DeviceData.getDeviceUniqueId())
-          .doc('${date.year}')
-          .collection(DateFormat('MM').format(date))
-          .get();
-      orderSnap.docs.map((e) => e).forEach((res) {
-        final data = res.data();
-        eventData.addAll({
-          DateTime.utc(date.year, date.month, int.parse(res.id)):
-          List.generate(1, (index) {
-            return Event(data, res.reference.path);
-          })
-        });
-      });
-    }
-    Provider.of<CalenderState>(context, listen: false).updateEvent(eventData);
   }
 
   String _getImagePath(DateTime targetDay) {
@@ -205,6 +180,7 @@ class _CalendarState extends State<Calendar> {
                 eventLoader: _getEventsForDay,
                 onDaySelected: _onDaySelected,
                 onPageChanged: (focusedDay) {
+                  context.read<CalenderState>().loadMonth(focusedDay);
                   setState(() {
                     _rightChevron = isSameMonth(kToday, focusedDay)
                         ? const Icon(Icons.chevron_right, color: Colors.grey)

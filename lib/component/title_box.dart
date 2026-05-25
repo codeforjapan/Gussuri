@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleBox extends StatelessWidget {
   final String text;
-  const TitleBox({required this.text, Key? key}) : super(key: key);
+  const TitleBox({required this.text, super.key});
 
   @override
   Widget build(BuildContext context) {

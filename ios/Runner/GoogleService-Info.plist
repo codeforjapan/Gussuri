@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>832218827991-vpqhq3rm8dg2a52ng80i8nklvech5v4s.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.832218827991-vpqhq3rm8dg2a52ng80i8nklvech5v4s</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAwvnGstXArW3t6P86Kt7pMsu6zsh360xc</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,11 +9,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.gussuri</string>
+	<string>com.gussuri.beta</string>
 	<key>PROJECT_ID</key>
 	<string>gussuri-7bb52</string>
 	<key>STORAGE_BUCKET</key>
-	<string>gussuri-7bb52.appspot.com</string>
+	<string>gussuri-7bb52.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:832218827991:ios:bf6fbf2669866e61af7492</string>
+	<string>1:832218827991:ios:830abb56e5ce8057af7492</string>
 </dict>
 </plist>

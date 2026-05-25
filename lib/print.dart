@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
 import 'package:gussuri/helper/DeviceData.dart';
+import 'package:gussuri/pdf_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
+import 'gen_l10n/app_localizations.dart';
 
 class Print extends StatefulWidget {
   const Print({super.key});
@@ -21,6 +22,16 @@ class _PrintState extends State<Print> {
   late DateTime startDate;
   late DateTime endDate;
   bool isGeneratingCsv = false;
+  bool isGeneratingPdf = false;
+  final _csvButtonKey = GlobalKey();
+  // ignore: unused_field
+  final _pdfButtonKey = GlobalKey();
+
+  Rect _buttonRect(GlobalKey key) {
+    final box = key.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) return Rect.zero;
+    return box.localToGlobal(Offset.zero) & box.size;
+  }
 
   @override
   void initState() {
@@ -30,69 +41,99 @@ class _PrintState extends State<Print> {
     endDate = today;
   }
 
-  Future saveCSV(String completeMsg, String failMsg) async {
-    setState(() {
-      isGeneratingCsv = true;
-    });
+  Future<void> saveCSV(String failMsg, {required Rect shareOrigin}) async {
+    setState(() => isGeneratingCsv = true);
     try {
-    String deviceUniqueId = await DeviceData.getDeviceUniqueId();
+      final deviceUniqueId = await DeviceData.getDeviceUniqueId();
 
-    List<List<dynamic>> rows = [];
-    rows.add(['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA']);
+      final rows = <List<dynamic>>[
+        ['date', 'bed_time', 'TASAFA', 'get_up_time', 'dysfunction', 'WASO', 'SOL', 'NOA'],
+      ];
 
-    for (DateTime date = startDate;
-    date.isBefore(endDate.add(const Duration(days: 1)));
-    date = date.add(const Duration(days: 1))) {
-      String year = date.year.toString();
-      String month = date.month.toString().padLeft(2, '0');
-      String day = date.day.toString().padLeft(2, '0');
-
-      var daySnapshot = await FirebaseFirestore.instance
-          .collection(deviceUniqueId)
-          .doc(year)
-          .collection(month)
-          .doc(day)
-          .get();
-
-      if (daySnapshot.exists) {
-        var data = daySnapshot.data() as Map<String, dynamic>;
-        List<dynamic> row = [
-          DateFormat('yyyy-MM-dd').format(DateTime.parse(parseFormat(data['bed_time']))),
-          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
-          data['TASAFA'],
-          DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
-          data['dysfunction'],
-          data['WASO'],
-          data['SOL'],
-          data['NOA'],
-        ];
-        rows.add(row);
+      // 月単位でまとめて並列取得
+      final monthKeys = <String, (String, String)>{};
+      for (DateTime date = startDate;
+          !date.isAfter(endDate);
+          date = date.add(const Duration(days: 1))) {
+        final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+        monthKeys[key] = (date.year.toString(), date.month.toString().padLeft(2, '0'));
       }
-    }
-
-    String csvData = const ListToCsvConverter().convert(rows);
-
-    final output = await getApplicationDocumentsDirectory();
-    final file = File('${output.path}/sleep_record_${DateFormat('yyyy-MM-dd-Hm').format(DateTime.now())}.csv');
-    await file.writeAsString(csvData);
-
-    Fluttertoast.showToast(
-      msg: completeMsg,
-      backgroundColor: Colors.green,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-    );
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: failMsg,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.red,
-        gravity: ToastGravity.BOTTOM,
+      final monthList = monthKeys.values.toList();
+      final snaps = await Future.wait(
+        monthList.map((ym) => FirebaseFirestore.instance
+            .collection(deviceUniqueId)
+            .doc(ym.$1)
+            .collection(ym.$2)
+            .get()),
       );
+
+      for (var i = 0; i < snaps.length; i++) {
+        final (yearStr, monthStr) = monthList[i];
+        final year = int.parse(yearStr);
+        final month = int.parse(monthStr);
+        for (final doc in snaps[i].docs) {
+          final day = int.tryParse(doc.id);
+          if (day == null) continue;
+          final date = DateTime(year, month, day);
+          if (date.isBefore(startDate) || date.isAfter(endDate)) continue;
+          final data = doc.data();
+          rows.add([
+            DateFormat('yyyy-MM-dd').format(date),
+            DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['bed_time']))),
+            data['TASAFA'],
+            DateFormat('HH:mm').format(DateTime.parse(parseFormat(data['get_up_time']))),
+            data['dysfunction'],
+            data['WASO'],
+            data['SOL'],
+            data['NOA'],
+          ]);
+        }
+      }
+
+      final csvData = const ListToCsvConverter().convert(rows);
+      final dir = await getTemporaryDirectory();
+      final fileName = 'sleep_record_${DateFormat('yyyyMMdd').format(startDate)}-${DateFormat('yyyyMMdd').format(endDate)}.csv';
+      final file = File('${dir.path}/$fileName');
+      await file.writeAsString(csvData);
+
+      await Share.shareXFiles(
+        [XFile(file.path, mimeType: 'text/csv')],
+        fileNameOverrides: [fileName],
+        sharePositionOrigin: shareOrigin,
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
+        );
+      }
     } finally {
-      setState(() {
-        isGeneratingCsv = false;
-      });
+      if (mounted) setState(() => isGeneratingCsv = false);
+    }
+  }
+
+  Future<void> savePDF(String failMsg, {required Rect shareOrigin}) async {
+    setState(() => isGeneratingPdf = true);
+    try {
+      final file = await SleepLogPdfGenerator.generateAndSave(
+        startDate: startDate,
+        endDate: endDate,
+      );
+      final fileName =
+          'sleep_log_${DateFormat('yyyyMMdd').format(startDate)}-${DateFormat('yyyyMMdd').format(endDate)}.pdf';
+      await Share.shareXFiles(
+        [XFile(file.path, mimeType: 'application/pdf')],
+        fileNameOverrides: [fileName],
+        sharePositionOrigin: shareOrigin,
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failMsg), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isGeneratingPdf = false);
     }
   }
 
@@ -187,6 +228,7 @@ class _PrintState extends State<Print> {
             Padding(
               padding: EdgeInsets.only(top: 20.h),
               child: ElevatedButton(
+                key: _csvButtonKey,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isGeneratingCsv ? Colors.grey : Colors.amber,
                   foregroundColor: Colors.black,
@@ -195,13 +237,43 @@ class _PrintState extends State<Print> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: isGeneratingCsv ? null : () => saveCSV(localizations.csvDownloadCompleted, localizations.csvGenerationFailed),
+                onPressed: isGeneratingCsv
+                    ? null
+                    : () => saveCSV(
+                          localizations.csvGenerationFailed,
+                          shareOrigin: _buttonRect(_csvButtonKey),
+                        ),
                 child: Text(
                   localizations.printPrintData,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-            )
+            ),
+            // TODO: PDF export button — re-enable once PDF format is finalized
+            // Padding(
+            //   padding: EdgeInsets.only(top: 12.h),
+            //   child: ElevatedButton(
+            //     key: _pdfButtonKey,
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: isGeneratingPdf ? Colors.grey : Colors.blueAccent,
+            //       foregroundColor: Colors.white,
+            //       minimumSize: Size(280.w, 50.h),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(50),
+            //       ),
+            //     ),
+            //     onPressed: isGeneratingPdf
+            //         ? null
+            //         : () => savePDF(
+            //               localizations.csvGenerationFailed,
+            //               shareOrigin: _buttonRect(_pdfButtonKey),
+            //             ),
+            //     child: Text(
+            //       localizations.printExportPdf,
+            //       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // )
           ],
         )
       ],
