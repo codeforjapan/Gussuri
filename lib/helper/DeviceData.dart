@@ -31,11 +31,12 @@ class DeviceData {
   }
 
   static Future<String> _fetchRawDeviceId() async {
-    final deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       // androidInfo.id は Build.ID（ファームウェアラベル）で端末固有値ではないため UUID を使用
       return const Uuid().v4();
-    } else if (Platform.isIOS) {
+    }
+    final deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
       final iosInfo = await deviceInfo.iosInfo;
       // null の場合は 'unknown' でなく UUID を生成（コレクション衝突を防ぐ）
       return iosInfo.identifierForVendor ?? const Uuid().v4();
