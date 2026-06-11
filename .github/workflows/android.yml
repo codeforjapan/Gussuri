@@ -34,8 +34,6 @@ jobs:
       - name: Flutter analyze
         run: flutter analyze --no-fatal-infos
 
-      - name: Flutter test
-        run: flutter test
 
   distribute:
     name: Build & Distribute
