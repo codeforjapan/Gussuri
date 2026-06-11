@@ -39,7 +39,6 @@ jobs:
     name: Build & Distribute
     runs-on: ubuntu-latest
     needs: analyze_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     steps:
       - uses: actions/checkout@v4
