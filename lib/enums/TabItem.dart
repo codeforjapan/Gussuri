@@ -47,4 +47,17 @@ extension TabItemExtension on TabItem {
         return AppLocalizations.of(context)?.help ?? 'ヘルプ';
     }
   }
+
+  String pageTitle(BuildContext context) {
+    switch (this) {
+      case TabItem.home:
+        return AppLocalizations.of(context)?.home ?? 'ホーム';
+      case TabItem.calender:
+        return AppLocalizations.of(context)?.calender ?? '睡眠記録カレンダー';
+      case TabItem.print:
+        return AppLocalizations.of(context)?.printSleepLog ?? '睡眠記録の印刷';
+      case TabItem.help:
+        return AppLocalizations.of(context)?.help ?? 'ヘルプ';
+    }
+  }
 }

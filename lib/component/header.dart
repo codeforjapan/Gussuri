@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
-  const Header({super.key});
+  final String? pageTitle;
+  const Header({super.key, this.pageTitle});
 
   @override
   Size get preferredSize => const Size.fromHeight(kTextTabBarHeight);
@@ -10,10 +11,10 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF002153),
-      title: const Text(
-            'gussuri',
-            style: TextStyle(color: Colors.white),
-          ),
+      title: Text(
+        pageTitle ?? 'gussuri',
+        style: const TextStyle(color: Colors.white),
+      ),
       elevation: 0.0,
       automaticallyImplyLeading: false,
     );

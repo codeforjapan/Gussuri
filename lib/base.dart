@@ -70,7 +70,7 @@ class Base extends HookWidget {
 
     if (isTablet(context)) {
       return Scaffold(
-        appBar: const Header(),
+        appBar: Header(pageTitle: currentTab.value.pageTitle(context)),
         body: Row(
           children: [
             NavigationRail(
