@@ -163,9 +163,14 @@ class _InputState extends State<Input> {
     );
   }
 
+  DateTime _toDateTime(dynamic value) {
+    if (value is DateTime) return value;
+    return DateTime.parse(value.toString()).toLocal();
+  }
+
   Widget _buildSummaryPanel(AppLocalizations l) {
-    final bed = _sleepyData['bed_time'] as DateTime;
-    final getUp = _sleepyData['get_up_time'] as DateTime;
+    final bed = _toDateTime(_sleepyData['bed_time']);
+    final getUp = _toDateTime(_sleepyData['get_up_time']);
     var dur = getUp.difference(bed);
     if (dur.isNegative) dur += const Duration(days: 1);
     final hours = dur.inHours;
@@ -279,7 +284,7 @@ class _InputState extends State<Input> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  color: const Color(0xFF001637),
+                  color: Colors.black.withValues(alpha: 0.45),
                   child: _buildSummaryPanel(localizations),
                 ),
               ),
