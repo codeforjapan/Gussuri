@@ -323,11 +323,8 @@ class _MoonIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.nightlight_round,
-      size: 140.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.35).clamp(100.0, 190.0);
+    return Icon(Icons.nightlight_round, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }
 
@@ -337,7 +334,7 @@ class _TimeSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shortestSide = MediaQuery.of(context).size.shortestSide;
-    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 80.0);
+    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 96.0);
     final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
 
     return FittedBox(
@@ -364,11 +361,8 @@ class _CalendarIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.calendar_month,
-      size: 130.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.33).clamp(100.0, 180.0);
+    return Icon(Icons.calendar_month, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }
 
@@ -377,10 +371,7 @@ class _ExportIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.file_download_outlined,
-      size: 130.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.33).clamp(100.0, 180.0);
+    return Icon(Icons.file_download_outlined, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }

@@ -37,15 +37,23 @@ class AboutMePage extends StatelessWidget {
         bottom: false,
         child: Column(
           children: [
-            SizedBox(height: size.height * 0.05),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: size.height * 0.38),
-              child: FadeTransition(
-                opacity: fadeAnimation,
-                child: illustration,
+            Flexible(
+              flex: 2,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: size.height * 0.38,
+                    maxWidth: size.width * 0.9,
+                  ),
+                  child: FadeTransition(
+                    opacity: fadeAnimation,
+                    child: illustration,
+                  ),
+                ),
               ),
             ),
             Expanded(
+              flex: 3,
               child: SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(hPadding, 20, hPadding, 100),
                 child: SlideTransition(
