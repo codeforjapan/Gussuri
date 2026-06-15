@@ -334,7 +334,7 @@ class _TimeSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shortestSide = MediaQuery.of(context).size.shortestSide;
-    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 96.0);
+    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 130.0);
     final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
 
     return FittedBox(
