@@ -78,44 +78,43 @@ class _HomeState extends State<Home> {
         body: GradientBox(
           child: Row(
             children: [
-              // 左カラム：バク君 + チャレンジTips
+              // 左カラム：チャレンジTips + バク君
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.9),
-                              borderRadius: BorderRadius.circular(20),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              localizations.challenge,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  localizations.challenge,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  AppLocalizations.of(context)?.challengeFirst ?? _tips,
-                                ),
-                              ],
+                            const SizedBox(height: 10),
+                            Text(
+                              AppLocalizations.of(context)?.challengeFirst ?? _tips,
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ),
-                    Image.asset('images/baku-kun-1.png'),
-                  ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset('images/baku-kun-1.png'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               // 右カラム：ボタン
