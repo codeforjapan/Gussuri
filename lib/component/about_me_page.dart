@@ -33,12 +33,12 @@ class AboutMePage extends StatelessWidget {
         bottom: false,
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
+            constraints: const BoxConstraints(maxWidth: 700),
             child: Column(
               children: [
-                SizedBox(height: screenHeight * 0.06),
+                SizedBox(height: screenHeight * 0.05),
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: screenHeight * 0.28),
+                  constraints: BoxConstraints(maxHeight: screenHeight * 0.38),
                   child: FadeTransition(
                     opacity: fadeAnimation,
                     child: illustration,
@@ -58,7 +58,7 @@ class AboutMePage extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 28,
                                 fontWeight: FontWeight.bold,
                                 shadows: [
                                   Shadow(
@@ -75,7 +75,7 @@ class AboutMePage extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white.withValues(alpha: 0.9),
-                                fontSize: 15,
+                                fontSize: 17,
                                 height: 1.7,
                               ),
                             ),

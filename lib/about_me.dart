@@ -109,7 +109,7 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
             child: SafeArea(
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
+                  constraints: const BoxConstraints(maxWidth: 700),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(28, 0, 28, 28),
                     child: Row(
