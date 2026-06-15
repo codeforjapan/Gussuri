@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gussuri/component/title_box.dart';
@@ -226,7 +227,13 @@ class _CalendarState extends State<Calendar> {
                                     builder: (context) => Input(
                                         _panelDay!,
                                         nextPage: const Calendar())),
-                              ),
+                              ).then((_) {
+                                if (mounted) {
+                                  setState(() {
+                                    _panelEvents = _getEventsForDay(_panelDay!);
+                                  });
+                                }
+                              }),
                       onEdit: (_panelDay == null || _panelEvents.isEmpty)
                           ? null
                           : () => Navigator.push(
@@ -235,7 +242,13 @@ class _CalendarState extends State<Calendar> {
                                     builder: (context) => Edit(
                                         _panelEvents.first.sleepyData,
                                         _panelEvents.first.documentId)),
-                              ),
+                              ).then((_) {
+                                if (mounted) {
+                                  setState(() {
+                                    _panelEvents = _getEventsForDay(_panelDay!);
+                                  });
+                                }
+                              }),
                     ),
                   ),
                 ],
@@ -253,10 +266,7 @@ class _CalendarState extends State<Calendar> {
             TitleBox(
                 text: AppLocalizations.of(context)?.calendar ??
                     '睡眠記録カレンダー'),
-            SizedBox(
-              height: 400,
-              child: _buildCalendar(),
-            ),
+            _buildCalendar(),
             const SizedBox(height: 8.0),
             Expanded(
                 child: Container(
@@ -287,7 +297,9 @@ class _DetailPanel extends StatelessWidget {
   String _formatTime(dynamic value) {
     try {
       DateTime dt;
-      if (value is DateTime) {
+      if (value is Timestamp) {
+        dt = value.toDate();
+      } else if (value is DateTime) {
         dt = value;
       } else {
         dt = DateTime.parse(value.toString()).toLocal();
