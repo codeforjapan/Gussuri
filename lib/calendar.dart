@@ -352,23 +352,74 @@ class _DetailPanel extends StatelessWidget {
     }
 
     final data = events.first.sleepyData;
+    final dysfunction = data['dysfunction'] ?? 0;
+
+    // 睡眠時間を計算
+    String sleepDuration = '--';
+    try {
+      final bed = _formatTime(data['bed_time']);
+      final getUp = _formatTime(data['get_up_time']);
+      if (bed != '--:--' && getUp != '--:--') {
+        DateTime bedDt;
+        DateTime getUpDt;
+        final raw = data['bed_time'];
+        if (raw is Timestamp) {
+          bedDt = raw.toDate();
+        } else if (raw is DateTime) {
+          bedDt = raw;
+        } else {
+          bedDt = DateTime.parse(raw.toString()).toLocal();
+        }
+        final raw2 = data['get_up_time'];
+        if (raw2 is Timestamp) {
+          getUpDt = raw2.toDate();
+        } else if (raw2 is DateTime) {
+          getUpDt = raw2;
+        } else {
+          getUpDt = DateTime.parse(raw2.toString()).toLocal();
+        }
+        var dur = getUpDt.difference(bedDt);
+        if (dur.isNegative) dur += const Duration(days: 1);
+        final h = dur.inHours;
+        final m = dur.inMinutes % 60;
+        sleepDuration = m > 0 ? '$h時間$m分' : '$h時間';
+      }
+    } catch (_) {}
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            DateFormat('yyyy/M/d').format(selectedDay!),
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold),
+          // 日付 + 休養スコア
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  DateFormat('yyyy/M/d').format(selectedDay!),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ClipOval(
+                child: Image.asset(
+                  'images/evaluation_$dysfunction.jpg',
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '${localizations.rate} $dysfunction',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
-          _SummaryRow(
-              label: localizations.inputTimeInBed,
-              value: _formatTime(data['bed_time'])),
-          _SummaryRow(
-              label: localizations.inputGetUpTime,
-              value: _formatTime(data['get_up_time'])),
+          _SummaryRow(label: localizations.inputTimeInBed, value: _formatTime(data['bed_time'])),
+          _SummaryRow(label: localizations.inputGetUpTime, value: _formatTime(data['get_up_time'])),
+          _SummaryRow(label: '睡眠時間', value: sleepDuration),
+          const Divider(height: 20),
           _SummaryRow(
               label: localizations.inputWakeingUp,
               value: '${data['SOL'] ?? '--'}'),
