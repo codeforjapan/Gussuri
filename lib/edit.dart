@@ -88,6 +88,7 @@ class _EditState extends State<Edit> {
 
   Widget _buildFormItems(AppLocalizations l) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TitleBox(text: _formattedDate),
         SlideButton(
@@ -259,7 +260,7 @@ class _EditState extends State<Edit> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  color: Colors.white.withValues(alpha: 0.12),
+                  color: const Color(0xFF001637),
                   child: _buildSummaryPanel(localizations),
                 ),
               ),

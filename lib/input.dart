@@ -108,6 +108,7 @@ class _InputState extends State<Input> {
 
   Widget _buildFormItems(AppLocalizations l) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TitleBox(text: formattedDate),
         SlideButton(
@@ -278,7 +279,7 @@ class _InputState extends State<Input> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  color: Colors.white.withValues(alpha: 0.12),
+                  color: const Color(0xFF001637),
                   child: _buildSummaryPanel(localizations),
                 ),
               ),
