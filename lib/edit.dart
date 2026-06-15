@@ -85,7 +85,10 @@ class _EditState extends State<Edit> {
 
     return Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(children: [
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Stack(children: [
           SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               child: GradientBox(
@@ -185,6 +188,9 @@ class _EditState extends State<Edit> {
                 padding: EdgeInsets.only(left: 20.w),
                 child: Image.asset('images/baku-kun-2.png'),
               ))
-        ]));
+        ]),
+          ),
+        ),
+    );
   }
 }
