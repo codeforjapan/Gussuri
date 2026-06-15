@@ -15,6 +15,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
         pageTitle ?? 'gussuri',
         style: const TextStyle(color: Colors.white),
       ),
+      centerTitle: true,
       elevation: 0.0,
       automaticallyImplyLeading: false,
     );
