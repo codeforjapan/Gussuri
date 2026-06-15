@@ -58,5 +58,9 @@
   "aboutMePage8Title": "データをエクスポートしよう",
   "aboutMePage8Body": "印刷タブから、指定した期間の睡眠記録をCSVファイルとして書き出すことができます。",
   "aboutMeNext": "次へ",
-  "aboutMeDone": "はじめる"
+  "aboutMeDone": "はじめる",
+  "calendarSelectDate": "日付を選んでください",
+  "calendarNoRecord": "この日は未記録です",
+  "edit": "編集",
+  "inputWasoLabel": "中途覚醒の合計時間"
 }

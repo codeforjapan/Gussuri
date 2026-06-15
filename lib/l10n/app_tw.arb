@@ -58,5 +58,9 @@
   "aboutMePage8Title": "匯出您的資料",
   "aboutMePage8Body": "在匯出紀錄分頁中，可以將指定期間的睡眠紀錄匯出為 CSV 檔案。",
   "aboutMeNext": "下一步",
-  "aboutMeDone": "開始使用"
+  "aboutMeDone": "開始使用",
+  "calendarSelectDate": "請選擇日期",
+  "calendarNoRecord": "此日無記錄",
+  "edit": "編輯",
+  "inputWasoLabel": "中途覺醒合計時間"
 }
