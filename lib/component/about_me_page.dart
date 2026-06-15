@@ -20,7 +20,11 @@ class AboutMePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final size = MediaQuery.of(context).size;
+    // shortestSide でスケール。縦横回転してもフォントサイズが安定する
+    final scale = (size.shortestSide / 360).clamp(1.0, 2.2);
+    final hPadding = (size.width * 0.08).clamp(24.0, 120.0);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -31,63 +35,58 @@ class AboutMePage extends StatelessWidget {
       ),
       child: SafeArea(
         bottom: false,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 700),
-            child: Column(
-              children: [
-                SizedBox(height: screenHeight * 0.05),
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: screenHeight * 0.38),
+        child: Column(
+          children: [
+            SizedBox(height: size.height * 0.05),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: size.height * 0.38),
+              child: FadeTransition(
+                opacity: fadeAnimation,
+                child: illustration,
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(hPadding, 20, hPadding, 100),
+                child: SlideTransition(
+                  position: slideAnimation,
                   child: FadeTransition(
                     opacity: fadeAnimation,
-                    child: illustration,
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(32, 20, 32, 100),
-                    child: SlideTransition(
-                      position: slideAnimation,
-                      child: FadeTransition(
-                        opacity: fadeAnimation,
-                        child: Column(
-                          children: [
-                            Text(
-                              title,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black26,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
+                    child: Column(
+                      children: [
+                        Text(
+                          title,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22.0 * scale,
+                            fontWeight: FontWeight.bold,
+                            shadows: const [
+                              Shadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 2),
                               ),
-                            ),
-                            const SizedBox(height: 14),
-                            Text(
-                              description,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.9),
-                                fontSize: 17,
-                                height: 1.7,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 12.0 * scale),
+                        Text(
+                          description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            fontSize: 15.0 * scale,
+                            height: 1.7,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
