@@ -74,8 +74,11 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: GradientBox(
-        child: Column(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: GradientBox(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
@@ -155,6 +158,8 @@ class _HomeState extends State<Home> {
               child: Image.asset('images/baku-kun-1.png'),
             )
           ],
+        ),
+          ),
         ),
       ),
     );
