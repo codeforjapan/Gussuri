@@ -107,40 +107,45 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
             left: 0,
             right: 0,
             child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(28.w, 0, 28.w, 28.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _DotIndicator(
-                      total: _totalPages,
-                      current: _currentPage,
-                      onTap: (i) => _pageController.animateToPage(
-                        i,
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeInOut,
-                      ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 28),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _DotIndicator(
+                          total: _totalPages,
+                          current: _currentPage,
+                          onTap: (i) => _pageController.animateToPage(
+                            i,
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _next,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: const Color(0xFF002153),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 28,
+                              vertical: 14,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          child: Text(isLast ? l.aboutMeDone : l.aboutMeNext),
+                        ),
+                      ],
                     ),
-                    ElevatedButton(
-                      onPressed: _next,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF002153),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 28.w,
-                          vertical: 14.h,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      child: Text(isLast ? l.aboutMeDone : l.aboutMeNext),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
