@@ -33,7 +33,10 @@ class _HelpState extends State<Help> {
     ];
 
     return Scaffold(
-        body: Column(
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         TitleBox(text: localizations.help),
@@ -96,6 +99,9 @@ class _HelpState extends State<Help> {
           },
         )
       ],
-    ));
+            ),
+          ),
+        ),
+    );
   }
 }
