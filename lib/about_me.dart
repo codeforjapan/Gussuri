@@ -280,13 +280,17 @@ class _EvaluationSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
+    final imgSize = (shortestSide / 360 * 54).clamp(54.0, 88.0);
+    final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
+
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [0, 3, 5, 7, 10].map((i) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: hPad),
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -301,8 +305,8 @@ class _EvaluationSample extends StatelessWidget {
               child: ClipOval(
                 child: Image.asset(
                   'images/evaluation_$i.jpg',
-                  width: 54.w,
-                  height: 54.w,
+                  width: imgSize,
+                  height: imgSize,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -332,17 +336,21 @@ class _TimeSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
+    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 80.0);
+    final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
+
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(5, (i) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: hPad),
             child: Image.asset(
               'images/time$i.png',
-              width: 48.w,
-              height: 48.w,
+              width: imgSize,
+              height: imgSize,
             ),
           );
         }),
