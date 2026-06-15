@@ -77,3 +77,4 @@ lib_copy/
 .fvm/flutter_sdk
 .fvm/versions/
 # .fvm/fvm_config.json はトラッキング対象（チームで SDK バージョンを共有するため）
+.superpowers/
