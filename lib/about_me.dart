@@ -252,15 +252,16 @@ class _DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: List.generate(total, (i) {
         return GestureDetector(
           onTap: () => onTap(i),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            width: i == current ? 24.w : 8.w,
-            height: 8.h,
-            margin: EdgeInsets.only(right: 6.w),
+            width: i == current ? 20.0 : 7.0,
+            height: 7.0,
+            margin: const EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: i == current
