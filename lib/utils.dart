@@ -14,6 +14,9 @@ bool isSameMonth(DateTime? a, DateTime? b) {
   return a.year == b.year && a.month == b.month;
 }
 
+bool isTablet(BuildContext context) =>
+    MediaQuery.of(context).size.width >= 600;
+
 class Event {
   Map<String, dynamic> sleepyData = {
     "bed_time": DateTime.now(),
