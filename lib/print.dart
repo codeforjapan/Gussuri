@@ -185,7 +185,10 @@ class _PrintState extends State<Print> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-        body: Column(
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Column(
       children: [
         TitleBox(text: localizations.printSleepLog),
         Align(
@@ -277,6 +280,9 @@ class _PrintState extends State<Print> {
           ],
         )
       ],
-    ));
+            ),
+          ),
+        ),
+    );
   }
 }
