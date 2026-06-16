@@ -76,11 +76,13 @@ class _InputState extends State<Input> {
 
   Future<void> _createSleepyData() async {
     final deviceId = await DeviceData.getDeviceUniqueId();
-    final ref = FirebaseFirestore.instance
+    final yearRef = FirebaseFirestore.instance
         .collection(deviceId)
-        .doc(_targetDays[0])
+        .doc(_targetDays[0]);
+    final ref = yearRef
         .collection(_targetDays[1])
         .doc(_targetDays[2]);
+    await yearRef.set({'year': int.parse(_targetDays[0])}, SetOptions(merge: true));
     await ref.set(_sleepyData);
     if (!mounted) return;
     Provider.of<CalenderState>(context, listen: false)
