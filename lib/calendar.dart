@@ -150,6 +150,7 @@ class _CalendarState extends State<Calendar> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
