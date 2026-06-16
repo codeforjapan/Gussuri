@@ -188,6 +188,12 @@ class _PrintState extends State<Print> {
         body: Column(
       children: [
         TitleBox(text: localizations.printSleepLog),
+        Expanded(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: Column(
+        children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -276,6 +282,11 @@ class _PrintState extends State<Print> {
             // )
           ],
         )
+      ],
+              ),
+            ),
+          ),
+        ),
       ],
     ));
   }

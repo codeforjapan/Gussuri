@@ -1,4 +1,3 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/image_buttons.dart';
 import '../gen_l10n/app_localizations.dart';
@@ -46,13 +45,19 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final ss = MediaQuery.of(context).size.shortestSide;
+    final w = (20.0 * ss / 360).clamp(20.0, 24.0);
+    final h = (20.0 * ss / 360).clamp(20.0, 24.0);
+    final innerW = (10.0 * ss / 360).clamp(10.0, 12.0);
+    final listH = (40.0 * ss / 360).clamp(40.0, 48.0);
+    final sepW = (5.0 * ss / 360).clamp(5.0, 6.0);
     return Card(
-        margin: EdgeInsets.only(top: 10.h, right: 20.w, left: 20.w),
+        margin: EdgeInsets.only(top: h / 2, right: w, left: w),
         color: Colors.white.withValues(alpha: 0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.h),
+            padding: EdgeInsets.symmetric(vertical: h),
             child: Text(
               AppLocalizations.of(context)?.inputAwakeingAfter ?? '途中で目が覚めた',
               textAlign: TextAlign.center,
@@ -60,9 +65,9 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(right: 10.w, left: 10.w, bottom: 5.h),
+            margin: EdgeInsets.only(right: innerW, left: innerW, bottom: h / 4),
             child: SizedBox(
-              height: 40.h,
+              height: listH,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -94,7 +99,7 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return Padding(padding: EdgeInsets.all(5.w));
+                  return Padding(padding: EdgeInsets.all(sepW));
                 },
               ),
             ),
@@ -102,7 +107,7 @@ class AwakeFormState extends State<AwakeForm> with TickerProviderStateMixin {
           Visibility(
             visible: isChecked,
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.h),
+                padding: EdgeInsets.symmetric(vertical: h),
                 child: Opacity(
                   opacity: isChecked ? 1 : 0.5,
                   child: Text(

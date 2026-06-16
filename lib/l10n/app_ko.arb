@@ -58,5 +58,9 @@
   "aboutMePage8Title": "데이터를 내보내세요",
   "aboutMePage8Body": "인쇄 탭에서 지정한 기간의 수면 기록을 CSV 파일로 내보낼 수 있습니다.",
   "aboutMeNext": "다음",
-  "aboutMeDone": "시작하기"
+  "aboutMeDone": "시작하기",
+  "calendarSelectDate": "날짜를 선택하세요",
+  "calendarNoRecord": "이 날의 기록이 없습니다",
+  "edit": "편집",
+  "inputWasoLabel": "중간 각성 합계 시간"
 }

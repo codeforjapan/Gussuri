@@ -14,6 +14,9 @@ bool isSameMonth(DateTime? a, DateTime? b) {
   return a.year == b.year && a.month == b.month;
 }
 
+bool isTablet(BuildContext context) =>
+    MediaQuery.of(context).size.width >= 600;
+
 class Event {
   Map<String, dynamic> sleepyData = {
     "bed_time": DateTime.now(),
@@ -33,6 +36,7 @@ Map<DateTime, List<Event>> kEvents = <DateTime, List<Event>>{};
 
 class CalenderState with ChangeNotifier {
   final _loadedMonths = <String>{};
+  final _migratedYears = <String>{};
   Future<void>? _initialFuture;
 
   /// 起動時：前月・当月の2ヶ月だけ取得
@@ -60,6 +64,19 @@ class CalenderState with ChangeNotifier {
     if (toFetch.isEmpty) return;
 
     final deviceId = await DeviceData.getDeviceUniqueId();
+
+    // 年ドキュメントを明示化（初回アクセス時のみ1回書き込み）
+    final years = toFetch.map((d) => '${d.year}').toSet();
+    for (final year in years) {
+      if (!_migratedYears.contains(year)) {
+        _migratedYears.add(year);
+        FirebaseFirestore.instance
+            .collection(deviceId)
+            .doc(year)
+            .set({'year': int.parse(year)}, SetOptions(merge: true));
+      }
+    }
+
     final snaps = await Future.wait(
       toFetch.map((date) => FirebaseFirestore.instance
           .collection(deviceId)

@@ -107,40 +107,45 @@ class _AboutMeState extends State<AboutMe> with SingleTickerProviderStateMixin {
             left: 0,
             right: 0,
             child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(28.w, 0, 28.w, 28.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _DotIndicator(
-                      total: _totalPages,
-                      current: _currentPage,
-                      onTap: (i) => _pageController.animateToPage(
-                        i,
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeInOut,
-                      ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 700),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(28, 0, 28, 28),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _DotIndicator(
+                          total: _totalPages,
+                          current: _currentPage,
+                          onTap: (i) => _pageController.animateToPage(
+                            i,
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _next,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: const Color(0xFF002153),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 28,
+                              vertical: 14,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          child: Text(isLast ? l.aboutMeDone : l.aboutMeNext),
+                        ),
+                      ],
                     ),
-                    ElevatedButton(
-                      onPressed: _next,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF002153),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 28.w,
-                          vertical: 14.h,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      child: Text(isLast ? l.aboutMeDone : l.aboutMeNext),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -247,15 +252,16 @@ class _DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: List.generate(total, (i) {
         return GestureDetector(
           onTap: () => onTap(i),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            width: i == current ? 24.w : 8.w,
-            height: 8.h,
-            margin: EdgeInsets.only(right: 6.w),
+            width: i == current ? 20.0 : 7.0,
+            height: 7.0,
+            margin: const EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: i == current
@@ -274,13 +280,17 @@ class _EvaluationSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
+    final imgSize = (shortestSide / 360 * 54).clamp(54.0, 88.0);
+    final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
+
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [0, 3, 5, 7, 10].map((i) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: hPad),
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -295,8 +305,8 @@ class _EvaluationSample extends StatelessWidget {
               child: ClipOval(
                 child: Image.asset(
                   'images/evaluation_$i.jpg',
-                  width: 54.w,
-                  height: 54.w,
+                  width: imgSize,
+                  height: imgSize,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -313,11 +323,8 @@ class _MoonIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.nightlight_round,
-      size: 140.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.35).clamp(100.0, 190.0);
+    return Icon(Icons.nightlight_round, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }
 
@@ -326,17 +333,21 @@ class _TimeSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
+    final imgSize = (shortestSide / 360 * 48).clamp(48.0, 130.0);
+    final hPad = (shortestSide / 360 * 6).clamp(6.0, 10.0);
+
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(5, (i) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: hPad),
             child: Image.asset(
               'images/time$i.png',
-              width: 48.w,
-              height: 48.w,
+              width: imgSize,
+              height: imgSize,
             ),
           );
         }),
@@ -350,11 +361,8 @@ class _CalendarIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.calendar_month,
-      size: 130.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.33).clamp(100.0, 180.0);
+    return Icon(Icons.calendar_month, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }
 
@@ -363,10 +371,7 @@ class _ExportIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.file_download_outlined,
-      size: 130.w,
-      color: Colors.white.withValues(alpha: 0.9),
-    );
+    final s = (MediaQuery.of(context).size.shortestSide * 0.33).clamp(100.0, 180.0);
+    return Icon(Icons.file_download_outlined, size: s, color: Colors.white.withValues(alpha: 0.9));
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:gussuri/component/input_card.dart';
 import '../gen_l10n/app_localizations.dart';
@@ -19,8 +18,7 @@ class SlideButtonState extends State<SlideButton>
   late final Function(int?) submitOnChanged;
   final ScrollController _scrollController = ScrollController();
 
-  // Must match itemExtent on the ListView
-  static double get _itemW => 56.w;
+  double _itemW = 56.0;
 
   @override
   void initState() {
@@ -68,6 +66,10 @@ class SlideButtonState extends State<SlideButton>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final shortestSide = MediaQuery.of(context).size.shortestSide;
+    _itemW = (56.0 * shortestSide / 360).clamp(56.0, 80.0);
+    final btnSize = (44.0 * shortestSide / 360).clamp(44.0, 60.0);
+    final listH = btnSize + 20;
 
     return InputCard(
       title: localizations.inputLastnight,
@@ -81,7 +83,7 @@ class SlideButtonState extends State<SlideButton>
           ),
           Expanded(
             child: SizedBox(
-              height: 70.h,
+              height: listH,
               child: ListView.builder(
                 shrinkWrap: true,
                 controller: _scrollController,
@@ -103,7 +105,7 @@ class SlideButtonState extends State<SlideButton>
                         style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),
                           backgroundColor: Colors.white,
-                          fixedSize: Size(44.w, 44.w),
+                          fixedSize: Size(btnSize, btnSize),
                           padding: EdgeInsets.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),

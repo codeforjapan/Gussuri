@@ -72,10 +72,142 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
+    if (isTablet(context)) {
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: GradientBox(
+          child: Row(
+            children: [
+              // 左カラム：チャレンジTips + バク君
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              localizations.challenge,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              AppLocalizations.of(context)?.challengeFirst ?? _tips,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset('images/baku-kun-1.png'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // 右カラム：ボタン
+              Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _checkLastNightSleep == true
+                            ? Text(
+                                localizations.recordComplete,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            : SizedBox(
+                                width: double.infinity,
+                                height: 72,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xffFFD069),
+                                    foregroundColor: Colors.black,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    textStyle: const TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: _checkLastNightSleep == false
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Input(
+                                                DateTime.now(),
+                                                nextPage: Home(
+                                                  updateIndex: widget.updateIndex,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      : null,
+                                  child: Text(localizations.record),
+                                ),
+                              ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () {
+                              widget.updateIndex?.call(1, TabItem.calender);
+                            },
+                            icon: const Icon(Icons.calendar_month),
+                            label: Text(localizations.calendar),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: GradientBox(
-        child: Column(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: GradientBox(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
@@ -155,6 +287,8 @@ class _HomeState extends State<Home> {
               child: Image.asset('images/baku-kun-1.png'),
             )
           ],
+        ),
+          ),
         ),
       ),
     );

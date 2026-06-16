@@ -58,5 +58,9 @@
   "aboutMePage8Title": "Export your data",
   "aboutMePage8Body": "From the Export tab, you can export your sleep records for a selected period as a CSV file.",
   "aboutMeNext": "Next",
-  "aboutMeDone": "Get Started"
+  "aboutMeDone": "Get Started",
+  "calendarSelectDate": "Select a date",
+  "calendarNoRecord": "No record for this day",
+  "edit": "Edit",
+  "inputWasoLabel": "Total wake time"
 }
