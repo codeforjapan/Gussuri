@@ -176,7 +176,7 @@ class _EditState extends State<Edit> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '${l.rate} ${_sleepyData['dysfunction']}',
+                  '${l.rate} ${10 - (_sleepyData['dysfunction'] as int)}',
                   style: const TextStyle(
                       color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
                 ),
