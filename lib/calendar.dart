@@ -411,7 +411,7 @@ class _DetailPanel extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '${localizations.rate} $dysfunction',
+                '${localizations.rate} ${10 - (dysfunction as int)}',
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ],
