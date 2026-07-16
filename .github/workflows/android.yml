@@ -90,3 +90,13 @@ jobs:
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
           releaseNotes: "Build ${{ github.run_number }} / ${{ github.sha }}"
+
+      - name: Build release AAB (Play Console)
+        run: flutter build appbundle --release --build-number=${{ github.run_number }}
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
